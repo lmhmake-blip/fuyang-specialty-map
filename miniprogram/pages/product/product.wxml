@@ -20,7 +20,7 @@
     <view class="pname">{{p.name}}</view>
     <view class="psub">{{p.sub}}</view>
     <view class="badges">
-      <text class="badge {{b[1]}}" wx:for="{{p.badges}}" wx:for-item="b" wx:key="index">{{b[0]}}</text>
+      <text class="badge {{b.c}}" wx:for="{{p.badges}}" wx:for-item="b" wx:key="key">{{b.t}}</text>
     </view>
 
     <view class="pbuy">
@@ -32,7 +32,7 @@
     <view class="block">
       <view class="block-t ev">为什么可信</view>
       <view class="evlist">
-        <view class="ev" wx:for="{{p.evidence}}" wx:key="t">
+        <view class="ev" wx:for="{{p.evidence}}" wx:key="key">
           <image class="ev-ico" src="/assets/ic-cert-seal.png" mode="aspectFit" />
           <view class="ev-b">
             <text class="ev-t">{{item.t}}</text>
@@ -50,9 +50,9 @@
     <view class="block">
       <view class="block-t">规格与溯源</view>
       <view class="specs">
-        <view class="spec" wx:for="{{p.specs}}" wx:key="index">
-          <text class="spec-k">{{item[0]}}</text>
-          <text class="spec-v">{{item[1]}}</text>
+        <view class="spec" wx:for="{{p.specs}}" wx:key="key">
+          <text class="spec-k">{{item.k}}</text>
+          <text class="spec-v">{{item.v}}</text>
         </view>
       </view>
       <view class="spec-note">* 价格为演示数据；生产方与资质需经商会确认后上线，食品经营资质由实际销售主体承担。</view>

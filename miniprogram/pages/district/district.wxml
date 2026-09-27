@@ -15,9 +15,9 @@
       <view class="dhead-name">{{d.name}}</view>
       <view class="dhead-desc">{{d.desc}}</view>
       <view class="dstats">
-        <view class="dstat" wx:for="{{d.stats}}" wx:key="index">
-          <text class="dstat-num">{{item[1]}}</text>
-          <text class="dstat-lb">{{item[0]}}</text>
+        <view class="dstat" wx:for="{{d.stats}}" wx:key="key">
+          <text class="dstat-num">{{item.v}}</text>
+          <text class="dstat-lb">{{item.k}}</text>
         </view>
       </view>
     </view>
@@ -43,7 +43,7 @@
           <text class="price-unit">{{item.unit}}</text>
         </view>
         <view class="badges prow-badges" wx:if="{{item.badges}}">
-          <text class="badge {{b[1]}}" wx:for="{{item.badges}}" wx:for-item="b" wx:key="index">{{b[0]}}</text>
+          <text class="badge {{b.c}}" wx:for="{{item.badges}}" wx:for-item="b" wx:key="key">{{b.t}}</text>
         </view>
       </view>
     </view>

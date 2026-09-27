@@ -15,9 +15,15 @@ Page({
       return;
     }
     const app = getApp();
+    // 列表项预加唯一 key —— wx:key="index" 不是合法值，item 里并没有 index 属性
+    const view = Object.assign({}, p, {
+      badges: (p.badges || []).map((b, i) => ({ t: b[0], c: b[1], key: 'bd' + i })),
+      specs: (p.specs || []).map((sp, i) => ({ k: sp[0], v: sp[1], key: 'sp' + i })),
+      evidence: (p.evidence || []).map((e, i) => ({ t: e.t, b: e.b, key: 'ev' + i })),
+    });
     this.setData({
       statusBarHeight: app.globalData.statusBarHeight,
-      p,
+      p: view,
       d: D(p.d),
       others: byDistrict(p.d).length - 1,
       heroFontSize: p.short.length <= 2 ? 84 : 64,
