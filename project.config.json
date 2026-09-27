@@ -1,0 +1,17 @@
+{
+  "description": "阜阳特产地图 · 微信小程序",
+  "miniprogramRoot": "miniprogram/",
+  "compileType": "miniprogram",
+  "appid": "touristappid",
+  "projectname": "fuyang-specialty-map",
+  "libVersion": "latest",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": false,
+    "ignoreDevUnusedFiles": false,
+    "checkInvalidKey": true
+  }
+}

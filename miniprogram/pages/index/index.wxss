@@ -1,0 +1,67 @@
+/* ============ 场景入口（1 主 2 次）============ */
+.scenes {
+  display: grid;
+  grid-template-columns: 1.24fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 9px;
+  padding: 0 20px 28px;
+}
+.scene {
+  border-radius: 15px; background: var(--surface); box-shadow: var(--shadow-1);
+  padding: 14px 12px 13px;
+  transition: transform .22s var(--ease), box-shadow .22s var(--ease);
+}
+.scene-hover { transform: translateY(-3px); box-shadow: var(--shadow-2); }
+.scene-lead {
+  grid-row: span 2;
+  display: flex; flex-direction: column;
+  background: linear-gradient(158deg, #F2F6F3 0%, #EAF1ED 62%, #E4EDE7 100%);
+  padding: 15px 14px 14px;
+  position: relative; overflow: hidden;
+}
+/* 右下角篆字水印：填掉主卡的大片空白 */
+.scene-lead::after {
+  content: '食';
+  position: absolute; right: -10px; bottom: -22px;
+  font-family: var(--serif); font-weight: 700; font-size: 96px; line-height: 1;
+  color: var(--brand); opacity: .055;
+}
+.scene-ico-lead { width: 30px; height: 30px; margin-bottom: auto; position: relative; z-index: 1; }
+.scene-t-lg {
+  font-family: var(--serif); font-weight: 700; font-size: 20px; line-height: 1.2;
+  letter-spacing: -.02em; margin-bottom: 5px; position: relative; z-index: 1;
+}
+.scene-d-lg {
+  font-size: 11.5px; color: var(--ink-2); line-height: 1.55;
+  margin-bottom: 11px; position: relative; z-index: 1;
+}
+.scene-tags { display: flex; gap: 5px; flex-wrap: wrap; position: relative; z-index: 1; }
+.scene-tag {
+  font-size: 10px; font-weight: 500; color: var(--brand);
+  background: rgba(255, 255, 255, .72); border-radius: 4px; padding: 2px 7px;
+}
+.scene-ico { width: 22px; height: 22px; display: block; margin-bottom: 9px; }
+.scene-t { font-family: var(--serif); font-weight: 700; font-size: 14.5px; margin-bottom: 2px; }
+.scene-d { font-size: 10.5px; color: var(--ink-3); line-height: 1.45; }
+
+/* ============ 横滑商品卡 ============ */
+.hscroll { white-space: nowrap; padding: 0 20px 30px; }
+.pcard {
+  display: inline-block; vertical-align: top;
+  width: 152px; margin-right: 11px; white-space: normal;
+  border-radius: 15px; background: var(--surface); box-shadow: var(--shadow-1);
+  overflow: hidden;
+  transition: transform .22s var(--ease), box-shadow .22s var(--ease);
+}
+.pcard-hover { transform: translateY(-3px); box-shadow: var(--shadow-2); }
+.pcard-img { height: 104px; display: flex; align-items: center; justify-content: center; }
+.pcard-tile { font-size: 30px; }
+.pcard-body { padding: 10px 11px 12px; }
+.pcard-name {
+  font-family: var(--serif); font-weight: 700; font-size: 14.5px;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+.pcard-sub {
+  font-size: 10.5px; color: var(--ink-3); margin: 3px 0 8px;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}

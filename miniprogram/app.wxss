@@ -1,0 +1,256 @@
+@import "assets/font/font.wxss";
+
+/* ============================================================
+   阜阳特产地图 · 小程序全局样式
+   从 HTML 原型迁移。注意小程序差异：
+   - 单位用 px（逻辑像素），直接照搬原型值
+   - 无 :active / :hover，点击反馈用 hover-class（WXML 里配）
+   - 无内联 SVG，图标见 assets/ 或用 CSS 画
+   - 无 backdrop-filter（支持不稳），毛玻璃改半透明纯色
+   ============================================================ */
+
+page {
+  /* ---- 设计 token ---- */
+  --bg: #FBF8F3;
+  --surface: #FFFFFF;
+  --ink: #241C14;
+  --ink-2: #6B5B4A;
+  --ink-3: #A0907C;
+  --line: #EAE2D6;
+  --line-2: #F2ECE2;
+  --brand: #1E4B3C;
+  --brand-soft: #EAF1ED;
+  --seal: #C4472F;
+  --seal-soft: #FAEDE9;
+  --gold: #B0862E;
+  --gold-soft: #F8F1E0;
+  --shadow-1: 0 1px 2px rgba(96, 64, 44, .045), 0 4px 14px rgba(96, 64, 44, .055);
+  --shadow-2: 0 2px 6px rgba(96, 64, 44, .06), 0 14px 34px rgba(96, 64, 44, .10);
+  --ease: cubic-bezier(.22, 1, .36, 1);
+
+  /* 宋体走子集化自定义字体；未加载完时退到各端自带宋体 */
+  --serif: 'FYSerif', 'Songti SC', 'Source Han Serif SC', Georgia, serif;
+  --sans: -apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif;
+
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============ 顶栏（自定义导航，避让右上角胶囊）============ */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line-2);
+}
+/* 44px 内容行：右侧留出胶囊宽度（约 100px），避免被 ··· 挡住 */
+.tb-row { display: flex; align-items: center; gap: 12px; padding: 0 20px; height: 44px; }
+.tb-row.has-right { padding-right: 108px; }
+.tb-back {
+  width: 32px; height: 32px; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--line); border-radius: 50%;
+  background: var(--surface);
+  transition: background .22s var(--ease);
+}
+.tb-back-hover, .tb-back.active { background: var(--line-2); }
+.tb-back-ico { width: 21px; height: 21px; }
+.tb-title { font-family: var(--serif); font-weight: 700; font-size: 17px; letter-spacing: .02em; }
+.tb-sub { font-size: 11px; color: var(--ink-3); letter-spacing: .14em; font-weight: 500; }
+.tb-spacer { flex: 1; }
+
+/* ============ 品牌区 ============ */
+.brand { padding: 22px 20px 22px; }
+.brand-kicker { font-size: 11px; letter-spacing: .28em; color: var(--ink-3); font-weight: 500; margin-bottom: 12px; }
+.brand-title {
+  font-family: var(--serif); font-weight: 700; font-size: 32px; line-height: 1.18;
+  letter-spacing: -.02em; margin: 0 0 12px;
+}
+.brand-title .hl { color: var(--brand); }
+.brand-desc { font-size: 13.5px; color: var(--ink-2); line-height: 1.78; }
+.brand-meta { display: flex; gap: 18px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+.brand-meta-item { font-size: 11.5px; color: var(--ink-3); line-height: 1.5; }
+.brand-meta-num {
+  display: block; font-family: var(--serif); font-size: 19px; color: var(--ink); font-weight: 700;
+  font-variant-numeric: tabular-nums; letter-spacing: -.02em;
+}
+
+/* ============ 区块标题 ============ */
+.sec { padding: 0 20px; margin-bottom: 12px; display: flex; align-items: baseline; gap: 10px; }
+.sec-t { font-family: var(--serif); font-weight: 700; font-size: 19px; letter-spacing: .01em; }
+.sec-n { font-size: 11px; color: var(--ink-3); letter-spacing: .1em; }
+.sec-more { margin-left: auto; font-size: 12px; color: var(--brand); font-weight: 500; }
+
+/* ============ 徽章 ============ */
+.badges { display: flex; gap: 5px; flex-wrap: wrap; }
+.badge {
+  font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 4px;
+  border: 1px solid currentColor; line-height: 1.35;
+}
+.badge.gi { color: var(--seal); background: var(--seal-soft); }
+.badge.heritage { color: var(--gold); background: var(--gold-soft); }
+.badge.fresh { color: var(--brand); background: var(--brand-soft); }
+
+/* ============ 价格 ============ */
+.price {
+  font-family: var(--serif); font-weight: 700; color: var(--seal); font-size: 16px;
+  font-variant-numeric: tabular-nums; letter-spacing: -.015em;
+}
+.price .sym { font-size: 11px; font-weight: 600; margin-right: 1px; }
+.price .unit { font-family: var(--sans); font-size: 10.5px; color: var(--ink-3); font-weight: 400; margin-left: 4px; }
+.price-was { font-size: 12px; color: var(--ink-3); text-decoration: line-through; }
+
+/* ============ 色块里的文字（商品/地名）============ */
+.tile-text {
+  font-family: var(--serif); font-weight: 700; color: #fff; line-height: 1;
+  letter-spacing: .05em; text-shadow: 0 1px 3px rgba(40, 26, 16, .16);
+}
+
+/* ============ 按钮 ============ */
+.btn {
+  flex: 1; height: 48px; border-radius: 12px; font-size: 15px; font-weight: 500;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .22s var(--ease), background-color .22s var(--ease), opacity .22s var(--ease);
+}
+.btn.active { transform: scale(.975); }
+.btn-primary { background: var(--brand); color: #fff; font-weight: 600; }
+.btn-primary.active { background: #173E31; }
+.btn-seal { background: var(--seal); color: #fff; font-weight: 600; }
+.btn-seal.active { background: #AE3B25; }
+.btn-ghost { background: var(--surface); border: 1px solid var(--line); color: var(--ink); }
+.btn-ghost.active { background: var(--line-2); }
+
+/* ============ 说明块 / 页脚 ============ */
+.note {
+  margin: 0 20px 26px; padding: 13px 15px; border-radius: 12px;
+  background: var(--brand-soft); border: 1px solid rgba(30, 75, 60, .14);
+  font-size: 12px; color: #1E4B3C; line-height: 1.7;
+}
+.footnote { padding: 0 20px 30px; font-size: 11px; color: var(--ink-3); line-height: 1.7; text-align: center; }
+
+/* ============ 动画（小程序支持 CSS Animation）============ */
+.stagger > .stagger-item { animation: rise .46s var(--ease) both; }
+.stagger-item:nth-child(1) { animation-delay: .03s; }
+.stagger-item:nth-child(2) { animation-delay: .07s; }
+.stagger-item:nth-child(3) { animation-delay: .11s; }
+.stagger-item:nth-child(4) { animation-delay: .15s; }
+.stagger-item:nth-child(5) { animation-delay: .19s; }
+.stagger-item:nth-child(6) { animation-delay: .23s; }
+.stagger-item:nth-child(7) { animation-delay: .27s; }
+.stagger-item:nth-child(8) { animation-delay: .31s; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+.fadein { animation: fade .28s ease both; }
+@keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+.toast {
+  position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%);
+  background: rgba(36, 28, 20, .92); color: #fff; font-size: 13px;
+  padding: 10px 18px; border-radius: 10px; z-index: 90;
+  animation: toastin .22s ease both;
+  box-shadow: 0 8px 24px rgba(36, 28, 20, .24);
+}
+@keyframes toastin { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+
+/* ============ 八县区网格（首页 + 地图页共用）============ */
+.dgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 20px 28px; }
+.dcard {
+  border-radius: 16px; background: var(--surface); box-shadow: var(--shadow-1);
+  overflow: hidden; transition: transform .22s var(--ease), box-shadow .22s var(--ease);
+}
+.dcard-hover { transform: translateY(-3px); box-shadow: var(--shadow-2); }
+.dcard-top { height: 74px; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.dcard-top::after {
+  content: ''; position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+  background-image: repeating-linear-gradient(90deg, rgba(255,255,255,.09) 0, rgba(255,255,255,.09) 1px, transparent 1px, transparent 7px);
+}
+.dcard-title {
+  position: relative; z-index: 1;
+  font-family: var(--serif); font-weight: 700; font-size: 30px; line-height: 1;
+  color: #fff; letter-spacing: .07em; text-indent: .07em;
+  text-shadow: 0 1px 3px rgba(40, 26, 16, .18);
+}
+.dcard-body { padding: 12px 13px 13px; }
+.dcard-hint { font-size: 12.5px; color: var(--ink-2); line-height: 1.55; height: 39px; overflow: hidden; }
+.dcard-count { font-size: 10.5px; color: var(--brand); font-weight: 500; margin-top: 7px; }
+
+/* ============ 列表行（县区页 / 购物车 / 我的共用）============ */
+.plist { padding: 0 20px 30px; display: flex; flex-direction: column; gap: 10px; }
+.prow {
+  display: flex; gap: 13px; align-items: stretch;
+  border-radius: 15px; background: var(--surface); box-shadow: var(--shadow-1);
+  padding: 11px; transition: transform .22s var(--ease), box-shadow .22s var(--ease);
+}
+.prow-hover { transform: translateY(-2px); box-shadow: var(--shadow-2); }
+.prow-img {
+  width: 78px; height: 78px; flex: none; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.prow-img .tile-text { font-size: 21px; }
+.prow-img.icon-tile .tile-text { font-size: 29px; }
+.prow-main { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+.prow-name { font-family: var(--serif); font-weight: 700; font-size: 16px; line-height: 1.3; }
+.prow-sub { font-size: 11.5px; color: var(--ink-3); line-height: 1.45; margin-top: 4px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.prow-price { margin-top: 6px; display: flex; align-items: baseline; gap: 8px; }
+.prow-badges { margin-top: 6px; }
+
+/* ============ 商品详情区块 ============ */
+.block { margin-bottom: 26px; }
+.block-t { font-family: var(--serif); font-weight: 700; font-size: 16px; margin-bottom: 11px; display: flex; align-items: center; }
+.block-t::before { content: ''; width: 3px; height: 14px; background: var(--brand); border-radius: 2px; margin-right: 8px; }
+.block-t.ev::before { background: var(--seal); }
+.block-p { font-size: 13.5px; color: var(--ink-2); line-height: 1.88; }
+
+.evlist { display: flex; flex-direction: column; gap: 9px; }
+.ev { display: flex; gap: 11px; padding: 12px 13px; border-radius: 11px; background: var(--seal-soft); border: 1px solid rgba(196, 71, 47, .16); }
+.ev-ico { flex: none; width: 20px; height: 20px; margin-top: 1px; }
+.ev-b { font-size: 12.5px; color: #8A3320; line-height: 1.6; flex: 1; }
+.ev-b .ev-t { font-weight: 700; color: var(--seal); font-size: 13px; display: block; }
+
+.specs { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); }
+.spec { display: flex; padding: 11px 14px; font-size: 12.5px; border-bottom: 1px solid var(--line-2); }
+.spec:last-child { border-bottom: 0; }
+.spec-k { width: 94px; flex: none; color: var(--ink-3); }
+.spec-v { flex: 1; color: var(--ink); line-height: 1.6; }
+
+/* ============ 表单 ============ */
+.field { display: flex; flex-direction: column; }
+.inp {
+  height: 46px; border: 1px solid var(--line); border-radius: 11px; background: var(--surface);
+  padding: 0 14px; font-size: 13.5px; color: var(--ink); box-sizing: border-box;
+  transition: border-color .22s var(--ease);
+}
+.inp.bad { border-color: var(--seal); background: #FEF8F6; }
+.err-msg { font-size: 11.5px; color: var(--seal); padding: 5px 0 0 2px; line-height: 1.5; }
+
+.opts { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.opt {
+  border: 1px solid var(--line); border-radius: 11px; background: var(--surface);
+  padding: 12px 10px; font-size: 13px; font-weight: 500; text-align: center; line-height: 1.5;
+  transition: border-color .22s var(--ease), background-color .22s var(--ease), color .22s var(--ease);
+}
+.opt.on { border-color: var(--brand); background: var(--brand-soft); color: var(--brand); }
+.opt .opt-sub { font-size: 10.5px; color: var(--ink-3); font-weight: 400; display: block; }
+.opt.on .opt-sub { color: var(--brand); opacity: .8; }
+
+/* ============ 底部固定操作条 ============ */
+.bottombar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+  display: flex; gap: 10px; align-items: center;
+  padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+  background: #FBF8F3; border-top: 1px solid var(--line);
+}
+.bottombar-due { flex: 1; padding-left: 2px; }
+.bottombar-due-lb { font-size: 10.5px; color: var(--ink-3); }
+
+/* ============ 色块图标（商品/地名大字）============ */
+.tile-img { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+
+/* ============ 带底部条的页面要给内容留出空间 ============ */
+.has-bar { padding-bottom: 96px; }

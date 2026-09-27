@@ -1,0 +1,13 @@
+<view class="topbar" style="padding-top:{{statusBarHeight}}px">
+  <view class="tb-row">
+    <view class="tb-back" hover-class="tb-back-active" bindtap="back">
+      <image class="tb-back-ico" src="/assets/ic-back-ink.png" mode="aspectFit" />
+    </view>
+    <text class="tb-title">我的</text>
+  </view>
+</view>
+
+<view class="fadein placeholder">
+  <view class="ph-t">正在迁移到小程序</view>
+  <view class="ph-d">这个页面还没搬过来，先在 HTML 原型里看效果。</view>
+</view>

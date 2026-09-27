@@ -1,0 +1,91 @@
+<view class="topbar" style="padding-top:{{statusBarHeight}}px">
+  <view class="tb-row">
+    <text class="tb-title">阜阳特产地图</text>
+  </view>
+</view>
+
+<view class="fadein">
+  <!-- 品牌区 -->
+  <view class="brand">
+    <view class="brand-kicker">八县区 · 产地直选</view>
+    <view class="brand-title">一张<text class="hl">阜阳</text>特产地图，八县区的好东西</view>
+    <view class="brand-desc">地理标志、非遗手艺、合作社直供。按县区找，知道自己在买什么、买的是谁家的。</view>
+    <view class="brand-meta">
+      <view class="brand-meta-item"><text class="brand-meta-num">8</text>县区覆盖</view>
+      <view class="brand-meta-item"><text class="brand-meta-num">{{productCount}}</text>款特产</view>
+      <view class="brand-meta-item"><text class="brand-meta-num">7</text>项阜阳地标</view>
+    </view>
+  </view>
+
+  <!-- 场景入口：1 主 2 次非对称，主入口跨两行 -->
+  <view class="scenes stagger">
+    <view class="scene scene-lead stagger-item" hover-class="scene-hover" hover-stay-time="80" bindtap="goMap">
+      <image class="scene-ico-lead" src="/assets/ic-bowl-brand.png" mode="aspectFit" />
+      <view class="scene-t-lg">自家吃</view>
+      <view class="scene-d-lg">按产地挑。每款都标着它凭什么是地理标志、非遗手艺，还是合作社直供。</view>
+      <view class="scene-tags">
+        <text class="scene-tag">22 款</text>
+        <text class="scene-tag">8 县区</text>
+        <text class="scene-tag">产地直发</text>
+      </view>
+    </view>
+
+    <view class="scene stagger-item" hover-class="scene-hover" hover-stay-time="80" bindtap="goGifts">
+      <image class="scene-ico" src="/assets/ic-gift-seal.png" mode="aspectFit" />
+      <view class="scene-t">送人</view>
+      <view class="scene-d">礼盒组合</view>
+      <view class="scene-d">体面不出错</view>
+    </view>
+
+    <view class="scene stagger-item" hover-class="scene-hover" hover-stay-time="80" bindtap="goGifts">
+      <image class="scene-ico" src="/assets/ic-people-gold.png" mode="aspectFit" />
+      <view class="scene-t">团购</view>
+      <view class="scene-d">企业年礼</view>
+      <view class="scene-d">10 份起阶梯价</view>
+    </view>
+  </view>
+
+  <!-- 八县区 -->
+  <view class="sec">
+    <text class="sec-t">八县区</text>
+    <text class="sec-n">按产地找</text>
+    <view class="sec-more" bindtap="goMap">全览 ›</view>
+  </view>
+  <view class="dgrid stagger">
+    <view class="dcard stagger-item" wx:for="{{districts}}" wx:key="id"
+          hover-class="dcard-hover" hover-stay-time="80"
+          data-id="{{item.id}}" bindtap="goDistrict">
+      <view class="dcard-top" style="background:{{item.color}}">
+        <text class="dcard-title">{{item.name}}</text>
+      </view>
+      <view class="dcard-body">
+        <view class="dcard-hint">{{item.hint}}</view>
+        <view class="dcard-count">{{item.count}} 款特产 · 查看 ›</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 本周精选 -->
+  <view class="sec">
+    <text class="sec-t">本周精选</text>
+    <text class="sec-n">商会推荐</text>
+  </view>
+  <scroll-view class="hscroll" scroll-x enable-flex show-scrollbar="{{false}}">
+    <view class="pcard" wx:for="{{picks}}" wx:key="id"
+          hover-class="pcard-hover" hover-stay-time="80"
+          data-id="{{item.id}}" bindtap="goProduct">
+      <view class="pcard-img" style="background:{{item.color}}">
+        <text class="tile-text pcard-tile">{{item.short}}</text>
+      </view>
+      <view class="pcard-body">
+        <view class="pcard-name">{{item.name}}</view>
+        <view class="pcard-sub">{{item.sub}}</view>
+        <view class="price"><text class="sym">¥</text>{{item.price}}</view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="footnote">
+    演示原型 · 价格与规格为示意数据，正式版以商会实际供货为准
+  </view>
+</view>

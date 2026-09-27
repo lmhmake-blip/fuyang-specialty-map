@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>阜阳特产地图 · 家乡味精选</title>
+<meta name="description" content="安徽阜阳八县区特产精选：地理标志、非遗手艺、合作社直供。礼盒组合与企业团购。">
+<meta property="og:title" content="阜阳特产地图 · 家乡味精选">
+<meta property="og:description" content="八县区 22 款特产，每款都标着它凭什么可信。地理标志 / 非遗手艺 / 产地直发。">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#FBF8F3">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23C4472F'/%3E%3Ctext x='16' y='23' font-size='19' text-anchor='middle' fill='%23FBF8F3' font-family='Songti SC,serif' font-weight='700'%3E%E9%98%9C%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF8F3;
+  --surface:#FFFFFF;
+  --ink:#241C14;
+  --ink-2:#6B5B4A;
+  --ink-3:#A0907C;
+  --line:#EAE2D6;
+  --line-2:#F2ECE2;
+  --brand:#1E4B3C;
+  --brand-soft:#EAF1ED;
+  --seal:#C4472F;
+  --seal-soft:#FAEDE9;
+  --gold:#B0862E;
+  --gold-soft:#F8F1E0;
+  --serif:'Noto Serif SC','Songti SC',Georgia,serif;
+  --sans:'Noto Sans SC',-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue',sans-serif;
+  /* 暖色阴影：跟底色同色相，不用纯黑 */
+  --shadow-1:0 1px 2px rgba(96,64,44,.045), 0 4px 14px rgba(96,64,44,.055);
+  --shadow-2:0 2px 6px rgba(96,64,44,.06), 0 14px 34px rgba(96,64,44,.10);
+  --shadow-seal:0 3px 12px rgba(168,68,47,.32);
+  --ease:cubic-bezier(.22,1,.36,1);
+  /* z-index 尺度 */
+  --z-tab:50; --z-bar:60; --z-grain:80; --z-toast:90;
+}
+*,*::before,*::after{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--sans);
+  background:#E9E3D9;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  font-size:15px;
+  line-height:1.6;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:0;background:none;cursor:pointer;color:inherit;padding:0}
+
+/* ---------- 手机容器 ---------- */
+.phone{
+  width:100%;max-width:430px;margin:0 auto;
+  height:100dvh;
+  background:var(--bg);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  position:relative;
+}
+@media(min-width:520px){
+  body{padding:26px 0;background:#E4DDD1}
+  .phone{height:calc(100dvh - 52px);border-radius:30px;box-shadow:0 30px 80px rgba(36,28,20,.22),0 0 0 1px rgba(36,28,20,.06)}
+}
+.screen{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+.screen::-webkit-scrollbar{width:0}
+
+/* ---------- 顶栏 ---------- */
+.topbar{
+  position:sticky;top:0;z-index:30;
+  display:flex;align-items:center;gap:12px;
+  padding:14px 20px;
+  background:rgba(251,248,243,.86);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-2);
+  min-height:56px;
+}
+.topbar.solid{background:rgba(251,248,243,.94)}
+.tb-back{
+  width:32px;height:32px;flex:none;display:grid;place-items:center;
+  border:1px solid var(--line);border-radius:50%;background:var(--surface);
+  transition:background .22s var(--ease),border-color .22s var(--ease);
+}
+.tb-back:active{background:var(--line-2)}
+.tb-title{font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:.02em}
+.tb-sub{font-size:11px;color:var(--ink-3);letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+.tb-spacer{flex:1}
+
+/* ---------- 首页头部 ---------- */
+.brand{padding:30px 20px 22px}
+.brand-kicker{
+  font-size:11px;letter-spacing:.28em;color:var(--ink-3);
+  text-transform:uppercase;font-weight:500;margin-bottom:12px;
+}
+.brand-title{
+  font-family:var(--serif);font-weight:900;font-size:34px;line-height:1.14;
+  letter-spacing:-.022em;margin:0 0 12px;
+  text-wrap:balance;
+}
+.brand-title em{font-style:normal;color:var(--brand)}
+.brand-desc{font-size:13.5px;color:var(--ink-2);line-height:1.78;max-width:30ch;text-wrap:pretty}
+.brand-meta{
+  display:flex;gap:18px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);
+}
+.brand-meta div{font-size:11.5px;color:var(--ink-3);line-height:1.5}
+.brand-meta b{
+  display:block;font-family:var(--serif);font-size:19px;color:var(--ink);font-weight:700;
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em;
+}
+
+/* ---------- 场景入口 ---------- */
+.scenes{
+  display:grid;grid-template-columns:1.24fr 1fr;grid-template-rows:1fr 1fr;
+  gap:9px;padding:0 20px 28px;
+}
+.scene{
+  border:0;border-radius:15px;background:var(--surface);
+  box-shadow:var(--shadow-1);
+  padding:14px 12px 13px;text-align:left;position:relative;overflow:hidden;
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease);
+}
+/* 主入口：跨两行，承担视觉重心 */
+.scene-lead{
+  grid-row:span 2;
+  display:flex;flex-direction:column;
+  background:linear-gradient(158deg,#F2F6F3 0%,#EAF1ED 62%,#E4EDE7 100%);
+  padding:15px 14px 14px;
+}
+.scene-lead .scene-mark{width:30px;height:30px}
+.scene-lead .scene-ico{margin-bottom:auto;position:relative;z-index:1}
+/* 右下角篆字水印：给主卡内部制造层次，避免大片空 */
+.scene-lead::after{
+  content:'食';position:absolute;right:-10px;bottom:-22px;
+  font-family:var(--serif);font-weight:900;font-size:96px;line-height:1;
+  color:var(--brand);opacity:.055;pointer-events:none;user-select:none;
+}
+.scene-lead>*{position:relative;z-index:1}
+.scene-t-lg{
+  font-family:var(--serif);font-weight:700;font-size:20px;line-height:1.2;
+  letter-spacing:-.02em;margin-bottom:5px;
+}
+.scene-d-lg{font-size:11.5px;color:var(--ink-2);line-height:1.55;margin-bottom:11px;text-wrap:pretty}
+.scene-tags{display:flex;gap:5px;flex-wrap:wrap}
+.scene-tags span{
+  font-size:10px;font-weight:500;color:var(--brand);
+  background:rgba(255,255,255,.72);border-radius:4px;padding:2.5px 7px;
+  font-variant-numeric:tabular-nums;
+}
+.scene:active{transform:scale(.97)}
+.scene-mark{width:22px;height:22px}
+.scene-ico{display:block;margin-bottom:9px}
+.scene-lead .scene-ico{margin-bottom:auto}
+.scene-t{font-family:var(--serif);font-weight:700;font-size:14.5px;margin-bottom:2px}
+.scene-d{font-size:10.5px;color:var(--ink-3);line-height:1.45}
+
+/* ---------- 区块标题 ---------- */
+.sec{padding:0 20px;margin-bottom:12px;display:flex;align-items:baseline;gap:10px}
+.sec-t{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.01em}
+.sec-n{font-size:11px;color:var(--ink-3);letter-spacing:.1em}
+.sec-more{margin-left:auto;font-size:12px;color:var(--brand);font-weight:500;display:flex;align-items:center;gap:3px}
+
+/* ---------- 八县区网格 ---------- */
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 20px 28px}
+.dcard{
+  border:0;border-radius:16px;background:var(--surface);
+  box-shadow:var(--shadow-1);
+  overflow:hidden;position:relative;text-align:left;
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease);
+}
+.dcard:active{transform:scale(.975)}
+.dcard-top{height:74px;position:relative;display:grid;place-items:center;overflow:hidden}
+/* 色块里放完整地名，不做单字抽头 */
+.dcard-title{
+  position:relative;z-index:1;
+  font-family:var(--serif);font-weight:900;font-size:30px;line-height:1;
+  color:#fff;letter-spacing:.07em;text-indent:.07em;
+  text-shadow:0 1px 3px rgba(40,26,16,.18);
+}
+.dcard-top::after{
+  content:'';position:absolute;inset:0;
+  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.09) 0 1px,transparent 1px 7px);
+}
+.dcard-body{padding:12px 13px 13px}
+.dcard-hint{font-size:12.5px;color:var(--ink-2);line-height:1.55;height:39px;overflow:hidden}
+.dcard-count{
+  font-size:10.5px;color:var(--brand);font-weight:500;margin-top:7px;
+  display:flex;align-items:center;gap:4px;
+}
+
+/* ---------- 商品卡（横滑） ---------- */
+.hscroll{display:flex;gap:11px;overflow-x:auto;padding:0 20px 30px;scroll-snap-type:x mandatory}
+.hscroll::-webkit-scrollbar{height:0}
+.pcard{
+  flex:none;width:152px;scroll-snap-align:start;
+  border:0;border-radius:15px;background:var(--surface);overflow:hidden;text-align:left;
+  box-shadow:var(--shadow-1);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease);
+}
+.pcard:active{transform:scale(.97)}
+.pcard-img{height:104px;position:relative;display:grid;place-items:center;overflow:hidden}
+.tile-text{
+  font-family:var(--serif);font-weight:900;color:#fff;line-height:1;
+  letter-spacing:.05em;text-indent:.05em;
+  text-shadow:0 1px 3px rgba(40,26,16,.16);
+}
+.pcard-img .tile-text{font-size:30px}
+.pcard-body{padding:10px 11px 12px}
+.pcard-name{font-family:var(--serif);font-weight:700;font-size:14.5px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcard-sub{font-size:10.5px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:8px}
+.price{
+  font-family:var(--serif);font-weight:700;color:var(--seal);font-size:16px;
+  font-variant-numeric:tabular-nums;letter-spacing:-.015em;
+}
+.price small{font-size:11px;font-weight:600;margin-right:1px}
+.price .unit{font-family:var(--sans);font-size:10.5px;color:var(--ink-3);font-weight:400;margin-left:4px}
+
+/* ---------- 徽章 ---------- */
+.badges{display:flex;gap:5px;flex-wrap:wrap}
+.badge{
+  font-size:10px;font-weight:500;padding:2.5px 7px;border-radius:4px;
+  border:1px solid currentColor;line-height:1.35;letter-spacing:.02em;
+}
+.badge.gi{color:var(--seal);background:var(--seal-soft)}
+.badge.heritage{color:var(--gold);background:var(--gold-soft)}
+.badge.fresh{color:var(--brand);background:var(--brand-soft)}
+
+/* ---------- 列表式商品行 ---------- */
+.plist{padding:0 20px 30px;display:flex;flex-direction:column;gap:10px}
+.prow{
+  display:flex;gap:13px;align-items:stretch;
+  border:0;border-radius:15px;background:var(--surface);
+  box-shadow:var(--shadow-1);
+  padding:11px;text-align:left;
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease);
+}
+.prow:active{transform:scale(.985)}
+.prow-img{
+  width:78px;height:78px;flex:none;border-radius:10px;
+  display:grid;place-items:center;position:relative;overflow:hidden;
+}
+.prow-img .tile-text{font-size:21px}
+.prow-img.icon-tile .tile-text{font-size:29px}
+.prow-main{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:5px}
+.prow-name{font-family:var(--serif);font-weight:700;font-size:16px;line-height:1.3}
+.prow-sub{font-size:11.5px;color:var(--ink-3);line-height:1.45;
+  display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ---------- 县区页头部 ---------- */
+.dhead{padding:22px 20px 20px;position:relative;overflow:hidden}
+.dhead-bg{position:absolute;inset:0;opacity:.07}
+.dhead-in{position:relative}
+.dhead-kicker{font-size:11px;letter-spacing:.22em;color:var(--ink-3);text-transform:uppercase;margin-bottom:8px}
+.dhead-name{font-family:var(--serif);font-weight:900;font-size:32px;margin:0 0 10px;letter-spacing:.01em}
+.dhead-desc{font-size:13px;color:var(--ink-2);line-height:1.75;max-width:32ch}
+.dstats{display:flex;gap:22px;margin-top:18px;padding-top:15px;border-top:1px solid var(--line)}
+.dstats div{font-size:11px;color:var(--ink-3)}
+.dstats b{
+  display:block;font-family:var(--serif);font-size:18px;color:var(--ink);font-weight:700;
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em;
+}
+
+/* ---------- 商品详情 ---------- */
+.phero{
+  height:238px;position:relative;display:grid;place-items:center;overflow:hidden;
+  border-radius:0 0 24px 24px;
+}
+.phero-title{
+  position:relative;z-index:1;
+  font-family:var(--serif);font-weight:900;line-height:1.2;
+  color:#fff;letter-spacing:.04em;text-indent:.04em;
+  padding:0 30px;text-align:center;white-space:nowrap;
+  text-shadow:0 2px 10px rgba(40,26,16,.22);
+}
+.phero::after{
+  content:'';position:absolute;inset:0;
+  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.08) 0 1px,transparent 1px 9px);
+}
+.phero-seal{
+  position:absolute;right:18px;bottom:18px;width:46px;height:46px;border-radius:6px;
+  background:var(--seal);color:#fff;display:grid;place-items:center;
+  font-family:var(--serif);font-size:11px;font-weight:700;line-height:1.1;text-align:center;
+  box-shadow:0 4px 14px rgba(196,71,47,.4);
+}
+.pbody{
+  padding:26px 20px 34px;margin-top:-20px;position:relative;
+  background:var(--bg);border-radius:24px 24px 0 0;
+}
+.pname{
+  font-family:var(--serif);font-weight:900;font-size:27px;margin:0 0 8px;line-height:1.18;
+  letter-spacing:-.02em;text-wrap:balance;
+}
+.psub{font-size:13px;color:var(--ink-2);line-height:1.7;margin-bottom:16px}
+.pbuy{display:flex;align-items:baseline;gap:10px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.pbuy .price{font-size:27px}
+.pbuy .was{font-size:12.5px;color:var(--ink-3);text-decoration:line-through}
+.pbuy .sold{margin-left:auto;font-size:11.5px;color:var(--ink-3)}
+
+.block{margin-bottom:26px}
+.block-t{
+  font-family:var(--serif);font-weight:700;font-size:16px;margin-bottom:11px;
+  display:flex;align-items:center;gap:8px;
+}
+.block-t::before{content:'';width:3px;height:14px;background:var(--brand);border-radius:2px}
+.block-t.ev::before{background:var(--seal)}
+.block-p{font-size:13.5px;color:var(--ink-2);line-height:1.88;margin:0;text-wrap:pretty}
+
+.evlist{display:flex;flex-direction:column;gap:9px}
+.ev{
+  display:flex;gap:11px;padding:12px 13px;border-radius:11px;
+  background:var(--seal-soft);border:1px solid rgba(196,71,47,.16);
+}
+.ev-ico{flex:none;width:20px;height:20px;margin-top:1px}
+.ev-b{font-size:12.5px;color:#8A3320;line-height:1.6}
+.ev-b b{display:block;font-weight:700;color:var(--seal);margin-bottom:1px;font-size:13px}
+
+.specs{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.spec{display:flex;padding:11px 14px;font-size:12.5px;border-bottom:1px solid var(--line-2)}
+.spec:last-child{border-bottom:0}
+.spec-k{width:94px;flex:none;color:var(--ink-3)}
+.spec-v{flex:1;color:var(--ink);line-height:1.6}
+
+/* ---------- 底部操作条 ---------- */
+.bottombar{display:none}
+.bottombar:not(:empty){display:flex}
+.bottombar{
+  flex:none;z-index:var(--z-bar);
+  padding:12px 20px calc(12px + env(safe-area-inset-bottom));
+  background:rgba(251,248,243,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);
+  display:flex;gap:10px;align-items:center;
+}
+.btn{
+  flex:1;height:48px;border-radius:12px;font-size:15px;font-weight:500;
+  display:grid;place-items:center;
+  transition:transform .22s var(--ease),background-color .22s var(--ease),
+             border-color .22s var(--ease),color .22s var(--ease),opacity .22s var(--ease);
+}
+.btn:active{transform:scale(.975)}
+.btn-primary{background:var(--brand);color:#fff;font-weight:600}
+.btn-ghost{background:var(--surface);border:1px solid var(--line);color:var(--ink)}
+.btn-seal{background:var(--seal);color:#fff;font-weight:600}
+
+/* ---------- Tab bar ---------- */
+.tabbar{
+  flex:none;display:flex;
+  background:rgba(251,248,243,.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom);
+  z-index:var(--z-tab);
+}
+.cartdot{
+  position:absolute;top:4px;margin-left:13px;min-width:16px;height:16px;padding:0 4px;
+  border-radius:9px;background:var(--seal);color:#fff;font-size:10px;font-weight:600;
+  display:grid;place-items:center;line-height:1;
+}
+.tab{position:relative;
+  flex:1;padding:9px 0 10px;display:flex;flex-direction:column;align-items:center;gap:3px;
+  color:var(--ink-3);transition:color .22s var(--ease);
+}
+.tab.on{color:var(--brand)}
+.tab-ico{width:21px;height:21px}
+.tab-t{font-size:10px;font-weight:500;letter-spacing:.02em}
+
+/* ---------- 通用 ---------- */
+.note{
+  margin:0 20px 26px;padding:13px 15px;border-radius:12px;
+  background:var(--brand-soft);border:1px solid rgba(30,75,60,.14);
+  font-size:12px;color:#1E4B3C;line-height:1.7;
+}
+.note b{font-weight:700}
+.footnote{padding:0 20px 30px;font-size:11px;color:var(--ink-3);line-height:1.7;text-align:center}
+.divider{height:1px;background:var(--line);margin:0 20px 24px}
+.sec-more svg{width:13px;height:13px}
+.dcard-count svg{width:12px;height:12px;vertical-align:-1px}
+.inp{
+  height:46px;border:1px solid var(--line);border-radius:11px;background:var(--surface);
+  padding:0 14px;font-size:13.5px;font-family:inherit;color:var(--ink);width:100%;outline:none;
+  transition:border-color .22s var(--ease),background-color .22s var(--ease);
+}
+.inp::placeholder{color:var(--ink-3)}
+.inp:focus{border-color:var(--brand)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.opt{
+  border:1px solid var(--line);border-radius:11px;background:var(--surface);
+  padding:12px 10px;font-size:13px;font-weight:500;text-align:center;line-height:1.5;
+  transition:border-color .22s var(--ease),background-color .22s var(--ease),color .22s var(--ease);
+}
+.opt span{font-size:10.5px;color:var(--ink-3);font-weight:400}
+.opt.on{border-color:var(--brand);background:var(--brand-soft);color:var(--brand)}
+.opt.on span{color:var(--brand);opacity:.8}
+.toast{
+  position:absolute;left:50%;bottom:118px;transform:translateX(-50%);
+  background:rgba(36,28,20,.92);color:#fff;font-size:13px;font-weight:400;
+  padding:10px 18px;border-radius:10px;z-index:var(--z-toast);white-space:nowrap;
+  animation:toastin .22s ease both;pointer-events:none;
+  box-shadow:0 8px 24px rgba(36,28,20,.24);
+}
+@keyframes toastin{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+/* ---------- 宣纸颗粒：打破数字平面的"无菌感" ---------- */
+.grain{
+  position:absolute;inset:0;z-index:var(--z-grain);pointer-events:none;
+  opacity:.055;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- 交互反馈：hover（桌面）/ focus（键盘）---------- */
+@media(hover:hover){
+  .dcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-2)}
+  .pcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-2)}
+  .prow:hover{transform:translateY(-2px);box-shadow:var(--shadow-2)}
+  .scene:hover{transform:translateY(-3px);box-shadow:var(--shadow-2)}
+  .btn-primary:hover{background:#173E31}
+  .btn-seal:hover{background:#AE3B25}
+  .btn-ghost:hover{background:var(--line-2)}
+  .tab:hover{color:var(--brand)}
+  .tb-back:hover{background:var(--line-2);border-color:var(--ink-3)}
+  .sec-more:hover{text-decoration:underline;text-underline-offset:3px}
+  .opt:hover{border-color:var(--ink-3)}
+  .inp:hover{border-color:var(--ink-3)}
+}
+:focus-visible{
+  outline:2px solid var(--brand);outline-offset:2px;border-radius:6px;
+}
+.btn:focus-visible,.tab:focus-visible,.opt:focus-visible{outline-offset:3px}
+.inp:focus-visible{outline:2px solid var(--brand);outline-offset:0}
+.inp.bad:focus-visible{outline-color:var(--seal)}
+
+/* ---------- 交错入场：列表逐项浮现，不整体 mount ---------- */
+.stagger>*{animation:rise .46s var(--ease) both}
+.stagger>*:nth-child(1){animation-delay:.03s}
+.stagger>*:nth-child(2){animation-delay:.07s}
+.stagger>*:nth-child(3){animation-delay:.11s}
+.stagger>*:nth-child(4){animation-delay:.15s}
+.stagger>*:nth-child(5){animation-delay:.19s}
+.stagger>*:nth-child(6){animation-delay:.23s}
+.stagger>*:nth-child(7){animation-delay:.27s}
+.stagger>*:nth-child(8){animation-delay:.31s}
+.stagger>*:nth-child(9){animation-delay:.34s}
+.stagger>*:nth-child(n+10){animation-delay:.37s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){
+  .stagger>*,.fadein{animation:none}
+  .screen{scroll-behavior:auto}
+}
+
+/* ---------- 表单行内错误 ---------- */
+.field{display:flex;flex-direction:column;gap:5px}
+.inp.bad{border-color:var(--seal);background:#FEF8F6}
+.err-msg{display:none;font-size:11.5px;color:var(--seal);padding-left:2px;line-height:1.5}
+.err-msg.on{display:block}
+
+.fadein{animation:fade .28s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="screen" id="screen"></div>
+  <div class="bottombar" id="bottombar"></div>
+  <nav class="tabbar" id="tabbar"></nav>
+  <div class="grain" aria-hidden="true"></div>
+</div>
+<script>
+/* ============================================================
+   阜阳特产地图 · 演示原型
+   数据来源：公开报道（阜阳各县区年货特产清单 / 阜阳新增国家地理标志产品）
+   价格、规格为演示数据，正式版以商会实际供货为准
+   ============================================================ */
+
+const DISTRICTS = [
+  { id:'yingzhou', name:'颍州区', color:'#8F4A3C',
+    hint:'老城味道 · 枕头馍与焦馍',
+    desc:'阜阳老城区。年货清单里的“硬通货”大多出自这里——枕头馍耐存放，焦馍是省特色旅游商品。',
+    stats:[['特产','3 款'],['代表','枕头馍'],['特点','耐存放']] },
+
+  { id:'yingquan', name:'颍泉区', color:'#5F7548',
+    hint:'地理标志草莓 · 有机菌菇',
+    desc:'闻集草莓拿下了国家地理标志保护，中市街道的菌菇走有机路线。鲜果类适合做季节预售。',
+    stats:[['特产','2 款'],['地理标志','1 个'],['特点','季节鲜品']] },
+
+  { id:'yingdong', name:'颍东区', color:'#A8781F',
+    hint:'鲜食番茄 · 麻鸭蛋 · 牛奶',
+    desc:'以鲜食农产品为主，“瓦大一号”番茄和麻鸭蛋都是本地农场直供，适合做同城配送。',
+    stats:[['特产','3 款'],['代表','瓦大一号'],['特点','农场直供']] },
+
+  { id:'linquan', name:'临泉县', color:'#7C5563',
+    hint:'滑集芥菜 · 姜尚葫芦',
+    desc:'人口大县。滑集镇芥菜有 28 家加工企业、年产约 1.3 万吨，是能走量的品类。',
+    stats:[['特产','2 款'],['代表','滑集芥菜'],['特点','量产稳定']] },
+
+  { id:'taihe', name:'太和县', color:'#A8442F',
+    hint:'旧县麻糖 · 香椿与香椿酱',
+    desc:'旧县镇有条“麻糖一条街”，太和香椿是国家地理标志产品，香椿酱已线上热销。',
+    stats:[['特产','3 款'],['地理标志','2 个'],['特点','线上已验证']] },
+
+  { id:'funan', name:'阜南县', color:'#40695A',
+    hint:'方集馓子 · 郜台板鸭 · 芡实',
+    desc:'蒙洼蓄洪区一带。方集馓子是市级非遗，郜台板鸭自然风干，芡实可煮粥养生。',
+    stats:[['特产','3 款'],['非遗','1 项'],['特点','礼盒首选']] },
+
+  { id:'yingshang', name:'颍上县', color:'#8E6B4E',
+    hint:'手工粉丝 · 三味酱菜 · 西瓜酱豆',
+    desc:'陈桥镇手工红薯粉丝、夏桥镇西瓜酱豆（县级非遗）、低盐酱菜三味，都是下饭路线的复购品。',
+    stats:[['特产','3 款'],['非遗','1 项'],['特点','复购高']] },
+
+  { id:'jieshou', name:'界首市', color:'#6E5440',
+    hint:'黄牛肉 · 甘薯粉条 · 马铃薯',
+    desc:'界首黄牛肉入选 2025 年第三批全国名特优新农产品名录，泉阳镇的粉条粉皮是甘薯深加工。',
+    stats:[['特产','3 款'],['名特优新','1 个'],['特点','硬菜送礼']] },
+];
+
+const PRODUCTS = [
+  /* ---------- 颍州区 ---------- */
+  { id:'zhentoumo', short:'枕头馍', d:'yingzhou', name:'枕头馍', color:'#8F4A3C',
+    sub:'年货硬通货 · 一个够一家人吃两天', price:38, was:46, unit:'2个装', sold:'月售 200+',
+    badges:[['老字号','heritage']],
+    story:'枕头馍长近一尺、重两三斤，是阜阳人过年的“硬通货”。老面发酵、铁锅慢炕，晾透了能放很久——以前是行路人揣在怀里当干粮的，现在是年货清单上第一个被勾掉的。',
+    evidence:[
+      { t:'耐存放 · 适合囤年货', b:'自然晾干后常温可存较久，是年货清单里被点名“耐存放”的品类' },
+      { t:'老面发酵 · 铁锅慢炕', b:'非机器量产路线，烙制工艺决定了口感和存放性' }],
+    specs:[['净含量','2个装（约 2.5kg）'],['配料','小麦粉、老面、水'],['保质期','常温 15 天 / 冷冻 60 天'],['产地','安徽省阜阳市颍州区'],['生产方','待商会确认']] },
+
+  { id:'jiaomo', short:'焦馍', d:'yingzhou', name:'阜阳焦馍', color:'#8F4A3C',
+    sub:'九龙镇出品 · 省特色旅游商品', price:26, unit:'袋装 400g', sold:'月售 150+',
+    badges:[['省特色旅游商品','heritage']],
+    story:'来自九龙镇蜜香村的焦馍，已经入列安徽省特色旅游商品。薄、脆、芝麻香，是那种一拆袋就停不下来的零食——适合当伴手礼的“第一口”。',
+    evidence:[
+      { t:'安徽省特色旅游商品', b:'已入列省特色旅游商品名单，非自封头衔' },
+      { t:'伴手礼属性强', b:'独立包装耐运输，适合作为礼盒里的“垫底零食”' }],
+    specs:[['净含量','400g'],['口味','原味 / 芝麻'],['保质期','180 天'],['产地','安徽省阜阳市颍州区九龙镇'],['生产方','待商会确认']] },
+
+  { id:'pidan', short:'皮蛋', d:'yingzhou', name:'无铅手工皮蛋', color:'#8F4A3C',
+    sub:'三塔集镇 · 手工卤制', price:32, unit:'20枚装', sold:'月售 90+',
+    badges:[['手工制作','heritage']],
+    story:'三塔集镇的手工皮蛋和卤鹌鹑蛋，走的是无铅工艺。切开溏心透亮，配一碗白粥就是阜阳人的早饭。',
+    evidence:[
+      { t:'无铅工艺', b:'以无铅工艺制作，区别于传统氧化铅配方' },
+      { t:'手工卤制', b:'小批量手工卤制，非工业流水线' }],
+    specs:[['净含量','20枚'],['工艺','无铅 · 手工卤制'],['保质期','常温 90 天'],['产地','安徽省阜阳市颍州区三塔集镇'],['生产方','待商会确认']] },
+
+  /* ---------- 颍泉区 ---------- */
+  { id:'caomei', short:'草莓', d:'yingquan', name:'闻集草莓', color:'#5F7548',
+    sub:'国家地理标志产品 · 季节预售', price:68, unit:'2斤礼盒', sold:'预售中',
+    badges:[['国家地理标志','gi'],['季节限定','fresh']],
+    story:'闻集草莓拿下国家地理标志保护，是阜阳鲜果里最有“名分”的一个。鲜果不耐运，所以走的是季节预售 + 顺丰冷链的路子——下单后按采摘批次发货。',
+    evidence:[
+      { t:'国家地理标志保护产品', b:'2025 年阜阳新增 7 个国家地理标志产品之一' },
+      { t:'预售制 · 按批次采摘', b:'鲜果类不做库存，下单后按采摘批次冷链发出，避免压货损耗' }],
+    specs:[['净含量','2斤（约 40-50 颗）'],['品种','红颜 / 章姬（按季节）'],['发货方式','顺丰冷链 · 预售'],['产地','安徽省阜阳市颍泉区闻集镇'],['生产方','待商会确认']] },
+
+  { id:'junngu', short:'菌菇', d:'yingquan', name:'有机菌菇礼盒', color:'#5F7548',
+    sub:'中市街道合作社 · 有机路线', price:45, unit:'干品 3 种组合', sold:'月售 60+',
+    badges:[['有机认证','fresh']],
+    story:'中市街道聚隆农业合作社的有机菌菇及制品。烘干后重量轻、耐存放，一盒三种菇，是那种送出去不心疼、收的人也真的会用的礼。',
+    evidence:[
+      { t:'合作社直供', b:'中市街道聚隆农业合作社出品，公开报道可查' },
+      { t:'有机种植', b:'走有机认证路线，非普通大棚货' }],
+    specs:[['净含量','干品 3 种 · 共 300g'],['品种','按当季搭配'],['保质期','12 个月'],['产地','安徽省阜阳市颍泉区中市街道'],['生产方','待商会确认']] },
+
+  /* ---------- 颍东区 ---------- */
+  { id:'fanqie', short:'番茄', d:'yingdong', name:'“瓦大一号”鲜食番茄', color:'#A8781F',
+    sub:'鲜食品种 · 当水果吃', price:39, unit:'5斤箱装', sold:'月售 110+',
+    badges:[['鲜食品种','fresh'],['同城配送','fresh']],
+    story:'瓦大一号是鲜食番茄，甜度和沙瓤度按“能直接当水果吃”的标准选育。适合上海同城配送，早上摘、隔天到。',
+    evidence:[
+      { t:'鲜食型品种', b:'非菜用番茄，按生食口感标准选育' },
+      { t:'同城配送友好', b:'上海同城可次日达，适合做社群团购的引流单品' }],
+    specs:[['净含量','5斤'],['品种','瓦大一号'],['发货方式','同城配送 / 顺丰'],['产地','安徽省阜阳市颍东区'],['生产方','待商会确认']] },
+
+  { id:'yadan', short:'鸭蛋', d:'yingdong', name:'麻鸭蛋', color:'#A8781F',
+    sub:'烁硕家庭农场 · 蛋黄饱满', price:42, unit:'30枚装', sold:'月售 70+',
+    badges:[['农场直供','fresh']],
+    story:'烁硕家庭农场麻鸭所产的鸭蛋，蛋黄饱满、颜色偏红。腌成咸鸭蛋，一切开油就往外冒——这是阜阳人端午和早餐桌上的常客。',
+    evidence:[
+      { t:'家庭农场直供', b:'烁硕家庭农场出品，散养麻鸭' },
+      { t:'蛋黄饱满', b:'散养麻鸭产蛋，蛋黄比例高，适合腌咸蛋' }],
+    specs:[['净含量','30枚'],['保存','阴凉通风 / 冷藏'],['保质期','常温 30 天'],['产地','安徽省阜阳市颍东区'],['生产方','待商会确认']] },
+
+  { id:'niunai', short:'牛奶', d:'yingdong', name:'水牛奶礼盒', color:'#A8781F',
+    sub:'皇氏阜阳工厂 · 送礼体面', price:58, unit:'12盒装', sold:'月售 50+',
+    badges:[['本地工厂','fresh']],
+    story:'皇氏集团阜阳工厂的纯牛奶、水牛奶系列。水牛奶脂肪含量高，口感厚，礼盒装适合探望长辈这类场景。',
+    evidence:[
+      { t:'本地工厂生产', b:'皇氏集团阜阳工厂出品，非贴牌外采' },
+      { t:'水牛奶品类', b:'乳脂含量高于普通牛奶，口感更厚' }],
+    specs:[['净含量','12盒 × 200ml'],['品类','纯牛奶 / 水牛奶'],['保质期','常温 6 个月'],['产地','安徽省阜阳市颍东区'],['生产方','待商会确认']] },
+
+  /* ---------- 临泉县 ---------- */
+  { id:'jiecai', short:'芥菜', d:'linquan', name:'滑集芥菜丝', color:'#7C5563',
+    sub:'28家加工企业 · 年产1.3万吨', price:29, unit:'5袋装', sold:'月售 160+',
+    badges:[['规模化产区','fresh']],
+    story:'滑集镇的芥菜是能走量的品类——全镇 28 家加工企业，年产约 1.3 万吨。切丝、腌制、拌辣，配粥配面都合适，属于“吃完还会再买”的那类东西。',
+    evidence:[
+      { t:'产区规模可查', b:'滑集镇 28 家加工企业、年产约 1.3 万吨，供货稳定' },
+      { t:'复购属性强', b:'佐餐小菜，消耗快，适合做社群复购主推' }],
+    specs:[['净含量','5袋 × 80g'],['口味','香辣 / 原味'],['保质期','180 天'],['产地','安徽省阜阳市临泉县滑集镇'],['生产方','待商会确认']] },
+
+  { id:'hulu', short:'葫芦', d:'linquan', name:'姜尚葫芦工艺品', color:'#7C5563',
+    sub:'谐音“福禄” · 远销欧美', price:128, unit:'单个 · 附锦盒', sold:'月售 20+',
+    badges:[['文创工艺','heritage']],
+    story:'“葫芦”谐音“福禄”，临泉的姜尚葫芦已经远销欧美。不是食品，但正好补上礼盒里缺的那件“有彩头”的东西——企业年礼里放一个，比多塞两包零食有用。',
+    evidence:[
+      { t:'文创 + 彩头', b:'谐音“福禄”，企业年礼与商务馈赠场景适配' },
+      { t:'已有出口记录', b:'公开报道显示产品远销欧美' }],
+    specs:[['规格','单个（约 15-20cm）'],['工艺','烙画 / 彩绘'],['包装','附锦盒'],['产地','安徽省阜阳市临泉县'],['生产方','待商会确认']] },
+
+  /* ---------- 太和县 ---------- */
+  { id:'matang', short:'麻糖', d:'taihe', name:'旧县麻糖', color:'#A8442F',
+    sub:'旧县镇“麻糖一条街”', price:35, unit:'2盒装', sold:'月售 130+',
+    badges:[['地方名产','heritage']],
+    story:'旧县镇有条“麻糖一条街”，做麻糖是成规模的手艺。麦芽糖裹芝麻，切得薄，咬下去先脆后黏——过年摆果盘，这个总是最先见底。',
+    evidence:[
+      { t:'产业街区成形', b:'旧县镇有“麻糖一条街”，是当地成规模的特色产业' },
+      { t:'年节场景明确', b:'果盘 / 年货标配，节庆期间需求集中' }],
+    specs:[['净含量','2盒 × 250g'],['配料','麦芽糖、芝麻'],['保质期','120 天'],['产地','安徽省阜阳市太和县旧县镇'],['生产方','待商会确认']] },
+
+  { id:'chunya', short:'椿酱', d:'taihe', name:'太和香椿酱', color:'#A8442F',
+    sub:'国家地理标志原料 · 线上热销', price:42, unit:'3瓶装', sold:'月售 180+',
+    badges:[['国家地理标志','gi']],
+    story:'太和香椿是国家地理标志产品，做成酱之后保质期长、好运输，在线上已经跑通了。拌面、拌豆腐、炒蛋都行，是那种“吃过一次就会找”的味道。',
+    evidence:[
+      { t:'国家地理标志原料', b:'太和香椿为 2025 年阜阳新增国家地理标志产品之一' },
+      { t:'线上已验证', b:'公开报道显示香椿酱已线上热销，需求被动验证过' }],
+    specs:[['净含量','3瓶 × 200g'],['口味','原味 / 微辣'],['保质期','12 个月'],['产地','安徽省阜阳市太和县大新镇'],['生产方','待商会确认']] },
+
+  { id:'chunya-fresh', short:'香椿', d:'taihe', name:'太和香椿（鲜）', color:'#A8442F',
+    sub:'国家地理标志 · 春季限定', price:88, unit:'2斤礼盒', sold:'春季预售',
+    badges:[['国家地理标志','gi'],['季节限定','fresh']],
+    story:'香椿只在春天有那十几天。头茬最贵，也最鲜。走预售制，按采摘日发顺丰冷链——过了谷雨就没了，所以是“错过等一年”的品类。',
+    evidence:[
+      { t:'国家地理标志产品', b:'太和香椿列入国家地理标志保护' },
+      { t:'季节限定 · 预售制', b:'春季头茬按采摘批次发货，不做库存' }],
+    specs:[['净含量','2斤'],['规格','头茬 / 二茬'],['发货方式','顺丰冷链 · 春季预售'],['产地','安徽省阜阳市太和县'],['生产方','待商会确认']] },
+
+  /* ---------- 阜南县 ---------- */
+  { id:'sanzi', short:'馓子', d:'funan', name:'方集馓子', color:'#40695A',
+    sub:'市级非遗 · 手工盘条', price:36, unit:'2斤装', sold:'月售 220+',
+    badges:[['市级非遗','heritage']],
+    story:'方集镇的馓子要经七道手：和面、盘条、抻拉、两次油炸……过了腊月二十，镇上做馓子的人家就停不下来。这味道在阜南是过年的一部分，脆得能听见声。',
+    evidence:[
+      { t:'市级非物质文化遗产', b:'方集馓子制作技艺列入阜阳市市级非遗名录' },
+      { t:'手工盘条 · 七道工序', b:'非机器压制，手工盘条后两次油炸，决定了酥脆度' }],
+    specs:[['净含量','2斤（1000g）'],['配料','小麦粉、植物油、食盐'],['保质期','60 天'],['产地','安徽省阜阳市阜南县方集镇'],['生产方','待商会确认']] },
+
+  { id:'banya', short:'板鸭', d:'funan', name:'郜台板鸭', color:'#40695A',
+    sub:'自然风干 · 免调料', price:88, unit:'单只装', sold:'月售 100+',
+    badges:[['自然风干','heritage']],
+    story:'郜台板鸭靠的是蒙洼的风。腌好挂在檐下自然风干，不用加任何调料，蒸熟切片就是一盘硬菜。送礼体面，自己吃也实在。',
+    evidence:[
+      { t:'自然风干工艺', b:'依赖当地气候自然风干，非烘烤速成' },
+      { t:'零添加调料', b:'蒸熟即可食用，不需要额外调味' }],
+    specs:[['净含量','单只（约 800g-1kg）'],['工艺','腌渍 · 自然风干'],['保存','冷藏 90 天 / 冷冻 6 个月'],['产地','安徽省阜阳市阜南县郜台乡'],['生产方','待商会确认']] },
+
+  { id:'qianshi', short:'芡实', d:'funan', name:'蒙洼芡实', color:'#40695A',
+    sub:'可煮粥养生 · 干货耐存', price:68, unit:'500g 罐装', sold:'月售 80+',
+    badges:[['干货耐存','fresh']],
+    story:'蒙洼一带产的芡实（鸡头米），煮粥、炖汤都行。干货属性意味着不怕压货、不怕运输，是礼盒里最“稳”的一格。',
+    evidence:[
+      { t:'干货品类 · 零损耗风险', b:'常温耐存，运输和库存损耗极低' },
+      { t:'养生场景', b:'煮粥、炖汤，适配中老年送礼场景' }],
+    specs:[['净含量','500g'],['规格','整粒 / 半粒'],['保质期','18 个月'],['产地','安徽省阜阳市阜南县蒙洼'],['生产方','待商会确认']] },
+
+  /* ---------- 颍上县 ---------- */
+  { id:'fensi', short:'粉丝', d:'yingshang', name:'陈桥手工红薯粉丝', color:'#8E6B4E',
+    sub:'陈桥镇传统手工工艺', price:35, unit:'2斤装', sold:'月售 140+',
+    badges:[['手工工艺','heritage']],
+    story:'陈桥镇的红薯粉丝走传统手工路线，不加明矾。下锅不糊、久煮不烂，炖菜、涮锅、凉拌都撑得住场面——是那种上海家里常备、吃完就补的品类。',
+    evidence:[
+      { t:'传统手工工艺', b:'陈桥镇本地传统工艺制作，非工业粉丝' },
+      { t:'烹饪容错高', b:'久煮不烂，适合炖菜 / 火锅等家庭高频场景' }],
+    specs:[['净含量','2斤'],['配料','红薯淀粉、水'],['保质期','18 个月'],['产地','安徽省阜阳市颍上县陈桥镇'],['生产方','待商会确认']] },
+
+  { id:'jiangcai', short:'酱菜', d:'yingshang', name:'三味酱菜礼盒', color:'#8E6B4E',
+    sub:'香辣萝卜 · 腊八蒜 · 乳黄瓜', price:45, unit:'3瓶礼盒', sold:'月售 120+',
+    badges:[['低盐工艺','fresh']],
+    story:'颍上的香辣萝卜、腊八蒜、乳黄瓜三样，走的是低盐路线——不怎么咸但味足，是佐餐小菜里少见的“能空口吃”的路子。三瓶一组，送人也不寒酸。',
+    evidence:[
+      { t:'低盐工艺', b:'公开报道点名的低盐味鲜路线，区别于传统高盐酱菜' },
+      { t:'组合装', b:'三味一组，规格刚好卡在伴手礼价位' }],
+    specs:[['净含量','3瓶 × 200g'],['组合','香辣萝卜 / 腊八蒜 / 乳黄瓜'],['保质期','180 天'],['产地','安徽省阜阳市颍上县'],['生产方','待商会确认']] },
+
+  { id:'xigua-jiangdou', short:'酱豆', d:'yingshang', name:'西瓜酱豆', color:'#8E6B4E',
+    sub:'夏桥镇 · 县级非遗', price:28, unit:'2罐装', sold:'月售 95+',
+    badges:[['县级非遗','heritage']],
+    story:'夏桥镇徐富辰家的西瓜酱豆，是县级非遗项目。西瓜和黄豆一起晒出来，咸香里带一点回甜——阜阳人拿它拌面、夹馍，一罐见底很快。',
+    evidence:[
+      { t:'县级非物质文化遗产', b:'夏桥镇西瓜酱豆列入县级非遗项目' },
+      { t:'独特工艺', b:'西瓜与黄豆同晒，风味区别于普通豆酱' }],
+    specs:[['净含量','2罐 × 250g'],['配料','黄豆、西瓜、食盐'],['保质期','12 个月'],['产地','安徽省阜阳市颍上县夏桥镇'],['生产方','待商会确认']] },
+
+  /* ---------- 界首市 ---------- */
+  { id:'huangniurou', short:'牛肉', d:'jieshou', name:'界首黄牛肉', color:'#6E5440',
+    sub:'全国名特优新农产品 · 硬菜', price:98, unit:'1kg 礼盒', sold:'月售 75+',
+    badges:[['全国名特优新','gi']],
+    story:'界首黄牛肉入选 2025 年第三批全国名特优新农产品名录。卤好的牛肉切片就是一盘硬菜，企业年礼里放这个，比放零食像样得多。',
+    evidence:[
+      { t:'全国名特优新农产品', b:'入选 2025 年第三批全国名特优新农产品名录' },
+      { t:'高客单硬菜', b:'适合企业团购与年礼场景，客单价高、体面' }],
+    specs:[['净含量','1kg（卤制熟食）'],['口味','五香 / 原味'],['保存','冷藏 15 天 / 真空 90 天'],['产地','安徽省阜阳市界首市'],['生产方','待商会确认']] },
+
+  { id:'fentiao', short:'粉条', d:'jieshou', name:'甘薯粉条粉皮', color:'#6E5440',
+    sub:'泉阳镇丰絮农业 · 甘薯深加工', price:32, unit:'2斤组合', sold:'月售 85+',
+    badges:[['本地深加工','fresh']],
+    story:'泉阳镇丰絮农业做的甘薯粉条、粉皮，属于把本地甘薯就地深加工的路子。粉皮凉拌、粉条炖菜，都是家里用得快的东西。',
+    evidence:[
+      { t:'本地深加工', b:'泉阳镇丰絮农业公司生产，原料与加工同地' },
+      { t:'家庭高频消耗', b:'粉条粉皮属日常食材，复购周期短' }],
+    specs:[['净含量','粉条 500g + 粉皮 500g'],['配料','甘薯淀粉、水'],['保质期','18 个月'],['产地','安徽省阜阳市界首市泉阳镇'],['生产方','待商会确认']] },
+
+  { id:'malingshu', short:'马铃薯', d:'jieshou', name:'界首马铃薯', color:'#6E5440',
+    sub:'国家地理标志 · 适合囤', price:26, unit:'10斤装', sold:'月售 65+',
+    badges:[['国家地理标志','gi']],
+    story:'界首马铃薯是国家地理标志产品。个头匀、淀粉含量高，炖、炒、做粉都行，10 斤装是那种“一次买够一冬天”的规格。',
+    evidence:[
+      { t:'国家地理标志保护产品', b:'2025 年阜阳新增 7 个国家地理标志产品之一' },
+      { t:'耐存主食类', b:'常温可存，损耗低，适合家庭囤货' }],
+    specs:[['净含量','10斤'],['品种','按当季'],['发货方式','产地直发'],['产地','安徽省阜阳市界首市'],['生产方','待商会确认']] },
+];
+
+/* ============================================================
+   渲染层
+   ============================================================ */
+const P = id => PRODUCTS.find(p => p.id === id);
+const D = id => DISTRICTS.find(d => d.id === id);
+const byDistrict = id => PRODUCTS.filter(p => p.d === id);
+const price = (n, unit) =>
+  `<span class="price"><small>¥</small>${n}</span>` + (unit ? `<span class="unit">${unit}</span>` : '');
+const badgeHtml = bs => (bs || []).map(([t, c]) => `<span class="badge ${c}">${t}</span>`).join('');
+const go = h => { location.hash = h; };
+
+/* ---------- 图标 ---------- */
+const ICON = {
+  home:'<path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/>',
+  map:'<path d="M9 4 3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5 9 4z"/><path d="M9 4v13M15 6.5v13"/>',
+  gift:'<rect x="3" y="8.5" width="18" height="12" rx="1.5"/><path d="M3 12.5h18M12 8.5v12M12 8.5S11 3.5 8.2 3.5a2.4 2.4 0 0 0 0 5M12 8.5s1-5 3.8-5a2.4 2.4 0 0 1 0 5"/>',
+  info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.9"/>',
+  back:'<path d="M15 5l-7 7 7 7"/>',
+  bowl:'<path d="M3.2 11h17.6a8.8 8.8 0 0 1-17.6 0Z"/><path d="M8.5 7.2c0-1.6 1-2.1 1-3.4M12 6.8c0-1.6 1-2.1 1-3.4"/>',
+  people:'<circle cx="9.2" cy="8" r="3.1"/><path d="M3.2 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16.2 5.3a3 3 0 0 1 0 5.4M17.6 14.2c2 .9 3.2 2.7 3.2 5"/>',
+  arrow:'<path d="M9 5l7 7-7 7"/>',
+  cert:'<path d="M6.6 3.2h7l4.4 4.4v13.2H6.6z"/><path d="M13.4 3.2v4.6h4.6"/><path d="M9.5 13.8l2.1 2.1 4-4.2"/>',
+};
+const svg = (k, cls = '') => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg>`;
+
+/* ---------- 页面：首页 ---------- */
+function viewHome(){
+  const picks = ['sanzi','chunya','huangniurou','caomei','zhentoumo','jiecai'].map(P).filter(Boolean);
+  return `
+  <div class="topbar solid">
+    <div class="tb-title">阜阳特产地图</div>
+    <div class="tb-spacer"></div>
+    <div class="tb-sub">Fuyang · 颍淮风物</div>
+  </div>
+  <div class="fadein">
+    <div class="brand">
+      <div class="brand-kicker">八县区 · 产地直选</div>
+      <h1 class="brand-title">一张<em>阜阳</em>特产地图，<br>八县区的好东西</h1>
+      <p class="brand-desc">地理标志、非遗手艺、合作社直供。按县区找，知道自己在买什么、买的是谁家的。</p>
+      <div class="brand-meta">
+        <div><b>8</b>县区覆盖</div>
+        <div><b>${PRODUCTS.length}</b>款特产</div>
+        <div><b>7</b>项阜阳地标</div>
+      </div>
+    </div>
+
+    <div class="scenes stagger">
+      <button class="scene scene-lead" onclick="go('#/map')">
+        <span class="scene-ico" style="color:var(--brand)">${svg('bowl','scene-mark')}</span>
+        <div class="scene-t-lg">自家吃</div>
+        <div class="scene-d-lg">按产地挑。每款都标着它凭什么是地理标志、非遗手艺，还是合作社直供。</div>
+        <div class="scene-tags"><span>22 款</span><span>8 县区</span><span>产地直发</span></div>
+      </button>
+      <button class="scene" onclick="go('#/gifts')">
+        <span class="scene-ico" style="color:var(--seal)">${svg('gift','scene-mark')}</span>
+        <div class="scene-t">送人</div>
+        <div class="scene-d">礼盒组合<br>体面不出错</div>
+      </button>
+      <button class="scene" onclick="go('#/gifts')">
+        <span class="scene-ico" style="color:var(--gold)">${svg('people','scene-mark')}</span>
+        <div class="scene-t">团购</div>
+        <div class="scene-d">企业年礼<br>10 份起阶梯价</div>
+      </button>
+    </div>
+
+    <div class="sec">
+      <span class="sec-t">八县区</span>
+      <span class="sec-n">按产地找</span>
+      <a class="sec-more" href="#/map">全览 ${svg('arrow','tab-ico')}</a>
+    </div>
+    <div class="dgrid stagger">
+      ${DISTRICTS.map(d => `
+        <button class="dcard" onclick="go('#/district/${d.id}')">
+          <div class="dcard-top" style="background:${d.color}"><span class="dcard-title">${d.name}</span></div>
+          <div class="dcard-body">
+            <div class="dcard-hint">${d.hint}</div>
+            <div class="dcard-count">${byDistrict(d.id).length} 款特产 · 查看 ${svg('arrow','tab-ico')}</div>
+          </div>
+        </button>`).join('')}
+    </div>
+
+    <div class="sec">
+      <span class="sec-t">本周精选</span>
+      <span class="sec-n">商会推荐</span>
+    </div>
+    <div class="hscroll">
+      ${picks.map(p => `
+        <button class="pcard" onclick="go('#/product/${p.id}')">
+          <div class="pcard-img" style="background:${p.color}"><span class="tile-text">${p.short}</span></div>
+          <div class="pcard-body">
+            <div class="pcard-name">${p.name}</div>
+            <div class="pcard-sub">${p.sub}</div>
+            ${price(p.price, p.unit)}
+          </div>
+        </button>`).join('')}
+    </div>
+
+    <div class="footnote">
+      演示原型 · 价格与规格为示意数据，正式版以商会实际供货为准<br>
+      数据来源：阜阳各县区年货特产清单 / 阜阳新增国家地理标志产品（公开报道）
+    </div>
+  </div>`;
+}
+
+/* ---------- 页面：八县区全览 ---------- */
+function viewMap(){
+  return `
+  <div class="topbar solid">
+    <div class="tb-title">阜阳特产地图</div>
+    <div class="tb-spacer"></div>
+    <div class="tb-sub">8 县区</div>
+  </div>
+  <div class="fadein">
+    <div class="brand" style="padding-bottom:16px">
+      <div class="brand-kicker">Fuyang · 八县区</div>
+      <h1 class="brand-title" style="font-size:27px">从颍州到界首，<br>每个县区都有自己的招牌</h1>
+      <p class="brand-desc">点进去看这一带到底产什么、谁在做、凭什么可信。</p>
+    </div>
+    <div class="dgrid">
+      ${DISTRICTS.map(d => `
+        <button class="dcard" onclick="go('#/district/${d.id}')">
+          <div class="dcard-top" style="background:${d.color}"><span class="dcard-title">${d.name}</span></div>
+          <div class="dcard-body">
+            <div class="dcard-hint">${d.hint}</div>
+            <div class="dcard-count">${byDistrict(d.id).length} 款特产 · 查看 ${svg('arrow','tab-ico')}</div>
+          </div>
+        </button>`).join('')}
+    </div>
+    <div class="footnote">地理标志信息据公开报道整理 · 演示原型</div>
+  </div>`;
+}
+
+/* ---------- 页面：县区详情 ---------- */
+function viewDistrict(id){
+  const d = D(id);
+  if (!d) return viewNotFound();
+  const list = byDistrict(id);
+  const gi = list.filter(p => (p.badges||[]).some(b => b[1] === 'gi')).length;
+  return `
+  <div class="topbar">
+    <button class="tb-back" onclick="history.back()">${svg('back','tab-ico')}</button>
+    <div class="tb-title">${d.name}</div>
+  </div>
+  <div class="fadein">
+    <div class="dhead">
+      <div class="dhead-bg" style="background:${d.color}"></div>
+      <div class="dhead-in">
+        <div class="dhead-kicker">阜阳 · 特产地图</div>
+        <h2 class="dhead-name">${d.name}</h2>
+        <p class="dhead-desc">${d.desc}</p>
+        <div class="dstats">
+          ${d.stats.map(([k, v]) => `<div><b>${v}</b>${k}</div>`).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="sec">
+      <span class="sec-t">本区特产</span>
+      <span class="sec-n">${list.length} 款</span>
+    </div>
+    <div class="plist stagger">
+      ${list.map(p => `
+        <button class="prow" onclick="go('#/product/${p.id}')">
+          <div class="prow-img" style="background:${d.color}"><span class="tile-text">${p.short}</span></div>
+          <div class="prow-main">
+            <div class="prow-name">${p.name}</div>
+            <div class="prow-sub">${p.sub}</div>
+            <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">
+              ${price(p.price, p.unit)}
+            </div>
+            ${p.badges ? `<div class="badges">${badgeHtml(p.badges)}</div>` : ''}
+          </div>
+        </button>`).join('')}
+    </div>
+    ${gi ? `<div class="note"><b>这一带有 ${gi} 个国家地理标志产品。</b>地理标志意味着产地和工艺受保护，是“可信”最硬的凭证。</div>` : ''}
+  </div>`;
+}
+
+function viewNotFound(){
+  return `
+  <div class="topbar"><div class="tb-title">找不到这个页面</div></div>
+  <div class="fadein" style="padding:64px 30px 40px;text-align:center">
+    <div style="font-family:var(--serif);font-weight:900;font-size:64px;line-height:1;
+      color:var(--line);letter-spacing:-.04em;margin-bottom:20px;font-variant-numeric:tabular-nums">404</div>
+    <div style="font-family:var(--serif);font-weight:700;font-size:19px;margin-bottom:9px">这页特产还没上架</div>
+    <div style="font-size:12.5px;color:var(--ink-3);line-height:1.75;margin-bottom:26px;text-wrap:pretty">
+      链接可能过期了，也可能这个县区暂时还没收录。从下面的入口重新找找。
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center">
+      <button class="btn btn-primary" style="width:auto;padding:0 24px;height:44px" onclick="go('#/map')">看八县区</button>
+      <button class="btn btn-ghost" style="width:auto;padding:0 24px;height:44px" onclick="go('#/home')">回首页</button>
+    </div>
+  </div>`;
+}
+
+/* ---------- 页面：商品详情 ---------- */
+function viewProduct(id){
+  const p = P(id);
+  if (!p) return viewNotFound();
+  const d = D(p.d);
+  return `
+  <div class="topbar">
+    <button class="tb-back" onclick="history.back()">${svg('back','tab-ico')}</button>
+    <div class="tb-title">${p.name}</div>
+  </div>
+  <div class="fadein">
+    <div class="phero" style="background:${p.color}">
+      <span class="phero-title" style="font-size:${p.short.length <= 2 ? 84 : 64}px">${p.short}</span>
+      <div class="phero-seal">阜阳<br>特产</div>
+    </div>
+    <div class="pbody">
+      <h2 class="pname">${p.name}</h2>
+      <p class="psub">${p.sub}</p>
+      <div class="badges">${badgeHtml(p.badges)}</div>
+      <div class="pbuy" style="margin-top:16px">
+        ${price(p.price)}
+        ${p.was ? `<span class="was">¥${p.was}</span>` : ''}
+        <span class="unit" style="margin-left:0">${p.unit}</span>
+        <span class="sold">${p.sold}</span>
+      </div>
+
+      <div class="block">
+        <div class="block-t ev">为什么可信</div>
+        <div class="evlist">
+          ${p.evidence.map(e => `
+            <div class="ev">
+              <span class="ev-ico" style="color:var(--seal)">${svg('cert','tab-ico')}</span>
+              <div class="ev-b"><b>${e.t}</b>${e.b}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-t">产地故事</div>
+        <p class="block-p">${p.story}</p>
+      </div>
+
+      <div class="block">
+        <div class="block-t">规格与溯源</div>
+        <div class="specs">
+          ${p.specs.map(([k, v]) => `
+            <div class="spec"><div class="spec-k">${k}</div><div class="spec-v">${v}</div></div>`).join('')}
+        </div>
+        <p style="font-size:11px;color:var(--ink-3);line-height:1.7;margin:10px 0 0">
+          * 价格为演示数据；生产方与资质需经商会确认后上线，食品经营资质由实际销售主体承担。
+        </p>
+      </div>
+
+      <div class="block">
+        <div class="block-t">产地</div>
+        <p class="block-p">${d.name} · ${d.hint}</p>
+        <button class="btn btn-ghost" style="margin-top:12px;height:42px;font-size:13px"
+          onclick="go('#/district/${d.id}')">看 ${d.name} 其他 ${byDistrict(d.id).length - 1} 款特产</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ---------- 页面：礼盒 ---------- */
+const GIFT_BOXES = [
+  { id:'gb-nianwei', name:'阜阳年味礼盒', price:188, was:197, color:'#A8442F',
+    desc:'过年摆得上桌的四样：非遗馓子、旧县麻糖、郜台板鸭、枕头馍。',
+    items:['sanzi','matang','banya','zhentoumo'], tag:'节庆首选' },
+  { id:'gb-tuan', name:'同乡尝鲜礼盒', price:99, was:118, color:'#8E6B4E',
+    desc:'第一次买先试这个。四款下饭神器，都是家里消耗快的。',
+    items:['jiecai','xigua-jiangdou','fensi','jiaomo'], tag:'入门尝鲜' },
+  { id:'gb-qiye', name:'企业年礼礼盒', price:358, color:'#1E4B3C',
+    desc:'送客户/送员工。黄牛肉压阵，加地理标志香椿酱与有机菌菇，含定制腰封与手提礼箱。',
+    items:['huangniurou','chunya','junngu','hulu'], tag:'含定制腰封' },
+];
+
+function viewGifts(){
+  return `
+  <div class="topbar solid">
+    <div class="tb-title">礼盒与团购</div>
+    <div class="tb-spacer"></div>
+    <div class="tb-sub">Gift & Group</div>
+  </div>
+  <div class="fadein">
+    <div class="brand" style="padding-bottom:18px">
+      <div class="brand-kicker">送人 · 团购</div>
+      <h1 class="brand-title" style="font-size:27px">不知道送什么的时候，<br>组合好了给你</h1>
+      <p class="brand-desc">三档礼盒，从 99 的尝鲜装到 358 的企业年礼。企业团购 10 份起阶梯价。</p>
+    </div>
+
+    ${GIFT_BOXES.map(g => `
+      <div style="padding:0 20px 16px">
+        <div style="border:1px solid var(--line);border-radius:16px;background:var(--surface);overflow:hidden">
+          <div style="height:6px;background:${g.color}"></div>
+          <div style="padding:16px 16px 18px">
+            <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:6px">
+              <div style="font-family:var(--serif);font-weight:700;font-size:19px">${g.name}</div>
+              <span class="badge heritage">${g.tag}</span>
+            </div>
+            <div style="font-size:12.5px;color:var(--ink-2);line-height:1.7;margin-bottom:13px">${g.desc}</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
+              ${g.items.map(i => P(i)).filter(Boolean).map(i =>
+                `<span style="font-size:11px;color:var(--ink-2);background:var(--line-2);padding:3px 9px;border-radius:4px">${i.name}</span>`).join('')}
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding-top:13px;border-top:1px solid var(--line-2)">
+              ${price(g.price)}
+              ${g.was ? `<span class="was" style="font-size:12px;color:var(--ink-3);text-decoration:line-through">¥${g.was}</span>` : ''}
+              <button class="btn btn-primary" style="flex:none;margin-left:auto;height:38px;padding:0 20px;font-size:13.5px"
+                onclick="addBox('${g.name}')">加入礼盒</button>
+            </div>
+          </div>
+        </div>
+      </div>`).join('')}
+
+    <div class="sec"><span class="sec-t">企业团购</span><span class="sec-n">阶梯价</span></div>
+    <div style="padding:0 20px 20px">
+      <div class="specs">
+        <div class="spec"><div class="spec-k">10-29 份</div><div class="spec-v">9 折 · 统一发货至指定地址</div></div>
+        <div class="spec"><div class="spec-k">30-99 份</div><div class="spec-v">8.5 折 · 可定制腰封与祝福卡</div></div>
+        <div class="spec"><div class="spec-k">100 份以上</div><div class="spec-v">8 折 · 定制礼箱 · 支持开票</div></div>
+        <div class="spec"><div class="spec-k">交付</div><div class="spec-v">由商会统一对接备货与发货</div></div>
+      </div>
+    </div>
+
+    <div class="note">
+      <b>团购这条路，是这个项目的第一优先级。</b>商会企业的年礼需求集中、单量大、不比价——比零散零售更容易跑通。
+    </div>
+    <div class="footnote">礼盒价格为演示数据 · 正式版以商会实际组合与供货价为准</div>
+  </div>`;
+}
+
+/* ---------- 页面：关于（给商会看的说明页） ---------- */
+function viewAbout(){
+  return `
+  <div class="topbar solid">
+    <div class="tb-title">关于这个原型</div>
+    <div class="tb-spacer"></div>
+    <div class="tb-sub">About</div>
+  </div>
+  <div class="fadein">
+    <div class="brand" style="padding-bottom:14px">
+      <div class="brand-kicker">Demo · 演示版</div>
+      <h1 class="brand-title" style="font-size:27px">这是给上海阜阳商会<br>看的一个原型</h1>
+      <p class="brand-desc">不是成品，是一个用来聊的实物。看完能直接说“这个不对”“那个要改”。</p>
+    </div>
+
+    <div class="block" style="padding:0 20px">
+      <div class="block-t">为什么想做这个</div>
+      <p class="block-p" style="margin-bottom:12px">
+        阜阳特产不缺商品，缺的是一个<b>把县域特产、可信证据、团购礼盒、上海渠道整合起来的入口</b>。
+        现有渠道要么是大而全的商城，要么是零散的微商朋友圈——买的人不知道自己买的是谁家的、凭什么值这个价。
+      </p>
+      <p class="block-p">
+        这个原型的核心不是“把特产搬上网”，而是<b>让用户放心买、方便送、容易复购</b>。
+      </p>
+    </div>
+
+    <div class="block" style="padding:0 20px">
+      <div class="block-t ev">需要商会确认的事</div>
+      <div class="evlist">
+        <div class="ev"><span class="ev-ico" style="color:var(--seal)">${svg('info','tab-ico')}</span>
+          <div class="ev-b"><b>谁组织、谁发货</b>商会是否愿意组织销售？备货、包装、发货由谁负责？</div></div>
+        <div class="ev"><span class="ev-ico" style="color:var(--seal)">${svg('info','tab-ico')}</span>
+          <div class="ev-b"><b>资质与责任</b>食品经营许可等资质是否齐全？食品责任由哪个主体承担？</div></div>
+        <div class="ev"><span class="ev-ico" style="color:var(--seal)">${svg('info','tab-ico')}</span>
+          <div class="ev-b"><b>供货价与库存</b>供货价、起订量、库存深度怎么定？鲜品能否做预售？</div></div>
+        <div class="ev"><span class="ev-ico" style="color:var(--seal)">${svg('info','tab-ico')}</span>
+          <div class="ev-b"><b>老板们的角色</b>商会企业是零售商，还是团购/批发的组织者？</div></div>
+        <div class="ev"><span class="ev-ico" style="color:var(--seal)">${svg('info','tab-ico')}</span>
+          <div class="ev-b"><b>企业团购对接</b>谁负责对接企业年礼的单子？定制腰封能否落地？</div></div>
+      </div>
+    </div>
+
+    <div class="block" style="padding:0 20px">
+      <div class="block-t">数据来源</div>
+      <div class="specs">
+        <div class="spec"><div class="spec-k">县区与品类</div><div class="spec-v">阜阳各县区年货特产清单（公开报道）</div></div>
+        <div class="spec"><div class="spec-k">地理标志</div><div class="spec-v">2025 年阜阳新增 7 个国家地理标志产品（公开报道）</div></div>
+        <div class="spec"><div class="spec-k">非遗与名特优新</div><div class="spec-v">市级/县级非遗名录、全国名特优新农产品名录</div></div>
+        <div class="spec"><div class="spec-k">价格与规格</div><div class="spec-v">演示数据，非真实报价</div></div>
+        <div class="spec"><div class="spec-k">商品图片</div><div class="spec-v">暂无实拍图，正式版需商会提供</div></div>
+      </div>
+    </div>
+
+    <div class="block" style="padding:0 20px">
+      <div class="block-t">下一步</div>
+      <div class="specs">
+        <div class="spec"><div class="spec-k">第一步</div><div class="spec-v">拿这个原型和商会聊，把上面 5 个问题问清楚</div></div>
+        <div class="spec"><div class="spec-k">第二步</div><div class="spec-v">确认资质与供货后，替换真实商品图与价格</div></div>
+        <div class="spec"><div class="spec-k">第三步</div><div class="spec-v">转成微信小程序（含支付需企业主体 + 食品经营许可）</div></div>
+      </div>
+    </div>
+
+    <div class="note" style="margin-bottom:34px">
+      <b>关于支付：</b>个人主体小程序无法开通微信支付与电商类目。真要在微信里收款，需要企业或个体工商户主体，并具备食品经营许可——这一步建议等商会主体来承接。
+    </div>
+  </div>`;
+}
+
+
+/* ---------- 购物车数据 ---------- */
+function cartItems(){
+  return CART.map(k => {
+    if (k.indexOf('box:') === 0) {
+      const g = GIFT_BOXES.find(x => x.name === k.slice(4));
+      return g ? { type:'box', name:g.name, price:g.price, color:g.color, short:'礼盒', unit:'礼盒装', sub:'组合礼盒', key:k } : null;
+    }
+    const pr = P(k);
+    return pr ? { type:'product', name:pr.name, price:pr.price, color:pr.color, short:pr.short, unit:pr.unit, sub:pr.sub, key:k } : null;
+  }).filter(Boolean);
+}
+const cartTotal = () => cartItems().reduce((s, i) => s + i.price, 0);
+function removeItem(key){
+  const i = CART.indexOf(key);
+  if (i > -1) { CART.splice(i, 1); saveCart(); render(); toast('已移除'); }
+}
+
+/* ---------- 页面：我的 ---------- */
+function viewMe(){
+  const n = CART.length;
+  return `
+  <div class="topbar solid">
+    <div class="tb-title">我的</div>
+    <div class="tb-spacer"></div>
+    <div class="tb-sub">Demo</div>
+  </div>
+  <div class="fadein">
+    <div class="brand" style="padding-bottom:20px">
+      <div class="brand-kicker">演示账号</div>
+      <h1 class="brand-title" style="font-size:26px">上海阜阳商会<br>特产精选 · 原型</h1>
+    </div>
+
+    <div style="padding:0 20px 22px">
+      <button class="prow" style="width:100%" onclick="go('#/cart')">
+        <div class="prow-img icon-tile" style="background:var(--brand)"><span class="tile-text">选</span></div>
+        <div class="prow-main">
+          <div class="prow-name">已选清单</div>
+          <div class="prow-sub">${n ? `${n} 件 · 合计 ¥${cartTotal()}` : '还没有选东西'}</div>
+        </div>
+        <div style="align-self:center;color:var(--ink-3)">${svg('arrow','tab-ico')}</div>
+      </button>
+    </div>
+
+    <div style="padding:0 20px 22px;display:flex;flex-direction:column;gap:10px">
+      <button class="prow" style="width:100%" onclick="go('#/orders')">
+        <div class="prow-img icon-tile" style="background:#6E5440"><span class="tile-text">单</span></div>
+        <div class="prow-main">
+          <div class="prow-name">我的订单</div>
+          <div class="prow-sub">${ORDERS.length ? `${ORDERS.length} 笔（演示）` : '暂无订单'}</div>
+        </div>
+        <div style="align-self:center;color:var(--ink-3)">${svg('arrow','tab-ico')}</div>
+      </button>
+      <button class="prow" style="width:100%" onclick="go('#/about')">
+        <div class="prow-img icon-tile" style="background:var(--seal)"><span class="tile-text">关</span></div>
+        <div class="prow-main">
+          <div class="prow-name">关于这个原型</div>
+          <div class="prow-sub">为什么做 · 数据来源 · 需要商会确认的事</div>
+        </div>
+        <div style="align-self:center;color:var(--ink-3)">${svg('arrow','tab-ico')}</div>
+      </button>
+      <button class="prow" style="width:100%" onclick="go('#/map')">
+        <div class="prow-img icon-tile" style="background:var(--brand)"><span class="tile-text">图</span></div>
+        <div class="prow-main">
+          <div class="prow-name">阜阳特产地图</div>
+          <div class="prow-sub">八县区 ${PRODUCTS.length} 款特产</div>
+        </div>
+        <div style="align-self:center;color:var(--ink-3)">${svg('arrow','tab-ico')}</div>
+      </button>
+    </div>
+
+    <div class="note" style="margin-bottom:30px">
+      <b>这是演示原型。</b>所有下单与支付均为模拟，不产生真实交易；价格与规格为示意数据。
+    </div>
+  </div>`;
+}
+
+/* ---------- 页面：已选清单 ---------- */
+function viewCart(){
+  const items = cartItems();
+  if (!items.length) {
+    return `
+    <div class="topbar"><button class="tb-back" onclick="history.back()">${svg('back','tab-ico')}</button>
+      <div class="tb-title">已选清单</div></div>
+    <div style="padding:80px 20px;text-align:center">
+      <div style="font-family:var(--serif);font-size:17px;color:var(--ink-2);margin-bottom:8px">还没选东西</div>
+      <div style="font-size:12.5px;color:var(--ink-3);margin-bottom:22px">从八县区里挑，或者直接拿一个礼盒</div>
+      <button class="btn btn-primary" style="display:inline-grid;padding:0 26px;width:auto" onclick="go('#/map')">去挑特产</button>
+    </div>`;
+  }
+  return `
+  <div class="topbar"><button class="tb-back" onclick="history.back()">${svg('back','tab-ico')}</button>
+    <div class="tb-title">已选清单</div><div class="tb-spacer"></div>
+    <div class="tb-sub">${items.length} 件</div></div>
+  <div class="fadein">
+    <div class="plist" style="padding-top:18px">
+      ${items.map(i => `
+        <div class="prow" style="align-items:center">
+          <div class="prow-img" style="background:${i.color}"><span class="tile-text">${i.short}</span></div>
+          <div class="prow-main">
+            <div class="prow-name" style="font-size:15px">${i.name}</div>
+            <div class="prow-sub">${i.sub}</div>
+            ${price(i.price, i.unit)}
+          </div>
+          <button style="align-self:center;color:var(--ink-3);font-size:12px;padding:6px 2px"
+            onclick="removeItem('${i.key}')">移除</button>
+        </div>`).join('')}
+    </div>
+    <div class="note">演示数据 · 提交订单不会产生真实交易</div>
+  </div>`;
+}
+
+/* ---------- 页面：结算 ---------- */
+function viewCheckout(){
+  const items = cartItems();
+  const total = cartTotal();
+  const ship = total >= 199 ? 0 : 12;
+  return `
+  <div class="topbar"><button class="tb-back" onclick="history.back()">${svg('back','tab-ico')}</button>
+    <div class="tb-title">填写订单</div></div>
+  <div class="fadein">
+    <div style="padding:20px 20px 8px">
+      <div class="block-t">收货信息</div>
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <div class="field">
+          <input id="ck-name" class="inp" placeholder="收货人姓名" autocomplete="name">
+          <div class="err-msg" id="err-ck-name"></div>
+        </div>
+        <div class="field">
+          <input id="ck-phone" class="inp" placeholder="手机号" inputmode="numeric" autocomplete="tel">
+          <div class="err-msg" id="err-ck-phone"></div>
+        </div>
+        <div class="field">
+          <input id="ck-addr" class="inp" placeholder="收货地址（上海市 区 街道 门牌）" autocomplete="street-address">
+          <div class="err-msg" id="err-ck-addr"></div>
+        </div>
+        <input id="ck-note" class="inp" placeholder="备注：如需要开票、指定送达日期（选填）" autocomplete="off">
+      </div>
+    </div>
+
+    <div style="padding:18px 20px 8px">
+      <div class="block-t">配送方式</div>
+      <div class="opts">
+        <button class="opt on" data-g="ship" onclick="pick(this)">同城配送<br><span>上海内环次日达</span></button>
+        <button class="opt" data-g="ship" onclick="pick(this)">顺丰快递<br><span>全国 2-3 天</span></button>
+      </div>
+    </div>
+
+    <div style="padding:18px 20px 8px">
+      <div class="block-t">支付方式</div>
+      <div class="opts">
+        <button class="opt on" data-g="pay" onclick="pick(this)">微信支付<br><span>演示环境</span></button>
+        <button class="opt" data-g="pay" onclick="pick(this)">对公转账<br><span>企业团购</span></button>
+      </div>
+    </div>
+
+    <div style="padding:18px 20px 8px">
+      <div class="block-t">商品清单</div>
+      <div class="specs">
+        ${items.map(i => `<div class="spec"><div class="spec-k" style="width:auto;flex:1">${i.name} × 1</div><div class="spec-v" style="flex:none">¥${i.price}</div></div>`).join('')}
+        <div class="spec"><div class="spec-k" style="width:auto;flex:1">运费</div><div class="spec-v" style="flex:none">${ship ? '¥' + ship : '免运费'}</div></div>
+        <div class="spec"><div class="spec-k" style="width:auto;flex:1;color:var(--ink)">应付</div>
+          <div class="spec-v" style="flex:none;color:var(--seal);font-weight:700;font-family:var(--serif)">¥${total + ship}</div></div>
+      </div>
+      <p style="font-size:11px;color:var(--ink-3);line-height:1.7;margin:10px 0 0">
+        满 ¥199 免运费。演示环境不产生真实支付。
+      </p>
+    </div>
+    <div style="height:16px"></div>
+  </div>
+  `;
+}
+
+/* ---------- 页面：订单 ---------- */
+function viewOrders(){
+  if (!ORDERS.length) {
+    return `
+    <div class="topbar"><button class="tb-back" onclick="history.back()">${svg('back','tab-ico')}</button>
+      <div class="tb-title">我的订单</div></div>
+    <div style="padding:80px 20px;text-align:center">
+      <div style="font-family:var(--serif);font-size:17px;color:var(--ink-2);margin-bottom:8px">还没有订单</div>
+      <div style="font-size:12.5px;color:var(--ink-3);margin-bottom:22px">走一遍下单流程试试，演示不会产生真实交易</div>
+      <button class="btn btn-primary" style="display:inline-grid;padding:0 26px;width:auto" onclick="go('#/gifts')">看礼盒组合</button>
+    </div>`;
+  }
+  return `
+  <div class="topbar"><button class="tb-back" onclick="history.back()">${svg('back','tab-ico')}</button>
+    <div class="tb-title">我的订单</div><div class="tb-spacer"></div>
+    <div class="tb-sub">${ORDERS.length} 笔</div></div>
+  <div class="fadein">
+    <div style="padding:18px 20px 30px;display:flex;flex-direction:column;gap:12px">
+      ${ORDERS.map(o => `
+        <div style="border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden">
+          <div style="display:flex;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line-2)">
+            <div style="font-size:11.5px;color:var(--ink-3);font-family:ui-monospace,monospace">${o.no}</div>
+            <span class="badge fresh" style="margin-left:auto">待发货</span>
+          </div>
+          <div style="padding:13px 14px">
+            <div style="font-size:13px;color:var(--ink);line-height:1.7;margin-bottom:8px">
+              ${o.items.map(i => i.name).join(' · ')}
+            </div>
+            <div style="font-size:11.5px;color:var(--ink-3);line-height:1.7">
+              ${o.name} · ${o.phone}<br>${o.addr}
+            </div>
+            <div style="display:flex;align-items:baseline;margin-top:11px;padding-top:11px;border-top:1px solid var(--line-2)">
+              <span style="font-size:11px;color:var(--ink-3)">${o.time}</span>
+              <span class="price" style="margin-left:auto;font-size:17px"><small>¥</small>${o.total}</span>
+            </div>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div class="note">演示订单 · 不产生真实交易与发货</div>
+  </div>`;
+}
+
+/* ---------- 结算交互 ---------- */
+function pick(el){
+  const g = el.dataset.g;
+  document.querySelectorAll(`[data-g="${g}"]`).forEach(x => x.classList.remove('on'));
+  el.classList.add('on');
+}
+let ORDERS = [];
+try { ORDERS = JSON.parse(localStorage.getItem('fy_orders') || '[]'); } catch (e) { ORDERS = []; }
+
+function fieldErr(id, msg){
+  const el = document.getElementById(id);
+  const box = document.getElementById('err-' + id);
+  if (!el || !box) return;
+  el.classList.toggle('bad', !!msg);
+  box.textContent = msg || '';
+  box.classList.toggle('on', !!msg);
+}
+function submitOrder(){
+  const v = id => (document.getElementById(id) || {}).value || '';
+  const name = v('ck-name').trim(), phone = v('ck-phone').trim(), addr = v('ck-addr').trim();
+
+  fieldErr('ck-name',  name ? '' : '请填写收货人姓名');
+  fieldErr('ck-phone', !phone ? '请填写手机号'
+                    : (/^1[3-9]\d{9}$/.test(phone) ? '' : '手机号格式不对，应为 11 位大陆号码'));
+  fieldErr('ck-addr',  addr ? '' : '请填写收货地址');
+  document.querySelectorAll('#ck-name,#ck-phone,#ck-addr').forEach(el => {
+    el.addEventListener('input', () => fieldErr(el.id, ''), { once: true });
+  });
+  const firstBad = document.querySelector('.inp.bad');
+  if (firstBad) { firstBad.focus(); return; }
+
+  const items = cartItems();
+  if (!items.length) { toast('清单是空的'); return; }
+  const total = cartTotal() + (cartTotal() >= 199 ? 0 : 12);
+  const d = new Date();
+  const no = 'FY' + d.toISOString().slice(2, 10).replace(/-/g, '') + String(Math.floor(Math.random() * 9000) + 1000);
+  ORDERS.unshift({
+    no, name, phone, addr, total,
+    items: items.map(i => ({ name: i.name, price: i.price })),
+    time: d.toLocaleString('zh-CN', { hour12: false }).replace(/:\d{1,2}$/, ''),
+  });
+  try { localStorage.setItem('fy_orders', JSON.stringify(ORDERS)); } catch (e) {}
+  CART = []; saveCart();
+  go('#/orders');
+  setTimeout(() => toast('演示下单成功 · 未产生真实交易'), 120);
+}
+
+/* ---------- 购物车 / 交互 ---------- */
+let CART = [];
+try { CART = JSON.parse(localStorage.getItem('fy_cart') || '[]'); } catch (e) { CART = []; }
+const saveCart = () => { try { localStorage.setItem('fy_cart', JSON.stringify(CART)); } catch (e) {} };
+
+function toast(msg){
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.textContent = msg;
+  document.querySelector('.phone').appendChild(el);
+  setTimeout(() => el.remove(), 1700);
+}
+function addToCart(id){
+  const p = P(id); if (!p) return;
+  CART.push(id); saveCart();
+  toast('已加入礼盒 · ' + p.name);
+}
+function addBox(name){
+  CART.push('box:' + name); saveCart();
+  toast('已加入 · ' + name);
+}
+
+/* ---------- Tab bar ---------- */
+const TABS = [
+  { k:'home',  t:'首页',     ico:'home' },
+  { k:'map',   t:'特产地图', ico:'map'  },
+  { k:'gifts', t:'礼盒',     ico:'gift' },
+  { k:'me',    t:'我的',     ico:'info' },
+];
+function renderTabbar(active){
+  const el = document.getElementById('tabbar');
+  const show = ['home','map','gifts','me'].includes(active);
+  el.style.display = show ? 'flex' : 'none';
+  el.innerHTML = TABS.map(t => `
+    <button class="tab ${t.k === active ? 'on' : ''}" onclick="go('#/${t.k}')">
+      ${svg(t.ico, 'tab-ico')}${t.k === 'me' && CART.length ? `<span class="cartdot">${CART.length}</span>` : ''}
+      <span class="tab-t">${t.t}</span>
+    </button>`).join('');
+}
+
+/* ---------- 路由 ---------- */
+function parse(){
+  const h = location.hash.replace(/^#\/?/, '');
+  const [name, param] = h.split('/');
+  return { name: name || 'home', param };
+}
+function render(){
+  const r = parse();
+  const screen = document.getElementById('screen');
+  const bar = document.getElementById('bottombar');
+  let html = '';
+  switch (r.name) {
+    case 'home':     html = viewHome(); break;
+    case 'map':      html = viewMap(); break;
+    case 'gifts':    html = viewGifts(); break;
+    case 'about':    html = viewAbout(); break;
+    case 'me':       html = viewMe(); break;
+    case 'cart':     html = viewCart(); break;
+    case 'checkout': html = viewCheckout(); break;
+    case 'orders':   html = viewOrders(); break;
+    case 'district': html = viewDistrict(r.param); break;
+    case 'product':  html = viewProduct(r.param); break;
+    default:         html = viewHome();
+  }
+  screen.innerHTML = html;
+
+  const citems = cartItems();
+  if (r.name === 'product' && P(r.param)) {
+    bar.innerHTML = `
+      <button class="btn btn-ghost" style="flex:0 0 108px" onclick="addToCart('${r.param}')">加入礼盒</button>
+      <button class="btn btn-seal" onclick="go('#/gifts')">看礼盒组合</button>`;
+  } else if (r.name === 'cart' && citems.length) {
+    bar.innerHTML = `
+      <div style="flex:1;padding-left:2px">
+        <div style="font-size:10.5px;color:var(--ink-3)">合计</div>
+        <div class="price" style="font-size:20px"><small>¥</small>${cartTotal()}</div>
+      </div>
+      <button class="btn btn-seal" style="flex:0 0 150px" onclick="go('#/checkout')">去结算</button>`;
+  } else if (r.name === 'checkout' && citems.length) {
+    const due = cartTotal() + (cartTotal() >= 199 ? 0 : 12);
+    bar.innerHTML = `
+      <div style="flex:1;padding-left:2px">
+        <div style="font-size:10.5px;color:var(--ink-3)">应付</div>
+        <div class="price" style="font-size:20px"><small>¥</small>${due}</div>
+      </div>
+      <button class="btn btn-seal" style="flex:0 0 150px" onclick="submitOrder()">提交订单</button>`;
+  } else {
+    bar.innerHTML = '';
+  }
+
+  renderTabbar(r.name);
+  screen.scrollTop = 0;
+}
+window.addEventListener('hashchange', render);
+window.addEventListener('DOMContentLoaded', render);
+render();
+</script>
+</body>
+</html>

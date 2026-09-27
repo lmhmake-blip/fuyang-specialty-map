@@ -1,0 +1,57 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/map/map",
+    "pages/gifts/gifts",
+    "pages/me/me",
+    "pages/district/district",
+    "pages/product/product",
+    "pages/cart/cart",
+    "pages/checkout/checkout",
+    "pages/orders/orders",
+    "pages/about/about"
+  ],
+  "window": {
+    "backgroundColor": "#FBF8F3",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#FBF8F3",
+    "navigationBarTitleText": "阜阳特产地图",
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "color": "#A0907C",
+    "selectedColor": "#1E4B3C",
+    "backgroundColor": "#FBF8F3",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/tab-home-off.png",
+        "selectedIconPath": "assets/tab-home-on.png"
+      },
+      {
+        "pagePath": "pages/map/map",
+        "text": "特产地图",
+        "iconPath": "assets/tab-map-off.png",
+        "selectedIconPath": "assets/tab-map-on.png"
+      },
+      {
+        "pagePath": "pages/gifts/gifts",
+        "text": "礼盒",
+        "iconPath": "assets/tab-gift-off.png",
+        "selectedIconPath": "assets/tab-gift-on.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我的",
+        "iconPath": "assets/tab-info-off.png",
+        "selectedIconPath": "assets/tab-info-on.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

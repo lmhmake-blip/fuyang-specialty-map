@@ -1,0 +1,9 @@
+# 字体源文件 24MB —— 用 tools/subset_font.py 重新下载即可，不进版本库
+tools/NotoSerifSC-var.ttf
+
+# 字体构建中间产物（真正进小程序包的是 miniprogram/assets/font/font.wxss）
+tools/font-build/
+
+# 系统文件
+.DS_Store
+*.log
