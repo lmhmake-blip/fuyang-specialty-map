@@ -29,6 +29,7 @@ page {
   --ease: cubic-bezier(.22, 1, .36, 1);
 
   /* 宋体走子集化自定义字体；未加载完时退到各端自带宋体 */
+  /* 2026-09-27 实测：去掉 fallback 仍是宋体，确认 FYSerif 真的加载成功 */
   --serif: 'FYSerif', 'Songti SC', 'Source Han Serif SC', Georgia, serif;
   --sans: -apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif;
 
