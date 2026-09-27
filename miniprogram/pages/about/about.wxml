@@ -1,13 +1,76 @@
 <view class="topbar" style="padding-top:{{statusBarHeight}}px">
   <view class="tb-row">
-    <view class="tb-back" hover-class="tb-back-hover" bindtap="back">
+    <view class="tb-back" hover-class="tb-back-hover" hover-stay-time="80" bindtap="back">
       <image class="tb-back-ico" src="/assets/ic-back-ink.png" mode="aspectFit" />
     </view>
     <text class="tb-title">关于这个原型</text>
   </view>
 </view>
 
-<view class="fadein placeholder">
-  <view class="ph-t">正在迁移到小程序</view>
-  <view class="ph-d">这个页面还没搬过来，先在 HTML 原型里看效果。</view>
+<view class="fadein">
+  <view class="brand" style="padding-bottom: 14px">
+    <view class="brand-kicker">Demo · 演示版</view>
+    <view class="brand-title" style="font-size: 27px">这是给上海阜阳商会看的一个原型</view>
+    <view class="brand-desc">不是成品，是一个用来聊的实物。看完能直接说“这个不对”“那个要改”。</view>
+  </view>
+
+  <view class="ab-sec">
+    <view class="block-t">为什么想做这个</view>
+    <view class="block-p" style="margin-bottom: 12px">
+      阜阳特产不缺商品，缺的是一个把县域特产、可信证据、团购礼盒、上海渠道整合起来的入口。现有渠道要么是大而全的商城，要么是零散的微商朋友圈——买的人不知道自己买的是谁家的、凭什么值这个价。
+    </view>
+    <view class="block-p">
+      这个原型的核心不是“把特产搬上网”，而是让用户放心买、方便送、容易复购。
+    </view>
+  </view>
+
+  <view class="ab-sec">
+    <view class="block-t ev">需要商会确认的事</view>
+    <view class="evlist">
+      <view class="ev">
+        <image class="ev-ico" src="/assets/ic-info-seal.png" mode="aspectFit" />
+        <view class="ev-b"><text class="ev-t">谁组织、谁发货</text><text>商会是否愿意组织销售？备货、包装、发货由谁负责？</text></view>
+      </view>
+      <view class="ev">
+        <image class="ev-ico" src="/assets/ic-info-seal.png" mode="aspectFit" />
+        <view class="ev-b"><text class="ev-t">资质与责任</text><text>食品经营许可等资质是否齐全？食品责任由哪个主体承担？</text></view>
+      </view>
+      <view class="ev">
+        <image class="ev-ico" src="/assets/ic-info-seal.png" mode="aspectFit" />
+        <view class="ev-b"><text class="ev-t">供货价与库存</text><text>供货价、起订量、库存深度怎么定？鲜品能否做预售？</text></view>
+      </view>
+      <view class="ev">
+        <image class="ev-ico" src="/assets/ic-info-seal.png" mode="aspectFit" />
+        <view class="ev-b"><text class="ev-t">老板们的角色</text><text>商会企业是零售商，还是团购/批发的组织者？</text></view>
+      </view>
+      <view class="ev">
+        <image class="ev-ico" src="/assets/ic-info-seal.png" mode="aspectFit" />
+        <view class="ev-b"><text class="ev-t">企业团购对接</text><text>谁负责对接企业年礼的单子？定制腰封能否落地？</text></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="ab-sec">
+    <view class="block-t">数据来源</view>
+    <view class="specs">
+      <view class="spec"><text class="spec-k">县区与品类</text><text class="spec-v">阜阳各县区年货特产清单（公开报道）</text></view>
+      <view class="spec"><text class="spec-k">地理标志</text><text class="spec-v">2025 年阜阳新增 7 个国家地理标志产品（公开报道）</text></view>
+      <view class="spec"><text class="spec-k">非遗名录</text><text class="spec-v">市级/县级非遗名录、全国名特优新农产品名录</text></view>
+      <view class="spec"><text class="spec-k">价格与规格</text><text class="spec-v">演示数据，非真实报价</text></view>
+      <view class="spec"><text class="spec-k">商品图片</text><text class="spec-v">暂无实拍图，正式版需商会提供</text></view>
+    </view>
+  </view>
+
+  <view class="ab-sec">
+    <view class="block-t">下一步</view>
+    <view class="specs">
+      <view class="spec"><text class="spec-k">第一步</text><text class="spec-v">拿这个原型和商会聊，把上面 5 个问题问清楚</text></view>
+      <view class="spec"><text class="spec-k">第二步</text><text class="spec-v">确认资质与供货后，替换真实商品图与价格</text></view>
+      <view class="spec"><text class="spec-k">第三步</text><text class="spec-v">转成微信小程序（含支付需企业主体 + 食品经营许可）</text></view>
+    </view>
+  </view>
+
+  <view class="note" style="margin-bottom: 34px">
+    关于支付：个人主体小程序无法开通微信支付与电商类目。真要在微信里收款，需要企业或个体工商户主体，并具备食品经营许可——这一步建议等商会主体来承接。
+  </view>
 </view>

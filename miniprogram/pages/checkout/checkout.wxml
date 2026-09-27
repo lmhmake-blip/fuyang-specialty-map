@@ -1,13 +1,87 @@
 <view class="topbar" style="padding-top:{{statusBarHeight}}px">
   <view class="tb-row">
-    <view class="tb-back" hover-class="tb-back-hover" bindtap="back">
+    <view class="tb-back" hover-class="tb-back-hover" hover-stay-time="80" bindtap="back">
       <image class="tb-back-ico" src="/assets/ic-back-ink.png" mode="aspectFit" />
     </view>
     <text class="tb-title">填写订单</text>
   </view>
 </view>
 
-<view class="fadein placeholder">
-  <view class="ph-t">正在迁移到小程序</view>
-  <view class="ph-d">这个页面还没搬过来，先在 HTML 原型里看效果。</view>
+<view class="fadein has-bar">
+  <view class="ck-sec">
+    <view class="block-t">收货信息</view>
+    <view class="ck-fields">
+      <view class="field">
+        <input class="inp {{errors.name ? 'bad' : ''}}" placeholder="收货人姓名"
+               value="{{form.name}}" data-k="name" bindinput="onInput" />
+        <view class="err-msg" wx:if="{{errors.name}}">{{errors.name}}</view>
+      </view>
+      <view class="field">
+        <input class="inp {{errors.phone ? 'bad' : ''}}" type="number" placeholder="手机号"
+               value="{{form.phone}}" data-k="phone" bindinput="onInput" />
+        <view class="err-msg" wx:if="{{errors.phone}}">{{errors.phone}}</view>
+      </view>
+      <view class="field">
+        <input class="inp {{errors.addr ? 'bad' : ''}}" placeholder="收货地址（上海市 区 街道 门牌）"
+               value="{{form.addr}}" data-k="addr" bindinput="onInput" />
+        <view class="err-msg" wx:if="{{errors.addr}}">{{errors.addr}}</view>
+      </view>
+      <input class="inp" placeholder="备注：如需要开票、指定送达日期（选填）"
+             value="{{form.note}}" data-k="note" bindinput="onInput" />
+    </view>
+  </view>
+
+  <view class="ck-sec">
+    <view class="block-t">配送方式</view>
+    <view class="opts">
+      <view class="opt {{shipWay === 0 ? 'on' : ''}}" data-i="0" bindtap="pickShip">
+        同城配送<text class="opt-sub">上海内环次日达</text>
+      </view>
+      <view class="opt {{shipWay === 1 ? 'on' : ''}}" data-i="1" bindtap="pickShip">
+        顺丰快递<text class="opt-sub">全国 2-3 天</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="ck-sec">
+    <view class="block-t">支付方式</view>
+    <view class="opts">
+      <view class="opt {{payWay === 0 ? 'on' : ''}}" data-i="0" bindtap="pickPay">
+        微信支付<text class="opt-sub">演示环境</text>
+      </view>
+      <view class="opt {{payWay === 1 ? 'on' : ''}}" data-i="1" bindtap="pickPay">
+        对公转账<text class="opt-sub">企业团购</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="ck-sec">
+    <view class="block-t">商品清单</view>
+    <view class="specs">
+      <view class="spec" wx:for="{{items}}" wx:key="key">
+        <text class="spec-k spec-k-auto">{{item.name}} × 1</text>
+        <text class="spec-v spec-v-auto">¥{{item.price}}</text>
+      </view>
+      <view class="spec">
+        <text class="spec-k spec-k-auto">运费</text>
+        <text class="spec-v spec-v-auto">{{ship ? '¥' + ship : '免运费'}}</text>
+      </view>
+      <view class="spec">
+        <text class="spec-k spec-k-auto spec-due">应付</text>
+        <text class="spec-v spec-v-auto spec-due">¥{{due}}</text>
+      </view>
+    </view>
+    <view class="ck-hint">满 ¥199 免运费。演示环境不产生真实支付。</view>
+  </view>
 </view>
+
+<view class="bottombar">
+  <view class="bottombar-due">
+    <view class="bottombar-due-lb">应付</view>
+    <view class="price" style="font-size: 20px"><text class="sym">¥</text>{{due}}</view>
+  </view>
+  <view class="btn btn-seal btn-fixed" hover-class="btn-seal-hover" bindtap="submit">提交订单</view>
+</view>
+
+<import src="/templates/toast.wxml" />
+<template is="fy-toast" data="{{text: toastText}}" />

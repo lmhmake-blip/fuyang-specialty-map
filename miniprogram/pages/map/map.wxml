@@ -1,13 +1,29 @@
 <view class="topbar" style="padding-top:{{statusBarHeight}}px">
   <view class="tb-row">
-    <view class="tb-back" hover-class="tb-back-hover" bindtap="back">
-      <image class="tb-back-ico" src="/assets/ic-back-ink.png" mode="aspectFit" />
-    </view>
     <text class="tb-title">阜阳特产地图</text>
   </view>
 </view>
 
-<view class="fadein placeholder">
-  <view class="ph-t">正在迁移到小程序</view>
-  <view class="ph-d">这个页面还没搬过来，先在 HTML 原型里看效果。</view>
+<view class="fadein">
+  <view class="brand" style="padding-bottom: 16px">
+    <view class="brand-kicker">FUYANG · 八县区</view>
+    <view class="brand-title" style="font-size: 27px">从颍州到界首，每个县区都有自己的招牌</view>
+    <view class="brand-desc">点进去看这一带到底产什么、谁在做、凭什么可信。</view>
+  </view>
+
+  <view class="dgrid stagger">
+    <view class="dcard stagger-item" wx:for="{{districts}}" wx:key="id"
+          hover-class="dcard-hover" hover-stay-time="80"
+          data-id="{{item.id}}" bindtap="goDistrict">
+      <view class="dcard-top" style="background:{{item.color}}">
+        <text class="dcard-title">{{item.name}}</text>
+      </view>
+      <view class="dcard-body">
+        <view class="dcard-hint">{{item.hint}}</view>
+        <view class="dcard-count">{{item.count}} 款特产 · 查看 ›</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="footnote">地理标志信息据公开报道整理 · 演示原型</view>
 </view>

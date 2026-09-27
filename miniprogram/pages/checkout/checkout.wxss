@@ -1,3 +1,7 @@
-.placeholder { padding: 80px 30px; text-align: center; }
-.ph-t { font-family: var(--serif); font-weight: 700; font-size: 18px; margin-bottom: 8px; }
-.ph-d { font-size: 12.5px; color: var(--ink-3); line-height: 1.7; }
+.ck-sec { padding: 20px 20px 8px; }
+.ck-fields { display: flex; flex-direction: column; gap: 11px; }
+.ck-fields .field { display: flex; flex-direction: column; }
+.spec-k-auto { width: auto; flex: 1; color: var(--ink); }
+.spec-v-auto { flex: none; }
+.spec-due { font-weight: 700; color: var(--seal); font-family: var(--serif); }
+.ck-hint { font-size: 11px; color: var(--ink-3); line-height: 1.7; margin-top: 10px; }

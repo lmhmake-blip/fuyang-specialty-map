@@ -1,3 +1,22 @@
-.placeholder { padding: 80px 30px; text-align: center; }
-.ph-t { font-family: var(--serif); font-weight: 700; font-size: 18px; margin-bottom: 8px; }
-.ph-d { font-size: 12.5px; color: var(--ink-3); line-height: 1.7; }
+.empty { padding: 80px 20px; text-align: center; }
+.empty-t { font-family: var(--serif); font-weight: 700; font-size: 17px; color: var(--ink-2); margin-bottom: 8px; }
+.empty-d { font-size: 12.5px; color: var(--ink-3); margin-bottom: 22px; line-height: 1.7; }
+.empty-btn { display: inline-flex; width: auto; padding: 0 26px; }
+.order-wrap { padding: 18px 20px 30px; }
+.order {
+  border: 1px solid var(--line); border-radius: 14px; background: var(--surface);
+  overflow: hidden; margin-bottom: 12px;
+}
+.order-head {
+  display: flex; align-items: center; padding: 12px 14px;
+  border-bottom: 1px solid var(--line-2);
+}
+.order-no { font-size: 11.5px; color: var(--ink-3); margin-right: auto; }
+.order-body { padding: 13px 14px; }
+.order-items { font-size: 13px; line-height: 1.7; margin-bottom: 8px; }
+.order-info { font-size: 11.5px; color: var(--ink-3); line-height: 1.7; }
+.order-foot {
+  display: flex; align-items: baseline; margin-top: 11px; padding-top: 11px;
+  border-top: 1px solid var(--line-2);
+}
+.order-time { font-size: 11px; color: var(--ink-3); margin-right: auto; }

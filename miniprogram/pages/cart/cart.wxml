@@ -1,13 +1,49 @@
 <view class="topbar" style="padding-top:{{statusBarHeight}}px">
   <view class="tb-row">
-    <view class="tb-back" hover-class="tb-back-hover" bindtap="back">
+    <view class="tb-back" hover-class="tb-back-hover" hover-stay-time="80" bindtap="back">
       <image class="tb-back-ico" src="/assets/ic-back-ink.png" mode="aspectFit" />
     </view>
     <text class="tb-title">已选清单</text>
+    <view class="tb-spacer"></view>
+    <text class="tb-sub" wx:if="{{items.length}}">{{items.length}} 件</text>
   </view>
 </view>
 
-<view class="fadein placeholder">
-  <view class="ph-t">正在迁移到小程序</view>
-  <view class="ph-d">这个页面还没搬过来，先在 HTML 原型里看效果。</view>
+<!-- 空状态 -->
+<view class="empty fadein" wx:if="{{!items.length}}">
+  <view class="empty-t">还没选东西</view>
+  <view class="empty-d">从八县区里挑，或者直接拿一个礼盒</view>
+  <view class="btn btn-primary empty-btn" hover-class="btn-primary-hover" bindtap="goMap">去挑特产</view>
 </view>
+
+<!-- 已选列表 -->
+<view class="fadein has-bar" wx:else>
+  <view class="plist stagger" style="padding-top: 18px">
+    <view class="prow stagger-item" wx:for="{{items}}" wx:key="key">
+      <view class="prow-img" style="background: {{item.color}}">
+        <text class="tile-text">{{item.short}}</text>
+      </view>
+      <view class="prow-main">
+        <view class="prow-name" style="font-size: 15px">{{item.name}}</view>
+        <view class="prow-sub">{{item.sub}}</view>
+        <view class="prow-price">
+          <view class="price"><text class="sym">¥</text>{{item.price}}</view>
+          <text class="price-unit">{{item.unit}}</text>
+        </view>
+      </view>
+      <view class="cart-remove" catchtap="remove" data-key="{{item.key}}">移除</view>
+    </view>
+  </view>
+  <view class="note">演示数据 · 提交订单不会产生真实交易</view>
+</view>
+
+<view class="bottombar" wx:if="{{items.length}}">
+  <view class="bottombar-due">
+    <view class="bottombar-due-lb">合计</view>
+    <view class="price" style="font-size: 20px"><text class="sym">¥</text>{{total}}</view>
+  </view>
+  <view class="btn btn-seal btn-fixed" hover-class="btn-seal-hover" bindtap="goCheckout">去结算</view>
+</view>
+
+<import src="/templates/toast.wxml" />
+<template is="fy-toast" data="{{text: toastText}}" />

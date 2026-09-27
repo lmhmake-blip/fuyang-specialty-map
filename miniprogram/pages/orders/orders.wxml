@@ -1,13 +1,37 @@
 <view class="topbar" style="padding-top:{{statusBarHeight}}px">
   <view class="tb-row">
-    <view class="tb-back" hover-class="tb-back-hover" bindtap="back">
+    <view class="tb-back" hover-class="tb-back-hover" hover-stay-time="80" bindtap="back">
       <image class="tb-back-ico" src="/assets/ic-back-ink.png" mode="aspectFit" />
     </view>
     <text class="tb-title">我的订单</text>
+    <view class="tb-spacer"></view>
+    <text class="tb-sub" wx:if="{{orders.length}}">{{orders.length}} 笔</text>
   </view>
 </view>
 
-<view class="fadein placeholder">
-  <view class="ph-t">正在迁移到小程序</view>
-  <view class="ph-d">这个页面还没搬过来，先在 HTML 原型里看效果。</view>
+<view class="empty fadein" wx:if="{{!orders.length}}">
+  <view class="empty-t">还没有订单</view>
+  <view class="empty-d">走一遍下单流程试试，演示不会产生真实交易</view>
+  <view class="btn btn-primary empty-btn" hover-class="btn-primary-hover" bindtap="goGifts">看礼盒组合</view>
+</view>
+
+<view class="fadein" wx:else>
+  <view class="order-wrap">
+    <view class="order" wx:for="{{orders}}" wx:key="no">
+      <view class="order-head">
+        <text class="order-no">{{item.no}}</text>
+        <text class="badge fresh">待发货</text>
+      </view>
+      <view class="order-body">
+        <view class="order-items">{{item.itemsText}}</view>
+        <view class="order-info">{{item.name}} · {{item.phone}}</view>
+        <view class="order-info">{{item.addr}}</view>
+        <view class="order-foot">
+          <text class="order-time">{{item.time}}</text>
+          <view class="price" style="font-size: 17px"><text class="sym">¥</text>{{item.total}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="note">演示订单 · 不产生真实交易与发货</view>
 </view>

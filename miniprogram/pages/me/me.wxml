@@ -1,13 +1,64 @@
 <view class="topbar" style="padding-top:{{statusBarHeight}}px">
   <view class="tb-row">
-    <view class="tb-back" hover-class="tb-back-hover" bindtap="back">
-      <image class="tb-back-ico" src="/assets/ic-back-ink.png" mode="aspectFit" />
-    </view>
     <text class="tb-title">我的</text>
+    <view class="tb-spacer"></view>
+    <text class="tb-sub">DEMO</text>
   </view>
 </view>
 
-<view class="fadein placeholder">
-  <view class="ph-t">正在迁移到小程序</view>
-  <view class="ph-d">这个页面还没搬过来，先在 HTML 原型里看效果。</view>
+<view class="fadein">
+  <view class="brand" style="padding-bottom: 20px">
+    <view class="brand-kicker">演示账号</view>
+    <view class="brand-title" style="font-size: 26px">上海阜阳商会特产精选 · 原型</view>
+  </view>
+
+  <view class="me-list">
+    <view class="prow" hover-class="prow-hover" hover-stay-time="80" bindtap="goCart">
+      <view class="prow-img icon-tile" style="background: var(--brand)">
+        <text class="tile-text">选</text>
+      </view>
+      <view class="prow-main">
+        <view class="prow-name">已选清单</view>
+        <view class="prow-sub">{{cartCount ? cartCount + ' 件 · 合计 ¥' + cartTotal : '还没有选东西'}}</view>
+      </view>
+      <view class="me-arrow">›</view>
+    </view>
+
+    <view class="prow" hover-class="prow-hover" hover-stay-time="80" bindtap="goOrders">
+      <view class="prow-img icon-tile" style="background: #6E5440">
+        <text class="tile-text">单</text>
+      </view>
+      <view class="prow-main">
+        <view class="prow-name">我的订单</view>
+        <view class="prow-sub">{{orderCount ? orderCount + ' 笔（演示）' : '暂无订单'}}</view>
+      </view>
+      <view class="me-arrow">›</view>
+    </view>
+
+    <view class="prow" hover-class="prow-hover" hover-stay-time="80" bindtap="goAbout">
+      <view class="prow-img icon-tile" style="background: var(--seal)">
+        <text class="tile-text">关</text>
+      </view>
+      <view class="prow-main">
+        <view class="prow-name">关于这个原型</view>
+        <view class="prow-sub">为什么做 · 数据来源 · 需要商会确认的事</view>
+      </view>
+      <view class="me-arrow">›</view>
+    </view>
+
+    <view class="prow" hover-class="prow-hover" hover-stay-time="80" bindtap="goMap">
+      <view class="prow-img icon-tile" style="background: var(--brand)">
+        <text class="tile-text">图</text>
+      </view>
+      <view class="prow-main">
+        <view class="prow-name">阜阳特产地图</view>
+        <view class="prow-sub">八县区 22 款特产</view>
+      </view>
+      <view class="me-arrow">›</view>
+    </view>
+  </view>
+
+  <view class="note" style="margin-top: 22px">
+    这是演示原型。所有下单与支付均为模拟，不产生真实交易；价格与规格为示意数据。
+  </view>
 </view>

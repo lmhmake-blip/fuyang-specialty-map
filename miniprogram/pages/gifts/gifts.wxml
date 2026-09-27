@@ -1,13 +1,56 @@
 <view class="topbar" style="padding-top:{{statusBarHeight}}px">
   <view class="tb-row">
-    <view class="tb-back" hover-class="tb-back-hover" bindtap="back">
-      <image class="tb-back-ico" src="/assets/ic-back-ink.png" mode="aspectFit" />
-    </view>
     <text class="tb-title">礼盒与团购</text>
+    <view class="tb-spacer"></view>
+    <text class="tb-sub">GIFT &amp; GROUP</text>
   </view>
 </view>
 
-<view class="fadein placeholder">
-  <view class="ph-t">正在迁移到小程序</view>
-  <view class="ph-d">这个页面还没搬过来，先在 HTML 原型里看效果。</view>
+<view class="fadein">
+  <view class="brand" style="padding-bottom: 18px">
+    <view class="brand-kicker">送人 · 团购</view>
+    <view class="brand-title" style="font-size: 27px">不知道送什么的时候，组合好了给你</view>
+    <view class="brand-desc">三档礼盒，从 99 的尝鲜装到 358 的企业年礼。企业团购 10 份起阶梯价。</view>
+  </view>
+
+  <view class="gift" wx:for="{{boxes}}" wx:key="id">
+    <view class="gift-bar" style="background:{{item.color}}"></view>
+    <view class="gift-body">
+      <view class="gift-head">
+        <text class="gift-name">{{item.name}}</text>
+        <text class="badge heritage">{{item.tag}}</text>
+      </view>
+      <view class="gift-desc">{{item.desc}}</view>
+      <view class="gift-items">
+        <text class="gift-item" wx:for="{{item.itemNames}}" wx:for-item="n" wx:key="*this">{{n}}</text>
+      </view>
+      <view class="gift-foot">
+        <view class="price"><text class="sym">¥</text>{{item.price}}</view>
+        <text class="price-was" wx:if="{{item.was}}">¥{{item.was}}</text>
+        <view class="btn btn-primary btn-sm" hover-class="btn-primary-hover"
+              data-name="{{item.name}}" bindtap="addBox">加入礼盒</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="sec">
+    <text class="sec-t">企业团购</text>
+    <text class="sec-n">阶梯价</text>
+  </view>
+  <view class="gift-specs-wrap">
+    <view class="specs">
+      <view class="spec"><text class="spec-k">10-29 份</text><text class="spec-v">9 折 · 统一发货至指定地址</text></view>
+      <view class="spec"><text class="spec-k">30-99 份</text><text class="spec-v">8.5 折 · 可定制腰封与祝福卡</text></view>
+      <view class="spec"><text class="spec-k">100 份以上</text><text class="spec-v">8 折 · 定制礼箱 · 支持开票</text></view>
+      <view class="spec"><text class="spec-k">交付</text><text class="spec-v">由商会统一对接备货与发货</text></view>
+    </view>
+  </view>
+
+  <view class="note">
+    团购这条路，是这个项目的第一优先级。商会企业的年礼需求集中、单量大、不比价——比零散零售更容易跑通。
+  </view>
+  <view class="footnote">礼盒价格为演示数据 · 正式版以商会实际组合与供货价为准</view>
 </view>
+
+<import src="/templates/toast.wxml" />
+<template is="fy-toast" data="{{text: toastText}}" />

@@ -249,6 +249,7 @@ page {
 }
 .bottombar-due { flex: 1; padding-left: 2px; }
 .bottombar-due-lb { font-size: 10.5px; color: var(--ink-3); }
+.btn-fixed { flex: 0 0 150px; }
 
 /* ============ 色块图标（商品/地名大字）============ */
 .tile-img { display: flex; align-items: center; justify-content: center; overflow: hidden; }
