@@ -1,3 +1,17 @@
-.placeholder { padding: 80px 30px; text-align: center; }
-.ph-t { font-family: var(--serif); font-weight: 700; font-size: 18px; margin-bottom: 8px; }
-.ph-d { font-size: 12.5px; color: var(--ink-3); line-height: 1.7; }
+.dhead { padding: 22px 20px 20px; position: relative; overflow: hidden; }
+.dhead-bg { position: absolute; left: 0; top: 0; right: 0; bottom: 0; opacity: .07; }
+.dhead-in { position: relative; }
+.dhead-kicker { font-size: 11px; letter-spacing: .22em; color: var(--ink-3); margin-bottom: 8px; }
+.dhead-name {
+  font-family: var(--serif); font-weight: 700; font-size: 32px;
+  margin-bottom: 10px; letter-spacing: .01em;
+}
+.dhead-desc { font-size: 13px; color: var(--ink-2); line-height: 1.75; }
+.dstats { display: flex; margin-top: 18px; padding-top: 15px; border-top: 1px solid var(--line); }
+.dstat { margin-right: 26px; }
+.dstat-num {
+  display: block; font-family: var(--serif); font-size: 18px; color: var(--ink);
+  font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -.02em;
+}
+.dstat-lb { font-size: 11px; color: var(--ink-3); }
+.price-unit { font-size: 10.5px; color: var(--ink-3); margin-left: 6px; }

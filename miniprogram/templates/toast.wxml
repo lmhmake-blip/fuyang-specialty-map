@@ -1,0 +1,3 @@
+<template name="fy-toast">
+  <view class="fy-toast" wx:if="{{text}}">{{text}}</view>
+</template>

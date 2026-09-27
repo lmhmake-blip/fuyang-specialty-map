@@ -1,6 +1,6 @@
 <view class="topbar" style="padding-top:{{statusBarHeight}}px">
   <view class="tb-row">
-    <view class="tb-back" hover-class="tb-back-active" bindtap="back">
+    <view class="tb-back" hover-class="tb-back-hover" bindtap="back">
       <image class="tb-back-ico" src="/assets/ic-back-ink.png" mode="aspectFit" />
     </view>
     <text class="tb-title">礼盒与团购</text>

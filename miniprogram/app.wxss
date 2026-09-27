@@ -117,13 +117,13 @@ page {
   display: flex; align-items: center; justify-content: center;
   transition: transform .22s var(--ease), background-color .22s var(--ease), opacity .22s var(--ease);
 }
-.btn.active { transform: scale(.975); }
 .btn-primary { background: var(--brand); color: #fff; font-weight: 600; }
-.btn-primary.active { background: #173E31; }
 .btn-seal { background: var(--seal); color: #fff; font-weight: 600; }
-.btn-seal.active { background: #AE3B25; }
 .btn-ghost { background: var(--surface); border: 1px solid var(--line); color: var(--ink); }
-.btn-ghost.active { background: var(--line-2); }
+/* hover-class 指定的类名，需单独定义（小程序无 :active） */
+.btn-primary-hover { background: #173E31; transform: scale(.975); }
+.btn-seal-hover { background: #AE3B25; transform: scale(.975); }
+.btn-ghost-hover { background: var(--line-2); transform: scale(.975); }
 
 /* ============ 说明块 / 页脚 ============ */
 .note {
@@ -254,3 +254,13 @@ page {
 
 /* ============ 带底部条的页面要给内容留出空间 ============ */
 .has-bar { padding-bottom: 96px; }
+
+/* ============ 轻提示（templates/toast.wxml）============ */
+.fy-toast {
+  position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%);
+  background: rgba(36, 28, 20, .92); color: #fff; font-size: 13px;
+  padding: 10px 18px; border-radius: 10px; z-index: 90;
+  box-shadow: 0 8px 24px rgba(36, 28, 20, .24);
+  animation: toastin .22s ease both;
+  max-width: 70%; text-align: center;
+}

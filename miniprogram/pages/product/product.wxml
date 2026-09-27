@@ -1,13 +1,77 @@
 <view class="topbar" style="padding-top:{{statusBarHeight}}px">
   <view class="tb-row">
-    <view class="tb-back" hover-class="tb-back-active" bindtap="back">
+    <view class="tb-back" hover-class="tb-back-hover" hover-stay-time="80" bindtap="back">
       <image class="tb-back-ico" src="/assets/ic-back-ink.png" mode="aspectFit" />
     </view>
-    <text class="tb-title">商品</text>
+    <text class="tb-title">{{p.name}}</text>
   </view>
 </view>
 
-<view class="fadein placeholder">
-  <view class="ph-t">正在迁移到小程序</view>
-  <view class="ph-d">这个页面还没搬过来，先在 HTML 原型里看效果。</view>
+<view class="fadein" wx:if="{{p}}">
+  <view class="phero" style="background:{{p.color}}">
+    <text class="phero-title" style="font-size:{{heroFontSize}}px">{{p.short}}</text>
+    <view class="phero-seal">
+      <text>阜阳</text>
+      <text>特产</text>
+    </view>
+  </view>
+
+  <view class="pbody">
+    <view class="pname">{{p.name}}</view>
+    <view class="psub">{{p.sub}}</view>
+    <view class="badges">
+      <text class="badge {{b[1]}}" wx:for="{{p.badges}}" wx:for-item="b" wx:key="index">{{b[0]}}</text>
+    </view>
+
+    <view class="pbuy">
+      <view class="price price-lg"><text class="sym">¥</text>{{p.price}}</view>
+      <text class="price-unit">{{p.unit}}</text>
+      <text class="sold">{{p.sold}}</text>
+    </view>
+
+    <view class="block">
+      <view class="block-t ev">为什么可信</view>
+      <view class="evlist">
+        <view class="ev" wx:for="{{p.evidence}}" wx:key="t">
+          <image class="ev-ico" src="/assets/ic-cert-seal.png" mode="aspectFit" />
+          <view class="ev-b">
+            <text class="ev-t">{{item.t}}</text>
+            <text>{{item.b}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="block">
+      <view class="block-t">产地故事</view>
+      <view class="block-p">{{p.story}}</view>
+    </view>
+
+    <view class="block">
+      <view class="block-t">规格与溯源</view>
+      <view class="specs">
+        <view class="spec" wx:for="{{p.specs}}" wx:key="index">
+          <text class="spec-k">{{item[0]}}</text>
+          <text class="spec-v">{{item[1]}}</text>
+        </view>
+      </view>
+      <view class="spec-note">* 价格为演示数据；生产方与资质需经商会确认后上线，食品经营资质由实际销售主体承担。</view>
+    </view>
+
+    <view class="block">
+      <view class="block-t">产地</view>
+      <view class="block-p">{{d.name}} · {{d.hint}}</view>
+      <view class="btn btn-ghost btn-inline" hover-class="btn-ghost-hover" bindtap="goDistrict">
+        看 {{d.name}} 其他 {{others}} 款特产
+      </view>
+    </view>
+  </view>
 </view>
+
+<view class="bottombar" wx:if="{{p}}">
+  <view class="btn btn-ghost btn-fixed" hover-class="btn-ghost-hover" bindtap="addCart">加入礼盒</view>
+  <view class="btn btn-seal" hover-class="btn-seal-hover" bindtap="goGifts">看礼盒组合</view>
+</view>
+
+<import src="/templates/toast.wxml" />
+<template is="fy-toast" data="{{text: toastText}}" />

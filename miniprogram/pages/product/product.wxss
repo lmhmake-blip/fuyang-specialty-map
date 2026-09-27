@@ -1,3 +1,40 @@
-.placeholder { padding: 80px 30px; text-align: center; }
-.ph-t { font-family: var(--serif); font-weight: 700; font-size: 18px; margin-bottom: 8px; }
-.ph-d { font-size: 12.5px; color: var(--ink-3); line-height: 1.7; }
+.phero {
+  height: 238px; display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  border-radius: 0 0 24px 24px;
+}
+.phero-title {
+  font-family: var(--serif); font-weight: 700; line-height: 1.2;
+  color: #fff; letter-spacing: .04em; text-indent: .04em; text-align: center;
+  text-shadow: 0 2px 10px rgba(40, 26, 16, .22);
+  position: relative; z-index: 1;
+}
+.phero-seal {
+  position: absolute; right: 18px; bottom: 18px;
+  width: 46px; height: 46px; border-radius: 6px;
+  background: var(--seal); color: #fff;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 11px; font-weight: 700; line-height: 1.15;
+  box-shadow: 0 3px 12px rgba(168, 68, 47, .32);
+}
+/* 内容区上浮，压住 hero 底缘形成层次 */
+.pbody {
+  margin-top: -20px; position: relative;
+  padding: 26px 20px 110px;
+  background: var(--bg); border-radius: 24px 24px 0 0;
+}
+.pname {
+  font-family: var(--serif); font-weight: 700; font-size: 27px;
+  line-height: 1.18; letter-spacing: -.02em; margin-bottom: 8px;
+}
+.psub { font-size: 13px; color: var(--ink-2); line-height: 1.7; margin-bottom: 16px; }
+.pbuy {
+  display: flex; align-items: baseline; margin: 16px 0 18px; padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+.price-lg { font-size: 27px; }
+.price-unit { font-size: 11px; color: var(--ink-3); margin-left: 8px; }
+.sold { margin-left: auto; font-size: 11.5px; color: var(--ink-3); }
+.spec-note { font-size: 11px; color: var(--ink-3); line-height: 1.7; margin-top: 10px; }
+.btn-inline { flex: none; height: 42px; font-size: 13px; margin-top: 12px; }
+.btn-fixed { flex: 0 0 108px; }

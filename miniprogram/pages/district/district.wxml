@@ -1,13 +1,58 @@
 <view class="topbar" style="padding-top:{{statusBarHeight}}px">
   <view class="tb-row">
-    <view class="tb-back" hover-class="tb-back-active" bindtap="back">
+    <view class="tb-back" hover-class="tb-back-hover" hover-stay-time="80" bindtap="back">
       <image class="tb-back-ico" src="/assets/ic-back-ink.png" mode="aspectFit" />
     </view>
-    <text class="tb-title">县区</text>
+    <text class="tb-title">{{d.name}}</text>
   </view>
 </view>
 
-<view class="fadein placeholder">
-  <view class="ph-t">正在迁移到小程序</view>
-  <view class="ph-d">这个页面还没搬过来，先在 HTML 原型里看效果。</view>
+<view class="fadein" wx:if="{{d}}">
+  <view class="dhead">
+    <view class="dhead-bg" style="background:{{d.color}}"></view>
+    <view class="dhead-in">
+      <view class="dhead-kicker">阜阳 · 特产地图</view>
+      <view class="dhead-name">{{d.name}}</view>
+      <view class="dhead-desc">{{d.desc}}</view>
+      <view class="dstats">
+        <view class="dstat" wx:for="{{d.stats}}" wx:key="index">
+          <text class="dstat-num">{{item[1]}}</text>
+          <text class="dstat-lb">{{item[0]}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="sec">
+    <text class="sec-t">本区特产</text>
+    <text class="sec-n">{{list.length}} 款</text>
+  </view>
+
+  <view class="plist stagger">
+    <view class="prow stagger-item" wx:for="{{list}}" wx:key="id"
+          hover-class="prow-hover" hover-stay-time="80"
+          data-id="{{item.id}}" bindtap="goProduct">
+      <view class="prow-img" style="background:{{d.color}}">
+        <text class="tile-text">{{item.short}}</text>
+      </view>
+      <view class="prow-main">
+        <view class="prow-name">{{item.name}}</view>
+        <view class="prow-sub">{{item.sub}}</view>
+        <view class="prow-price">
+          <view class="price"><text class="sym">¥</text>{{item.price}}</view>
+          <text class="price-unit">{{item.unit}}</text>
+        </view>
+        <view class="badges prow-badges" wx:if="{{item.badges}}">
+          <text class="badge {{b[1]}}" wx:for="{{item.badges}}" wx:for-item="b" wx:key="index">{{b[0]}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="note" wx:if="{{giCount}}">
+    这一带有 {{giCount}} 个国家地理标志产品。地理标志意味着产地和工艺受保护，是“可信”最硬的凭证。
+  </view>
 </view>
+
+<import src="/templates/toast.wxml" />
+<template is="fy-toast" data="{{text: toastText}}" />
