@@ -146,8 +146,9 @@ page {
 .stagger-item:nth-child(8) { animation-delay: .31s; }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
-.fadein { animation: fade .28s ease both; }
-@keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+/* 页面级只淡入（整页位移会整页重绘）；上浮感交给列表项的 stagger */
+.fadein { animation: fade .24s ease both; }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 
 .toast {
   position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%);
@@ -163,9 +164,11 @@ page {
 .dgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 20px 28px; }
 .dcard {
   border-radius: 16px; background: var(--surface); box-shadow: var(--shadow-1);
-  overflow: hidden; transition: transform .22s var(--ease), box-shadow .22s var(--ease);
+  overflow: hidden;
+  /* 只过渡 transform：box-shadow 动画每帧触发重绘，低端机必掉帧 */
+  transition: transform .22s var(--ease);
 }
-.dcard-hover { transform: translateY(-3px); box-shadow: var(--shadow-2); }
+.dcard-hover { transform: translateY(-3px); }
 .dcard-top { height: 74px; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .dcard-top::after {
   content: ''; position: absolute; left: 0; top: 0; right: 0; bottom: 0;
@@ -186,9 +189,9 @@ page {
 .prow {
   display: flex; gap: 13px; align-items: stretch;
   border-radius: 15px; background: var(--surface); box-shadow: var(--shadow-1);
-  padding: 11px; transition: transform .22s var(--ease), box-shadow .22s var(--ease);
+  padding: 11px; transition: transform .22s var(--ease);
 }
-.prow-hover { transform: translateY(-2px); box-shadow: var(--shadow-2); }
+.prow-hover { transform: translateY(-2px); }
 .prow-img {
   width: 78px; height: 78px; flex: none; border-radius: 10px;
   display: flex; align-items: center; justify-content: center; overflow: hidden;

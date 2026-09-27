@@ -9,9 +9,9 @@
 .scene {
   border-radius: 15px; background: var(--surface); box-shadow: var(--shadow-1);
   padding: 14px 12px 13px;
-  transition: transform .22s var(--ease), box-shadow .22s var(--ease);
+  transition: transform .22s var(--ease);
 }
-.scene-hover { transform: translateY(-3px); box-shadow: var(--shadow-2); }
+.scene-hover { transform: translateY(-3px); }
 .scene-lead {
   grid-row: span 2;
   display: flex; flex-direction: column;
@@ -51,9 +51,9 @@
   width: 152px; margin-right: 11px; white-space: normal;
   border-radius: 15px; background: var(--surface); box-shadow: var(--shadow-1);
   overflow: hidden;
-  transition: transform .22s var(--ease), box-shadow .22s var(--ease);
+  transition: transform .22s var(--ease);
 }
-.pcard-hover { transform: translateY(-3px); box-shadow: var(--shadow-2); }
+.pcard-hover { transform: translateY(-3px); }
 .pcard-img { height: 104px; display: flex; align-items: center; justify-content: center; }
 .pcard-tile { font-size: 30px; }
 .pcard-body { padding: 10px 11px 12px; }
