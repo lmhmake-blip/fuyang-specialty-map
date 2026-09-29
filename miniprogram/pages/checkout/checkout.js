@@ -1,4 +1,4 @@
-const { cartItems, shipFee } = require('../../data/catalog.js');
+const store = require('../../data/store.js');
 const { toast } = require('../../utils/toast.js');
 
 Page({
@@ -11,13 +11,17 @@ Page({
     toastText: '',
   },
 
-  onShow() { this.refresh(); },
+  onLoad() {
+    this.render();
+    store.onUpdate(() => this.render());
+  },
+  onShow() { this.render(); },
 
-  refresh() {
+  render() {
     const app = getApp();
-    const items = cartItems(app.globalData.cart);
+    const items = store.cartItems(app.globalData.cart);
     const total = items.reduce((s, i) => s + i.price, 0);
-    const ship = shipFee(total);
+    const ship = store.shipFee(total);
     this.setData({
       statusBarHeight: app.globalData.statusBarHeight,
       items, total, ship, due: total + ship,

@@ -1,4 +1,4 @@
-const { P, D, byDistrict, cartItems } = require('../../data/catalog.js');
+const store = require('../../data/store.js');
 const { toast } = require('../../utils/toast.js');
 
 Page({
@@ -8,12 +8,21 @@ Page({
   },
 
   onLoad(options) {
-    const p = P(options.id);
-    if (!p) {
+    this.pid = options.id;
+    if (!store.P(this.pid)) {
       wx.showToast({ title: '没找到这个商品', icon: 'none' });
       setTimeout(() => wx.navigateBack(), 1200);
       return;
     }
+    this.render();
+    store.onUpdate(() => this.render());
+  },
+
+  render() {
+    const p = store.P(this.pid);
+    // 云端数据里没有这个商品（比如已下架删除）→ 保留当前画面，不崩
+    if (!p) return;
+
     const app = getApp();
     // 列表项预加唯一 key —— wx:key="index" 不是合法值，item 里并没有 index 属性
     const view = Object.assign({}, p, {
@@ -24,17 +33,17 @@ Page({
     this.setData({
       statusBarHeight: app.globalData.statusBarHeight,
       p: view,
-      d: D(p.d),
-      others: byDistrict(p.d).length - 1,
+      d: store.D(p.d),
+      others: store.byDistrict(p.d).length - 1,
       heroFontSize: p.short.length <= 2 ? 84 : 64,
-      cartCount: cartItems(app.globalData.cart).length,
+      cartCount: store.cartItems(app.globalData.cart).length,
     });
   },
 
   addCart() {
     const app = getApp();
     app.addToCart(this.data.p.id);
-    this.setData({ cartCount: cartItems(app.globalData.cart).length });
+    this.setData({ cartCount: store.cartItems(app.globalData.cart).length });
     toast(this, '已加入礼盒 · ' + this.data.p.name);
   },
   goGifts() { wx.switchTab({ url: '/pages/gifts/gifts' }); },

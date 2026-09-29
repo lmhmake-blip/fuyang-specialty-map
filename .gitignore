@@ -11,3 +11,10 @@ tools/font-build/
 # 微信开发者工具生成的个人配置（含本地 AppID / 个人偏好），不进版本库
 # 提交前务必检查 project.config.json 的 appid 是否为占位符
 project.private.config.json
+
+# 微信开发者工具 / playwright 临时产物
+.playwright-mcp/
+
+# 云数据库导入文件（由 tools/gen_seed.js 生成）
+# 现在还是演示数据，但将来会变成真实商品数据（价格/供货），不该进公开仓库
+tools/seed/*.json

@@ -1,4 +1,4 @@
-const { DISTRICTS, PRODUCTS, byDistrict } = require('../../data/catalog.js');
+const store = require('../../data/store.js');
 
 const PICK_IDS = ['sanzi', 'chunya', 'huangniurou', 'caomei', 'zhentoumo', 'jiecai'];
 
@@ -11,16 +11,21 @@ Page({
   },
 
   onLoad() {
-    const app = getApp();
+    this.render();
+    // 云端数据到达后重渲染一次。数据没变时 setData 是空操作，看不到闪烁。
+    store.onUpdate(() => this.render());
+  },
+
+  render() {
     this.setData({
-      statusBarHeight: app.globalData.statusBarHeight,
+      statusBarHeight: getApp().globalData.statusBarHeight,
       // 县区色块里直接放完整地名，不做单字抽头
-      districts: DISTRICTS.map(d => ({
+      districts: store.allDistricts().map(d => ({
         id: d.id, name: d.name, color: d.color, hint: d.hint,
-        count: byDistrict(d.id).length,
+        count: store.byDistrict(d.id).length,
       })),
-      picks: PICK_IDS.map(id => PRODUCTS.find(p => p.id === id)).filter(Boolean),
-      productCount: PRODUCTS.length,
+      picks: PICK_IDS.map(id => store.P(id)).filter(Boolean),
+      productCount: store.allProducts().length,
     });
   },
 

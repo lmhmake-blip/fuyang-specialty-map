@@ -1,14 +1,18 @@
-const { cartItems } = require('../../data/catalog.js');
+const store = require('../../data/store.js');
 const { toast } = require('../../utils/toast.js');
 
 Page({
   data: { statusBarHeight: 20, items: [], total: 0, toastText: '' },
 
-  onShow() { this.refresh(); },
+  onLoad() {
+    this.render();
+    store.onUpdate(() => this.render());
+  },
+  onShow() { this.render(); },
 
-  refresh() {
+  render() {
     const app = getApp();
-    const items = cartItems(app.globalData.cart);
+    const items = store.cartItems(app.globalData.cart);
     this.setData({
       statusBarHeight: app.globalData.statusBarHeight,
       items,
@@ -18,7 +22,7 @@ Page({
 
   remove(e) {
     getApp().removeFromCart(e.currentTarget.dataset.key);
-    this.refresh();
+    this.render();
     toast(this, '已移除');
   },
   goCheckout() { wx.navigateTo({ url: '/pages/checkout/checkout' }); },
