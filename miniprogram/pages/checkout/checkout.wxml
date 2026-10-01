@@ -59,8 +59,8 @@
     <view class="block-t">商品清单</view>
     <view class="specs">
       <view class="spec" wx:for="{{items}}" wx:key="key">
-        <text class="spec-k spec-k-auto">{{item.name}} × 1</text>
-        <text class="spec-v spec-v-auto">¥{{item.price}}</text>
+        <text class="spec-k spec-k-auto">{{item.name}} × {{item.qty}}</text>
+        <text class="spec-v spec-v-auto">¥{{item.subtotal}}</text>
       </view>
       <view class="spec">
         <text class="spec-k spec-k-auto">运费</text>

@@ -29,6 +29,21 @@
       <text class="sold">{{p.sold}}</text>
     </view>
 
+    <!-- 数量行兼作加入入口：没加过只显示一个 +，加了变成步进器。
+         去掉独立的「加入清单」按钮 —— 那个跟这里功能重复，是累赘。 -->
+    <view class="qtybar">
+      <text class="qtybar-lb">数量</text>
+      <view class="stepper" wx:if="{{inCart}}">
+        <view class="step-btn {{inCart <= 1 ? 'step-off' : ''}}"
+              hover-class="step-btn-hover" hover-stay-time="80" bindtap="decCart">−</view>
+        <view class="step-num">{{inCart}}</view>
+        <view class="step-btn" hover-class="step-btn-hover" hover-stay-time="80"
+              bindtap="incCart">+</view>
+      </view>
+      <view class="step-add" wx:else hover-class="step-add-hover" hover-stay-time="80"
+            bindtap="incCart">+</view>
+    </view>
+
     <view class="block">
       <view class="block-t ev">为什么可信</view>
       <view class="evlist">
@@ -69,7 +84,8 @@
 </view>
 
 <view class="bottombar" wx:if="{{p}}">
-  <view class="btn btn-ghost btn-fixed" hover-class="btn-ghost-hover" bindtap="addCart">加入礼盒</view>
+  <view class="btn btn-ghost btn-fixed" wx:if="{{inCart}}" hover-class="btn-ghost-hover"
+        bindtap="goCart">看清单</view>
   <view class="btn btn-seal" hover-class="btn-seal-hover" bindtap="goGifts">看礼盒组合</view>
 </view>
 

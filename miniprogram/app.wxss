@@ -260,6 +260,24 @@ page {
 /* ============ 带底部条的页面要给内容留出空间 ============ */
 .has-bar { padding-bottom: 96px; }
 
+/* ============ 数量步进器（购物车行 / 商品详情页共用）============ */
+.stepper {
+  display: flex; align-items: center; flex: none; overflow: hidden;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--surface);
+}
+.step-btn {
+  width: 32px; height: 30px; display: flex; align-items: center; justify-content: center;
+  font-size: 17px; line-height: 1; color: var(--ink-2);
+  transition: background .22s var(--ease);
+}
+.step-btn-hover { background: var(--line-2); }
+.step-off { color: var(--ink-3); opacity: .4; }
+.step-num {
+  min-width: 34px; line-height: 30px; text-align: center;
+  font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums;
+  border-left: 1px solid var(--line); border-right: 1px solid var(--line);
+}
+
 /* ============ 轻提示（templates/toast.wxml）============ */
 .fy-toast {
   position: fixed; left: 50%; bottom: 118px; transform: translateX(-50%);

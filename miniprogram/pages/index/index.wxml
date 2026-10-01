@@ -24,7 +24,7 @@
       <view class="scene-t-lg">自家吃</view>
       <view class="scene-d-lg">按产地挑。每款都标着它凭什么是地理标志、非遗手艺，还是合作社直供。</view>
       <view class="scene-tags">
-        <text class="scene-tag">22 款</text>
+        <text class="scene-tag">{{productCount}} 款</text>
         <text class="scene-tag">8 县区</text>
         <text class="scene-tag">产地直发</text>
       </view>

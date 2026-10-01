@@ -37,4 +37,17 @@
 .sold { margin-left: auto; font-size: 11.5px; color: var(--ink-3); }
 .spec-note { font-size: 11px; color: var(--ink-3); line-height: 1.7; margin-top: 10px; }
 .btn-inline { flex: none; height: 42px; font-size: 13px; margin-top: 12px; }
+
+/* 数量行：步进器 + 清单现状 */
+.qtybar { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+.qtybar-lb { font-size: 13.5px; color: var(--ink-2); }
+/* 还没加入时只显示一个 + ：点它就是加入一件（印章红，明示这是主操作）*/
+.step-add {
+  width: 34px; height: 32px; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; line-height: 1; color: #fff;
+  background: var(--seal); border-radius: 8px;
+  transition: background .22s var(--ease), transform .22s var(--ease);
+}
+.step-add-hover { background: #AE3B25; transform: scale(.94); }
 .btn-fixed { flex: 0 0 108px; }

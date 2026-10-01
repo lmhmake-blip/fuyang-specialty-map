@@ -11,8 +11,10 @@ Page({
       return;
     }
     this.render();
-    store.onUpdate(() => this.render());
+    this._onStore = () => this.render();
+    store.onUpdate(this._onStore);
   },
+  onUnload() { store.offUpdate(this._onStore); },
 
   render() {
     const d = store.D(this.did);

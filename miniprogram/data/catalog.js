@@ -273,16 +273,20 @@ const byDistrict = id => PRODUCTS.filter(p => p.d === id);
 
 // ---- 购物车的两种条目：商品 与 礼盒 ----
 function cartItems(cart) {
-  return (cart || []).map(k => {
-    if (k.indexOf('box:') === 0) {
-      const g = GIFT_BOXES.find(x => x.name === k.slice(4));
-      return g ? { type: 'box', name: g.name, price: g.price, color: g.color, short: '礼盒', unit: '礼盒装', sub: '组合礼盒', key: k } : null;
+  return (cart || []).map(line => {
+    const key = typeof line === 'string' ? line : (line && line.key);
+    if (!key) return null;
+    const qty = (typeof line === 'string' || !(line.qty > 0)) ? 1 : line.qty;
+    if (key.indexOf('box:') === 0) {
+      const g = GIFT_BOXES.find(x => x.name === key.slice(4));
+      return g ? { type: 'box', name: g.name, price: g.price, color: g.color, short: '礼盒', unit: '礼盒装', sub: '组合礼盒', key: key, qty: qty, subtotal: g.price * qty } : null;
     }
-    const pr = P(k);
-    return pr ? { type: 'product', name: pr.name, price: pr.price, color: pr.color, short: pr.short, unit: pr.unit, sub: pr.sub, key: k } : null;
+    const pr = P(key);
+    return pr ? { type: 'product', name: pr.name, price: pr.price, color: pr.color, short: pr.short, unit: pr.unit, sub: pr.sub, key: key, qty: qty, subtotal: pr.price * qty } : null;
   }).filter(Boolean);
 }
-const cartTotal = cart => cartItems(cart).reduce((s, i) => s + i.price, 0);
+const cartCount = cart => (cart || []).reduce((s, l) => s + (l && l.qty > 0 ? l.qty : 1), 0);
+const cartTotal = cart => cartItems(cart).reduce((s, i) => s + i.subtotal, 0);
 const shipFee = total => (total >= 199 ? 0 : 12);
 
-module.exports = { DISTRICTS, PRODUCTS, GIFT_BOXES, P, D, byDistrict, cartItems, cartTotal, shipFee };
+module.exports = { DISTRICTS, PRODUCTS, GIFT_BOXES, P, D, byDistrict, cartItems, cartCount, cartTotal, shipFee };

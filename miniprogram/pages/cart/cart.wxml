@@ -5,7 +5,7 @@
     </view>
     <text class="tb-title">已选清单</text>
     <view class="tb-spacer"></view>
-    <text class="tb-sub" wx:if="{{items.length}}">{{items.length}} 件</text>
+    <text class="tb-sub" wx:if="{{items.length}}">{{totalQty}} 件</text>
   </view>
 </view>
 
@@ -24,14 +24,28 @@
         <text class="tile-text">{{item.short}}</text>
       </view>
       <view class="prow-main">
-        <view class="prow-name" style="font-size: 15px">{{item.name}}</view>
+        <!-- 名称与「移除」同一行 -->
+        <view class="prow-head">
+          <view class="prow-name" style="font-size: 15px">{{item.name}}</view>
+          <view class="cart-remove" catchtap="remove" data-key="{{item.key}}">移除</view>
+        </view>
         <view class="prow-sub">{{item.sub}}</view>
-        <view class="prow-price">
-          <view class="price"><text class="sym">¥</text>{{item.price}}</view>
-          <text class="price-unit">{{item.unit}}</text>
+        <!-- 价格与数量步进器同一行 -->
+        <view class="prow-foot">
+          <view class="prow-price">
+            <view class="price"><text class="sym">¥</text>{{item.price}}</view>
+            <text class="price-unit">{{item.unit}}</text>
+          </view>
+          <view class="stepper">
+            <view class="step-btn {{item.qty <= 1 ? 'step-off' : ''}}"
+                  hover-class="step-btn-hover" hover-stay-time="80"
+                  catchtap="dec" data-key="{{item.key}}">−</view>
+            <view class="step-num">{{item.qty}}</view>
+            <view class="step-btn" hover-class="step-btn-hover" hover-stay-time="80"
+                  catchtap="inc" data-key="{{item.key}}">+</view>
+          </view>
         </view>
       </view>
-      <view class="cart-remove" catchtap="remove" data-key="{{item.key}}">移除</view>
     </view>
   </view>
   <view class="note">演示数据 · 提交订单不会产生真实交易</view>

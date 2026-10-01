@@ -13,8 +13,10 @@ Page({
   onLoad() {
     this.render();
     // 云端数据到达后重渲染一次。数据没变时 setData 是空操作，看不到闪烁。
-    store.onUpdate(() => this.render());
+    this._onStore = () => this.render();
+    store.onUpdate(this._onStore);
   },
+  onUnload() { store.offUpdate(this._onStore); },
 
   render() {
     this.setData({

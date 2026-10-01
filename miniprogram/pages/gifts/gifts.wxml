@@ -10,7 +10,7 @@
   <view class="brand" style="padding-bottom: 18px">
     <view class="brand-kicker">送人 · 团购</view>
     <view class="brand-title" style="font-size: 27px">不知道送什么的时候，组合好了给你</view>
-    <view class="brand-desc">三档礼盒，从 99 的尝鲜装到 358 的企业年礼。企业团购 10 份起阶梯价。</view>
+    <view class="brand-desc" wx:if="{{boxCount}}">{{boxCount}} 档礼盒，从 {{priceFrom}} 的尝鲜装到 {{priceTo}} 的企业年礼。企业团购 10 份起阶梯价。</view>
   </view>
 
   <view class="gift" wx:for="{{boxes}}" wx:key="id">

@@ -13,14 +13,16 @@ Page({
 
   onLoad() {
     this.render();
-    store.onUpdate(() => this.render());
+    this._onStore = () => this.render();
+    store.onUpdate(this._onStore);
   },
+  onUnload() { store.offUpdate(this._onStore); },
   onShow() { this.render(); },
 
   render() {
     const app = getApp();
     const items = store.cartItems(app.globalData.cart);
-    const total = items.reduce((s, i) => s + i.price, 0);
+    const total = store.cartTotal(app.globalData.cart);
     const ship = store.shipFee(total);
     this.setData({
       statusBarHeight: app.globalData.statusBarHeight,
@@ -43,10 +45,12 @@ Page({
   submit() {
     const { name, phone, addr } = this.data.form;
     const errors = { name: '', phone: '', addr: '' };
+    // 三个字段各自独立判断 —— 一次把填错的都标出来，用户不用提交三次才填完表。
+    // （手机号内部保留 if/else if：空 与 格式错 是同一个字段的两种情况）
     if (!name.trim()) errors.name = '请填写收货人姓名';
-    else if (!phone.trim()) errors.phone = '请填写手机号';
+    if (!phone.trim()) errors.phone = '请填写手机号';
     else if (!/^1[3-9]\d{9}$/.test(phone.trim())) errors.phone = '手机号格式不对，应为 11 位大陆号码';
-    else if (!addr.trim()) errors.addr = '请填写收货地址';
+    if (!addr.trim()) errors.addr = '请填写收货地址';
 
     if (errors.name || errors.phone || errors.addr) {
       this.setData({ errors });

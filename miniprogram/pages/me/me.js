@@ -5,8 +5,10 @@ Page({
 
   onLoad() {
     this.render();
-    store.onUpdate(() => this.render());
+    this._onStore = () => this.render();
+    store.onUpdate(this._onStore);
   },
+  onUnload() { store.offUpdate(this._onStore); },
   // 用 onShow：从购物车/订单返回时要刷新计数
   onShow() { this.render(); },
 
@@ -14,7 +16,7 @@ Page({
     const app = getApp();
     this.setData({
       statusBarHeight: app.globalData.statusBarHeight,
-      cartCount: store.cartItems(app.globalData.cart).length,
+      cartCount: store.cartCount(app.globalData.cart),
       cartTotal: store.cartTotal(app.globalData.cart),
       orderCount: app.globalData.orders.length,
     });

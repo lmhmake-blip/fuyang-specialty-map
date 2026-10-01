@@ -1,4 +1,12 @@
-.cart-remove { align-self: center; color: var(--ink-3); font-size: 12px; padding: 6px 2px; }
+/* 行内两段：名称 + 移除 一行，价格 + 步进器 一行 */
+.prow-head { display: flex; align-items: flex-start; gap: 8px; }
+.prow-head .prow-name { flex: 1; min-width: 0; }
+.prow-foot { margin-top: 7px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.prow-foot .prow-price { margin-top: 0; }
+
+.cart-remove { flex: none; color: var(--ink-3); font-size: 12px; line-height: 1.35; padding: 1px 0 1px 4px; }
+
+/* 数量步进器样式已提到 app.wxss（商品详情页也要用）*/
 .price-unit { font-size: 10.5px; color: var(--ink-3); margin-left: 6px; }
 .empty { padding: 80px 20px; text-align: center; }
 .empty-t { font-family: var(--serif); font-weight: 700; font-size: 17px; color: var(--ink-2); margin-bottom: 8px; }

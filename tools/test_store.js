@@ -66,10 +66,25 @@ function cloudStub(docs) {
   ok('byDistrict 只返回该县区商品', yz.length > 0 && yz.every(p => p.d === 'yingzhou'), yz.length + ' 款');
   ok('byDistrict 保留原顺序', yz[0].id === 'zhentoumo');
 
-  const cart = ['zhentoumo', 'box:阜阳年味礼盒'];
+  const cart = [{ key: 'zhentoumo', qty: 1 }, { key: 'box:阜阳年味礼盒', qty: 1 }];
   ok('cartItems 商品+礼盒都能解析', store.cartItems(cart).length === 2);
-  ok('cartItems 丢弃无效 key', store.cartItems(['nope']).length === 0);
+  ok('cartItems 丢弃无效 key', store.cartItems([{ key: 'nope', qty: 1 }, {}]).length === 0);
   ok('cartTotal = 38 + 188', store.cartTotal(cart) === 226, store.cartTotal(cart));
+
+  // —— 数量：同一商品合并成一行后，钱与件数都要按数量算 ——
+  const cart2 = [{ key: 'zhentoumo', qty: 3 }, { key: 'box:阜阳年味礼盒', qty: 2 }];
+  ok('cartItems 带 qty / subtotal',
+     store.cartItems(cart2)[0].qty === 3 && store.cartItems(cart2)[0].subtotal === 114,
+     store.cartItems(cart2)[0].subtotal);
+  ok('cartTotal 按数量算（38×3 + 188×2）', store.cartTotal(cart2) === 490, store.cartTotal(cart2));
+  ok('cartCount 是件数之和，不是行数', store.cartCount(cart2) === 5, store.cartCount(cart2));
+
+  // —— 兼容 Storage 里可能残留的老格式（字符串数组）——
+  ok('兼容老格式字符串数组',
+     store.cartItems(['zhentoumo']).length === 1 &&
+     store.cartCount(['zhentoumo', 'zhentoumo']) === 2,
+     store.cartCount(['zhentoumo', 'zhentoumo']));
+
   ok('shipFee 满 199 免运费', store.shipFee(226) === 0);
   ok('shipFee 不满收 12', store.shipFee(38) === 12);
 

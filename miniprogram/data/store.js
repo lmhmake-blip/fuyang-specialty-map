@@ -64,9 +64,38 @@ function normalize(doc) {
 function bySort(a, b) { return (a.sort || 0) - (b.sort || 0); }
 
 // 给页面看的数据：排序 + 过滤掉已下架
+//
+// 结果做缓存：一次页面渲染会连着调 allDistricts + byDistrict×8 + allProducts，
+// 每次都 slice+sort+filter 纯属浪费；商家自主上架、SKU 涨上来之后更明显。
+// mem 一变就 invalidate()。
+// ⚠️ 返回的是缓存数组本身 —— 调用方只读，要改先自己 slice()。
+let viewCache = null;
+
+function invalidate() { viewCache = null; }
+
+function buildView() {
+  const districts = mem.districts.slice().sort(bySort);
+  const giftboxes = mem.giftboxes.slice().sort(bySort);
+  const products = mem.products.slice().sort(bySort).filter(p => p.onSale !== false);
+
+  // 按县区分桶：建一次，byDistrict 之后直接查表，不再每次 filter 三趟
+  const buckets = {};
+  products.forEach(p => {
+    if (!buckets[p.d]) buckets[p.d] = [];
+    buckets[p.d].push(p);
+  });
+
+  return { districts: districts, products: products, giftboxes: giftboxes, buckets: buckets };
+}
+
 function view(key) {
-  const list = mem[key].slice().sort(bySort);
-  return key === 'products' ? list.filter(p => p.onSale !== false) : list;
+  if (!viewCache) viewCache = buildView();
+  return viewCache[key];
+}
+
+function viewByDistrict(id) {
+  if (!viewCache) viewCache = buildView();
+  return viewCache.buckets[id] || [];
 }
 
 function emit() {
@@ -86,6 +115,7 @@ function loadCache() {
     if (!c || !c.products || !c.products.length) return false;
     COLLECTIONS.forEach(k => { if (c[k] && c[k].length) mem[k] = c[k].map(normalize); });
     mem.source = 'cache';
+    invalidate();
     return true;
   } catch (e) {
     console.warn('[store] 读缓存失败', e);
@@ -146,6 +176,7 @@ function pullCloud() {
         if (!changed) return;
         mem.source = 'cloud';
         cloudLoaded = true;
+        invalidate();
         saveCache();
         emit();
       })
@@ -172,18 +203,42 @@ function init() {
 //   onLoad() { this.render(); store.onUpdate(() => this.render()); }
 function onUpdate(cb) { listeners.push(cb); }
 
-// 购物车两种条目：商品 与 礼盒
+// 页面 onUnload 时摘掉自己的回调。不摘的两个后果：
+//   ① 云端数据回来时页面可能已经销毁 → 对死页面 setData，控制台报错
+//   ② 断网时 emit() 永不触发，listeners 只增不减
+function offUpdate(cb) {
+  const i = listeners.indexOf(cb);
+  if (i > -1) listeners.splice(i, 1);
+}
+
+// 购物车两种条目：商品 与 礼盒。
+// 入参是 [{key, qty}]；同时兼容老的字符串格式 ['sanzi','sanzi']，
+// 这样 Storage 里还没迁移的旧数据也不会炸。
 function cartItemsOf(cart) {
-  return (cart || []).map(k => {
-    if (k.indexOf('box:') === 0) {
-      const g = mem.giftboxes.find(x => x.name === k.slice(4));
+  return (cart || []).map(line => {
+    const key = typeof line === 'string' ? line : (line && line.key);
+    if (!key) return null;
+    const qty = (typeof line === 'string' || !(line.qty > 0)) ? 1 : line.qty;
+
+    if (key.indexOf('box:') === 0) {
+      const g = mem.giftboxes.find(x => x.name === key.slice(4));
       return g ? { type: 'box', name: g.name, price: g.price, color: g.color,
-                   short: '礼盒', unit: '礼盒装', sub: '组合礼盒', key: k } : null;
+                   short: '礼盒', unit: '礼盒装', sub: '组合礼盒',
+                   key: key, qty: qty, subtotal: g.price * qty } : null;
     }
-    const pr = mem.products.find(p => p.id === k);
+    const pr = mem.products.find(p => p.id === key);
     return pr ? { type: 'product', name: pr.name, price: pr.price, color: pr.color,
-                  short: pr.short, unit: pr.unit, sub: pr.sub, key: k } : null;
+                  short: pr.short, unit: pr.unit, sub: pr.sub,
+                  key: key, qty: qty, subtotal: pr.price * qty } : null;
   }).filter(Boolean);
+}
+
+// 件数 = 数量之和（不是行数）。购物车角标、结算页都用它。
+function cartCountOf(cart) {
+  return (cart || []).reduce((s, l) => {
+    if (!l) return s;
+    return s + (typeof l === 'string' ? 1 : (l.qty > 0 ? l.qty : 1));
+  }, 0);
 }
 
 // 调试用：看看现在数据是从哪来的
@@ -213,6 +268,7 @@ function storeInfo() {
 module.exports = {
   init,
   onUpdate,
+  offUpdate,
 
   // ---- 同步读：随时可用，不返回 Promise ----
   allDistricts: () => view('districts'),
@@ -222,11 +278,11 @@ module.exports = {
   // ---- 同步查询：与 catalog.js 同名同签名，页面只改 require 路径即可 ----
   P: id => mem.products.find(p => p.id === id),
   D: id => mem.districts.find(d => d.id === id),
-  byDistrict: id => mem.products.filter(p => p.d === id).sort(bySort)
-                    .filter(p => p.onSale !== false),
+  byDistrict: viewByDistrict,
 
   cartItems: cartItemsOf,
-  cartTotal: cart => cartItemsOf(cart).reduce((s, i) => s + i.price, 0),
+  cartCount: cartCountOf,
+  cartTotal: cart => cartItemsOf(cart).reduce((s, i) => s + i.subtotal, 0),
   shipFee: total => (total >= 199 ? 0 : 12),
 
   info: storeInfo,
