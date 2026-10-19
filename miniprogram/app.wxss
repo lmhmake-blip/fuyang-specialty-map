@@ -96,6 +96,7 @@ page {
 .badge.gi { color: var(--seal); background: var(--seal-soft); }
 .badge.heritage { color: var(--gold); background: var(--gold-soft); }
 .badge.fresh { color: var(--brand); background: var(--brand-soft); }
+.badge.new { color: var(--gold); background: var(--gold-soft); }
 
 /* ============ 价格 ============ */
 .price {

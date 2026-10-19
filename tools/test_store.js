@@ -90,15 +90,23 @@ function cloudStub(docs) {
 
   // ================= 场景二：云端正常 =================
   // 构造云端数据：id 换成 _id（验证归一化）、灌满 22 条（验证分页）、
-  // 把「焦馍」标成已下架（验证过滤）、把顺序打乱（验证 sort）
+  // 把「焦馍」标成已下架（验证过滤）、把顺序打乱（验证 sort）。
+  // 同时删掉 giName / certPending —— 模拟云端还是旧 seed，
+  // store 应该用内置数据把这两个新字段补齐。
   const catalog = require(CATALOG);
   const src = catalog.PRODUCTS;
   const cloudProducts = src.map((p, i) => {
     const o = Object.assign({}, p);
     delete o.id;
+    delete o.giName;
+    delete o.certPending;
     o._id = p.id;
     o.sort = (i + 1) * 10;              // 按原始次序给 sort
     o.onSale = p.id !== 'jiaomo';
+    // 旧 seed 里黄牛肉还挂着「地理标志」样式；云端已有字段不应被内置覆盖
+    if (p.id === 'huangniurou') o.badges = [['全国名特优新', 'gi']];
+    // 云端已有的值必须保留（价格由商家在后台改，不能被内置数据覆盖）
+    if (p.id === 'zhentoumo') o.price = 999;
     return o;
   });
   cloudProducts.reverse();              // 灌进去时把顺序打乱，模拟数据库不保证顺序
@@ -140,6 +148,18 @@ function cloudStub(docs) {
   ok('更新通知触发了一次', notified === 1, notified + ' 次');
   ok('县区也从云端覆盖了', store.allDistricts().length === 8);
   ok('礼盒云端为空时不覆盖（保留内置）', store.allGiftboxes().length === 3);
+
+  head('场景二 · 云端旧数据补齐');
+  ok('缺 giName 时从内置补齐（香椿酱）',
+     store.P('chunya').giName === '太和香椿', store.P('chunya').giName);
+  ok('缺 giName 时从内置补齐（鲜香椿）',
+     store.P('chunya-fresh').giName === '太和香椿', store.P('chunya-fresh').giName);
+  ok('缺 certPending 时从内置补齐（黄牛肉）',
+     store.P('huangniurou').certPending === true, store.P('huangniurou').certPending);
+  ok('云端已有字段不被覆盖（枕头馍价格仍为 999）',
+     store.P('zhentoumo').price === 999, store.P('zhentoumo').price);
+  ok('补齐后的黄牛肉徽章仍以云端为准（旧数据保留）',
+     store.P('huangniurou').badges[0][1] === 'gi', store.P('huangniurou').badges[0][1]);
 
   console.log();
   console.log(fail === 0 ? '全部通过 ✅' : `${fail} 项失败 ❌`);

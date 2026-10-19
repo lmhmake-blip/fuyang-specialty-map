@@ -23,7 +23,7 @@
 
 const catalog = require('./catalog.js');
 
-const CACHE_KEY = 'fy_data_v1';
+const CACHE_KEY = 'fy_data_v2';   // v1 缓存没有 giName / certPending，直接弃用
 const PAGE = 20;                 // ⚠️ 小程序端单次查询上限就是 20 条，必须分页
 const COLLECTIONS = ['districts', 'products', 'giftboxes'];
 
@@ -52,10 +52,25 @@ let cloudLoaded = false;
 //  内部工具
 // ============================================================
 
-// 云数据库返回 _id，catalog.js 用 id —— 统一成 id，页面不用关心数据来自哪
-function normalize(doc) {
+// 云数据库返回 _id，catalog.js 用 id —— 统一成 id，页面不用关心数据来自哪。
+// 同时用内置数据补齐云端/缓存里缺的新字段：云端数据库里还是旧 seed 时，
+// giName / certPending 不会凭空出现，页面上的地标计数就会是 0。
+// 只补 undefined/null，云端已有的值（价格、徽章等）仍以云端为准。
+const BUILTIN_BY_ID = {};
+COLLECTIONS.forEach(name => {
+  BUILTIN_BY_ID[name] = {};
+  BUILTIN[name].forEach(doc => { BUILTIN_BY_ID[name][doc.id] = doc; });
+});
+
+function normalize(doc, collection) {
   const o = Object.assign({}, doc);
   if (o.id === undefined && o._id !== undefined) o.id = o._id;
+  const base = collection && BUILTIN_BY_ID[collection][o.id];
+  if (base) {
+    Object.keys(base).forEach(key => {
+      if (o[key] === undefined || o[key] === null) o[key] = base[key];
+    });
+  }
   return o;
 }
 
@@ -113,7 +128,7 @@ function loadCache() {
   try {
     const c = wx.getStorageSync(CACHE_KEY);
     if (!c || !c.products || !c.products.length) return false;
-    COLLECTIONS.forEach(k => { if (c[k] && c[k].length) mem[k] = c[k].map(normalize); });
+    COLLECTIONS.forEach(k => { if (c[k] && c[k].length) mem[k] = c[k].map(d => normalize(d, k)); });
     mem.source = 'cache';
     invalidate();
     return true;
@@ -169,7 +184,7 @@ function pullCloud() {
         let changed = false;
         COLLECTIONS.forEach((k, i) => {
           if (results[i] && results[i].length) {
-            mem[k] = results[i].map(normalize);
+            mem[k] = results[i].map(d => normalize(d, k));
             changed = true;
           }
         });
