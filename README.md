@@ -9,6 +9,8 @@
 
 面向**上海阜阳商会 / 同乡社群**的阜阳特产精选小程序原型。第一版只做「可信精选 + 礼盒 + 团购」，不做开放式多商家平台。
 
+当前主力版本是 `miniprogram/` 里的**微信小程序**。根目录的 `index.html` 是最早的单文件网页原型，**已冻结**：只作历史参考，不再更新，数据也不与小程序同步。
+
 ## 页面预览
 
 | | | |
@@ -20,18 +22,30 @@
 
 ## 怎么打开
 
+### 微信小程序（主力版本）
+
+1. 用**微信开发者工具**打开本仓库根目录（`project.config.json` 的 `miniprogramRoot` 已指向 `miniprogram/`）
+2. AppID 可直接用测试号（当前配置是 `touristappid`），正式发布时换成商会主体的小程序 AppID
+3. 云开发环境 ID 在 `miniprogram/app.js` 的 `CLOUD_ENV`；不连云或拉取失败时，会自动退回内置数据 `miniprogram/data/catalog.js`，断网也能打开
+
+### 静态网页原型（已冻结）
+
 ```bash
-# 方式一：直接双击 index.html（最简单）
+# 方式一：直接双击 index.html
 open index.html
 
-# 方式二：本地服务器（推荐，手机可同局域网访问）
+# 方式二：本地服务器（手机可同局域网访问）
 cd ~/Claude/阜阳特产小程序 && python3 -m http.server 8899
 # 浏览器打开 http://localhost:8899
 ```
 
 手机上看：Mac 和手机连同一 WiFi，手机浏览器访问 `http://<Mac的局域网IP>:8899`。
 
+> `index.html` 仅用于回看早期设计，不再接收功能或数据更新。
+
 ## 页面结构
+
+> 下表是早期静态原型 `index.html` 的 hash 路由；小程序页面在 `miniprogram/pages/`，两者内容基本对应。
 
 | 路由 | 页面 | 说明 |
 |---|---|---|
@@ -49,10 +63,18 @@ cd ~/Claude/阜阳特产小程序 && python3 -m http.server 8899
 ## 数据说明
 
 - **县区与品类**：来自公开报道《阜阳各县区年货特产清单》
-- **地理标志**：2025 年阜阳新增 7 个国家地理标志产品（公开报道）
+- **地理标志**：2025 年阜阳新增 7 个国家地理标志产品（公开报道），按 `giName` 去重计数（香椿酱与鲜香椿同属「太和香椿」，只算 1 个）
 - **非遗 / 名特优新**：市级、县级非遗名录、全国名特优新农产品名录
+- **认证归属**：4 款地标商品与界首黄牛肉标了 `certPending`，待商会核实前不编造证书编号或链接
 - **价格、规格、销量**：⚠️ **全部是演示数据，非真实报价**
 - **商品图片**：暂无实拍图，用篆体字块 + 印章式色块代替，正式版需商会提供实拍
+
+### 数据从哪来
+
+- `miniprogram/data/catalog.js` 是**唯一内置数据源**，小程序内置兜底与云数据库 seed 都由它派生
+- `node tools/gen_seed.js` 生成云数据库导入文件（JSON Lines），输出到 `tools/seed/`；这是商品数据，已被 `.gitignore` 排除
+- 小程序取数顺序：**内置数据 → Storage 缓存（`fy_data_v2`）→ 云数据库**。云端拉取失败时继续用本地数据，不白屏；云端缺少的新字段用内置数据补齐
+- 修改商品/价格后：改 `catalog.js` → 跑 `gen_seed.js` → 重新导入云数据库；否则云端旧记录仍会覆盖内置值
 
 ## 设计方向
 
@@ -101,7 +123,6 @@ cd ~/Claude/阜阳特产小程序 && python3 -m http.server 8899
 缺的：
 - 真实商品图片
 - 真实价格与供货信息
-- 微信小程序版本（需转 WXML/WXSS）
 - 真实支付（**个人主体小程序开不了微信支付与电商类目**）
 
 上线前必须解决（见 `#/about` 页）：
@@ -114,8 +135,21 @@ cd ~/Claude/阜阳特产小程序 && python3 -m http.server 8899
 ## 文件
 
 ```
-index.html      单文件原型（HTML + CSS + JS，无依赖无构建）
-screenshots/    各页面截图（优化后版本）
+miniprogram/          微信小程序（主力版本）
+  app.js              云环境 ID、购物车、订单持久化
+  app.json / app.wxss 页面注册、全局样式
+  data/
+    catalog.js        内置商品/县区/礼盒数据（唯一数据源）
+    store.js          三级取数：内置 → Storage 缓存 → 云数据库
+  pages/              10 个页面（首页、地图、县区、商品、礼盒、清单、结算、订单、我的、关于）
+  utils/              订单快照（order.js）、轻提示（toast.js）
+  assets/             图标与字体
+index.html            早期单文件网页原型（已冻结，不再同步数据）
+project.config.json   微信开发者工具配置
+tools/
+  gen_seed.js         由 catalog.js 生成云数据库导入文件
+  test_*.js           Node 冒烟测试（数据、订单、store、购物车、缓存）
+screenshots/          早期网页版截图
 ```
 
-数据全部内联在 `index.html` 的 `DISTRICTS` / `PRODUCTS` / `GIFT_BOXES` 三个常量里，改内容直接改这三处。
+小程序数据全部来自 `miniprogram/data/catalog.js`，改内容直接改这一个文件，再重新生成 seed。
