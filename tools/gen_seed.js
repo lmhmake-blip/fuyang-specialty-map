@@ -39,6 +39,8 @@ const products = catalog.PRODUCTS.map((p, i) => ({
   short: p.short, d: p.d, name: p.name, color: p.color, sub: p.sub,
   price: p.price, was: p.was, unit: p.unit, sold: p.sold,
   badges: p.badges, story: p.story, evidence: p.evidence, specs: p.specs,
+  giName: p.giName,           // 地理标志名称；同名只算 1 个（如香椿酱与鲜香椿）
+  certPending: p.certPending, // 认证归属待核实，前端暂不展示证书编号/链接
   image: '',            // 云存储 fileID；空则前端用色块+短名兜底
   onSale: true,         // 上下架开关（管理端用）
   sort: (i + 1) * 10,

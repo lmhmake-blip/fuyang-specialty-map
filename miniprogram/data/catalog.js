@@ -28,7 +28,7 @@ const DISTRICTS = [
   { id:'taihe', name:'太和县', color:'#A8442F',
     hint:'旧县麻糖 · 香椿与香椿酱',
     desc:'旧县镇有条“麻糖一条街”，太和香椿是国家地理标志产品，香椿酱已线上热销。',
-    stats:[['特产','3 款'],['地理标志','2 个'],['特点','线上已验证']] },
+    stats:[['特产','3 款'],['地理标志','1 个'],['特点','线上已验证']] },
 
   { id:'funan', name:'阜南县', color:'#40695A',
     hint:'方集馓子 · 郜台板鸭 · 芡实',
@@ -79,6 +79,7 @@ const PRODUCTS = [
   { id:'caomei', short:'草莓', d:'yingquan', name:'闻集草莓', color:'#5F7548',
     sub:'国家地理标志产品 · 季节预售', price:68, unit:'2斤礼盒', sold:'预售中',
     badges:[['国家地理标志','gi'],['季节限定','fresh']],
+    giName:'闻集草莓', certPending:true,
     story:'闻集草莓拿下国家地理标志保护，是阜阳鲜果里最有“名分”的一个。鲜果不耐运，所以走的是季节预售 + 顺丰冷链的路子——下单后按采摘批次发货。',
     evidence:[
       { t:'国家地理标志保护产品', b:'2025 年阜阳新增 7 个国家地理标志产品之一' },
@@ -153,7 +154,8 @@ const PRODUCTS = [
 
   { id:'chunya', short:'椿酱', d:'taihe', name:'太和香椿酱', color:'#A8442F',
     sub:'国家地理标志原料 · 线上热销', price:42, unit:'3瓶装', sold:'月售 180+',
-    badges:[['国家地理标志','gi']],
+    badges:[['国家地理标志原料','gi']],
+    giName:'太和香椿', certPending:true,
     story:'太和香椿是国家地理标志产品，做成酱之后保质期长、好运输，在线上已经跑通了。拌面、拌豆腐、炒蛋都行，是那种“吃过一次就会找”的味道。',
     evidence:[
       { t:'国家地理标志原料', b:'太和香椿为 2025 年阜阳新增国家地理标志产品之一' },
@@ -163,6 +165,7 @@ const PRODUCTS = [
   { id:'chunya-fresh', short:'香椿', d:'taihe', name:'太和香椿（鲜）', color:'#A8442F',
     sub:'国家地理标志 · 春季限定', price:88, unit:'2斤礼盒', sold:'春季预售',
     badges:[['国家地理标志','gi'],['季节限定','fresh']],
+    giName:'太和香椿', certPending:true,
     story:'香椿只在春天有那十几天。头茬最贵，也最鲜。走预售制，按采摘日发顺丰冷链——过了谷雨就没了，所以是“错过等一年”的品类。',
     evidence:[
       { t:'国家地理标志产品', b:'太和香椿列入国家地理标志保护' },
@@ -228,7 +231,7 @@ const PRODUCTS = [
   /* ---------- 界首市 ---------- */
   { id:'huangniurou', short:'牛肉', d:'jieshou', name:'界首黄牛肉', color:'#6E5440',
     sub:'全国名特优新农产品 · 硬菜', price:98, unit:'1kg 礼盒', sold:'月售 75+',
-    badges:[['全国名特优新','gi']],
+    badges:[['全国名特优新','new']], certPending:true,
     story:'界首黄牛肉入选 2025 年第三批全国名特优新农产品名录。卤好的牛肉切片就是一盘硬菜，企业年礼里放这个，比放零食像样得多。',
     evidence:[
       { t:'全国名特优新农产品', b:'入选 2025 年第三批全国名特优新农产品名录' },
@@ -247,6 +250,7 @@ const PRODUCTS = [
   { id:'malingshu', short:'马铃薯', d:'jieshou', name:'界首马铃薯', color:'#6E5440',
     sub:'国家地理标志 · 适合囤', price:26, unit:'10斤装', sold:'月售 65+',
     badges:[['国家地理标志','gi']],
+    giName:'界首马铃薯', certPending:true,
     story:'界首马铃薯是国家地理标志产品。个头匀、淀粉含量高，炖、炒、做粉都行，10 斤装是那种“一次买够一冬天”的规格。',
     evidence:[
       { t:'国家地理标志保护产品', b:'2025 年阜阳新增 7 个国家地理标志产品之一' },
@@ -261,7 +265,7 @@ const GIFT_BOXES = [
   { id:'gb-tuan', name:'同乡尝鲜礼盒', price:99, was:118, color:'#8E6B4E',
     desc:'第一次买先试这个。四款下饭神器，都是家里消耗快的。',
     items:['jiecai','xigua-jiangdou','fensi','jiaomo'], tag:'入门尝鲜' },
-  { id:'gb-qiye', name:'企业年礼礼盒', price:358, color:'#1E4B3C',
+  { id:'gb-qiye', name:'企业年礼礼盒', price:299, was:313, color:'#1E4B3C',
     desc:'送客户/送员工。黄牛肉压阵，加地理标志香椿酱与有机菌菇，含定制腰封与手提礼箱。',
     items:['huangniurou','chunya','junngu','hulu'], tag:'含定制腰封' },
 ];

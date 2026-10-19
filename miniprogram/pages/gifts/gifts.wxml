@@ -26,7 +26,7 @@
       </view>
       <view class="gift-foot">
         <view class="price"><text class="sym">¥</text>{{item.price}}</view>
-        <text class="price-was" wx:if="{{item.was}}">¥{{item.was}}</text>
+        <text class="price-compare" wx:if="{{item.save > 0}}">单买 ¥{{item.singleBuy}} / 省 ¥{{item.save}}</text>
         <view class="btn btn-primary btn-sm" hover-class="btn-primary-hover"
               data-name="{{item.name}}" bindtap="addBox">加入礼盒</view>
       </view>

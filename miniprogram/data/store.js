@@ -23,7 +23,7 @@
 
 const catalog = require('./catalog.js');
 
-const CACHE_KEY = 'fy_data_v1';
+const CACHE_KEY = 'fy_data_v2';   // v1 缓存没有 giName / certPending，直接弃用
 const PAGE = 20;                 // ⚠️ 小程序端单次查询上限就是 20 条，必须分页
 const COLLECTIONS = ['districts', 'products', 'giftboxes'];
 
@@ -52,10 +52,99 @@ let cloudLoaded = false;
 //  内部工具
 // ============================================================
 
-// 云数据库返回 _id，catalog.js 用 id —— 统一成 id，页面不用关心数据来自哪
-function normalize(doc) {
+// 云数据库返回 _id，catalog.js 用 id —— 统一成 id，页面不用关心数据来自哪。
+// 同时用内置数据补齐云端/缓存里缺的新字段：云端数据库里还是旧 seed 时，
+// giName / certPending 不会凭空出现，页面上的地标计数就会是 0。
+// 只补 undefined/null，云端已有的值（价格、徽章等）仍以云端为准。
+const BUILTIN_BY_ID = {};
+COLLECTIONS.forEach(name => {
+  BUILTIN_BY_ID[name] = {};
+  BUILTIN[name].forEach(doc => { BUILTIN_BY_ID[name][doc.id] = doc; });
+});
+
+// ---- 已知错误值纠正 ----
+// 云端/缓存里可能还留着旧 seed 写进去的错值。只补缺失字段是不够的：
+// 错值会一直被当成「云端最新」，永远改不回来。
+//
+// 这里按 id + 字段精确匹配：只有当前值仍然等于当初那个错值时才改用内置值。
+// 商家后来合法改过的价格、徽章（包括清单以外的字段）一律以云端为准。
+// 旧值出处：git main 的 miniprogram/data/catalog.js / tools/gen_seed.js
+const KNOWN_BAD_VALUES = {
+  giftboxes: {
+    // 旧价 358 高于盒内单品现价合计 313，改为内置 299
+    'gb-qiye': [{ field: 'price', bad: 358 }],
+  },
+  products: {
+    // 「全国名特优新」不是地理标志，旧 seed 误用了 gi 样式
+    huangniurou: [{ field: 'badges', bad: [['全国名特优新', 'gi']] }],
+    // 香椿酱用的是「香椿」这个地标原料，本身不是地理标志产品
+    chunya: [{ field: 'badges', bad: [['国家地理标志', 'gi']] }],
+  },
+};
+
+// 只比较纠正清单里用到的数组 / 原始值，不需要通用深比较。
+function sameValue(a, b) {
+  if (a === b) return true;
+  if (!Array.isArray(a) || !Array.isArray(b)) return false;
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i++) {
+    if (!sameValue(a[i], b[i])) return false;
+  }
+  return true;
+}
+
+// 礼盒价守卫：
+//   - 价格不是有限正数（字符串 / NaN / 0 / 负数 / null）→ 回退内置价；
+//   - 价格合法但高于盒内单品现价合计 → 只告警并保留云端价。
+//     商家可能有意做溢价组合（含包装、定制等），没核实前不擅自改价。
+// 单品现价优先取内存里的（商家可能合法改过价），算不出来就不告警。
+function giftboxItemsTotal(box) {
+  const items = (box && box.items) || [];
+  if (!items.length) return null;
+  let total = 0;
+  for (let i = 0; i < items.length; i++) {
+    const p = mem.products.find(x => x.id === items[i]) || BUILTIN_BY_ID.products[items[i]];
+    if (!p || typeof p.price !== 'number' || !isFinite(p.price)) return null;
+    total += p.price;
+  }
+  return total;
+}
+
+function guardGiftboxPrice(box) {
+  const base = BUILTIN_BY_ID.giftboxes[box.id];
+  if (!base) return;              // 新增礼盒没有内置价可回退，不动它
+  const price = box.price;
+  const validNumber = typeof price === 'number' && isFinite(price) && price > 0;
+  if (!validNumber) {
+    box.price = base.price;
+    return;
+  }
+  const sum = giftboxItemsTotal(box);
+  if (sum !== null && price > sum) {
+    console.warn(
+      '[store] 礼盒价高于单品合计：' + box.id +
+      '，价格 ' + price + '，合计 ' + sum + '，保留云端价'
+    );
+  }
+}
+
+function normalize(doc, collection) {
   const o = Object.assign({}, doc);
   if (o.id === undefined && o._id !== undefined) o.id = o._id;
+  const base = collection && BUILTIN_BY_ID[collection][o.id];
+  if (base) {
+    // 先纠正已知错值，再补缺失字段：错值命中时以内置值为准。
+    const fixes = KNOWN_BAD_VALUES[collection] && KNOWN_BAD_VALUES[collection][o.id];
+    if (fixes) {
+      fixes.forEach(fix => {
+        if (sameValue(o[fix.field], fix.bad)) o[fix.field] = base[fix.field];
+      });
+    }
+    Object.keys(base).forEach(key => {
+      if (o[key] === undefined || o[key] === null) o[key] = base[key];
+    });
+    if (collection === 'giftboxes') guardGiftboxPrice(o);
+  }
   return o;
 }
 
@@ -113,7 +202,7 @@ function loadCache() {
   try {
     const c = wx.getStorageSync(CACHE_KEY);
     if (!c || !c.products || !c.products.length) return false;
-    COLLECTIONS.forEach(k => { if (c[k] && c[k].length) mem[k] = c[k].map(normalize); });
+    COLLECTIONS.forEach(k => { if (c[k] && c[k].length) mem[k] = c[k].map(d => normalize(d, k)); });
     mem.source = 'cache';
     invalidate();
     return true;
@@ -169,7 +258,7 @@ function pullCloud() {
         let changed = false;
         COLLECTIONS.forEach((k, i) => {
           if (results[i] && results[i].length) {
-            mem[k] = results[i].map(normalize);
+            mem[k] = results[i].map(d => normalize(d, k));
             changed = true;
           }
         });
