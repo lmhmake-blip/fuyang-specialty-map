@@ -78,6 +78,26 @@ ok('黄牛肉徽章 = 全国名特优新',
 ok('黄牛肉徽章样式 = new', P('huangniurou').badges[0][1] === 'new', P('huangniurou').badges[0][1]);
 ok('黄牛肉不再是 gi 徽章', P('huangniurou').badges.every(b => b[1] !== 'gi'));
 
+head('县区页 · giName 统计口径');
+// district.js 是页面文件，require 时会调用 Page()；打个桩拿到页面配置，
+// 并直接验证它导出的统计函数（不依赖真实小程序运行时）。
+global.Page = () => {};
+global.getApp = () => ({ globalData: { statusBarHeight: 20 } });
+global.wx = {
+  showToast: () => {}, navigateBack: () => {}, navigateTo: () => {}, switchTab: () => {},
+};
+const { giNamesOf } = require(path.join(__dirname, '..', 'miniprogram', 'pages', 'district', 'district.js'));
+
+ok('giName 带前后空格时先 trim 再去重（只算 1 个）',
+   giNamesOf([{ giName: ' 太和香椿 ' }, { giName: '太和香椿' }]).join(',') === '太和香椿',
+   giNamesOf([{ giName: ' 太和香椿 ' }, { giName: '太和香椿' }]).join(','));
+ok('giName 是空字符串 / 纯空格时不算',
+   giNamesOf([{ giName: '' }, { giName: '   ' }, {}]).length === 0,
+   giNamesOf([{ giName: '' }, { giName: '   ' }, {}]).length);
+ok('空值混在有效值里时只统计有效项',
+   giNamesOf([{ giName: ' 闻集草莓 ' }, { giName: '' }]).join(',') === '闻集草莓',
+   giNamesOf([{ giName: ' 闻集草莓 ' }, { giName: '' }]).join(','));
+
 console.log();
 console.log(fail === 0 ? '全部通过 ✅' : `${fail} 项失败 ❌`);
 process.exit(fail === 0 ? 0 : 1);

@@ -5,7 +5,12 @@ const store = require('../../data/store.js');
 // 都不应被当成新增的地理标志。
 function giNamesOf(list) {
   const seen = {};
-  (list || []).forEach(p => { if (p.giName) seen[p.giName] = true; });
+  (list || []).forEach(p => {
+    // 云端字段可能有前后空格；空字符串（含纯空格）不算一个地标。
+    if (typeof p.giName !== 'string') return;
+    const name = p.giName.trim();
+    if (name) seen[name] = true;
+  });
   return Object.keys(seen);
 }
 
@@ -65,3 +70,6 @@ Page({
     wx.navigateTo({ url: '/pages/product/product?id=' + e.currentTarget.dataset.id });
   },
 });
+
+// 供 Node 测试直接验证统计口径；小程序运行时不会用到这个导出。
+module.exports = { giNamesOf };

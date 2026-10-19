@@ -62,14 +62,76 @@ COLLECTIONS.forEach(name => {
   BUILTIN[name].forEach(doc => { BUILTIN_BY_ID[name][doc.id] = doc; });
 });
 
+// ---- 已知错误值纠正 ----
+// 云端/缓存里可能还留着旧 seed 写进去的错值。只补缺失字段是不够的：
+// 错值会一直被当成「云端最新」，永远改不回来。
+//
+// 这里按 id + 字段精确匹配：只有当前值仍然等于当初那个错值时才改用内置值。
+// 商家后来合法改过的价格、徽章（包括清单以外的字段）一律以云端为准。
+// 旧值出处：git main 的 miniprogram/data/catalog.js / tools/gen_seed.js
+const KNOWN_BAD_VALUES = {
+  giftboxes: {
+    // 旧价 358 高于盒内单品现价合计 313，改为内置 299
+    'gb-qiye': [{ field: 'price', bad: 358 }],
+  },
+  products: {
+    // 「全国名特优新」不是地理标志，旧 seed 误用了 gi 样式
+    huangniurou: [{ field: 'badges', bad: [['全国名特优新', 'gi']] }],
+    // 香椿酱用的是「香椿」这个地标原料，本身不是地理标志产品
+    chunya: [{ field: 'badges', bad: [['国家地理标志', 'gi']] }],
+  },
+};
+
+// 只比较纠正清单里用到的数组 / 原始值，不需要通用深比较。
+function sameValue(a, b) {
+  if (a === b) return true;
+  if (!Array.isArray(a) || !Array.isArray(b)) return false;
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i++) {
+    if (!sameValue(a[i], b[i])) return false;
+  }
+  return true;
+}
+
+// 礼盒价守卫：价格必须是有限正数，且不能高于盒内单品的现价合计。
+// 单品现价优先取内存里的（商家可能合法改过价），算不出来就不拦。
+function giftboxItemsTotal(box) {
+  const items = (box && box.items) || [];
+  if (!items.length) return null;
+  let total = 0;
+  for (let i = 0; i < items.length; i++) {
+    const p = mem.products.find(x => x.id === items[i]) || BUILTIN_BY_ID.products[items[i]];
+    if (!p || typeof p.price !== 'number' || !isFinite(p.price)) return null;
+    total += p.price;
+  }
+  return total;
+}
+
+function guardGiftboxPrice(box) {
+  const base = BUILTIN_BY_ID.giftboxes[box.id];
+  if (!base) return;              // 新增礼盒没有内置价可回退，不动它
+  const price = box.price;
+  const validNumber = typeof price === 'number' && isFinite(price) && price > 0;
+  const sum = giftboxItemsTotal(box);
+  if (!validNumber || (sum !== null && price > sum)) box.price = base.price;
+}
+
 function normalize(doc, collection) {
   const o = Object.assign({}, doc);
   if (o.id === undefined && o._id !== undefined) o.id = o._id;
   const base = collection && BUILTIN_BY_ID[collection][o.id];
   if (base) {
+    // 先纠正已知错值，再补缺失字段：错值命中时以内置值为准。
+    const fixes = KNOWN_BAD_VALUES[collection] && KNOWN_BAD_VALUES[collection][o.id];
+    if (fixes) {
+      fixes.forEach(fix => {
+        if (sameValue(o[fix.field], fix.bad)) o[fix.field] = base[fix.field];
+      });
+    }
     Object.keys(base).forEach(key => {
       if (o[key] === undefined || o[key] === null) o[key] = base[key];
     });
+    if (collection === 'giftboxes') guardGiftboxPrice(o);
   }
   return o;
 }
