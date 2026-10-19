@@ -20,6 +20,7 @@
     <view class="order" wx:for="{{orders}}" wx:key="no">
       <view class="order-head">
         <text class="order-no">{{item.no}}</text>
+        <text class="order-count" wx:if="{{item.countText}}">{{item.countText}}</text>
         <text class="badge fresh">待发货</text>
       </view>
       <view class="order-body">

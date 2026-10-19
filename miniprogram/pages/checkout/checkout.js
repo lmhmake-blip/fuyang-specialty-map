@@ -1,4 +1,5 @@
 const store = require('../../data/store.js');
+const order = require('../../utils/order.js');
 const { toast } = require('../../utils/toast.js');
 
 Page({
@@ -57,6 +58,14 @@ Page({
       return;
     }
     if (!this.data.items.length) { toast(this, '清单是空的'); return; }
+    // 数量只认正整数：小数 / 0 / 负数 / NaN 会把金额算错，提示后不下单。
+    // store.cartItems 渲染时会把 0 / 负数 / NaN 兜底成 1，所以同时看原始购物车，
+    // 否则这些非法值会在提交前被悄悄改成 1。
+    const rawCart = getApp().globalData.cart || [];
+    if (order.hasInvalidQty(this.data.items) || order.hasInvalidQty(rawCart)) {
+      toast(this, '商品数量有误，请回购物车调整');
+      return;
+    }
 
     const d = new Date();
     const pad = n => (n < 10 ? '0' + n : '' + n);
@@ -65,11 +74,23 @@ Page({
     const time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate()
                + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
 
+    // 订单快照：名称、单价、数量、小计一次存全。
+    // 之后商品改价或下架，历史订单展示的仍是提交时的数字。
+    const items = order.snapshotItems(this.data.items);
+    const goodsTotal = order.itemsTotal(items);
+    const ship = store.shipFee(goodsTotal);
+    const total = goodsTotal + ship;
+
     getApp().addOrder({
       no, time,
       name: name.trim(), phone: phone.trim(), addr: addr.trim(),
-      total: this.data.due,
-      items: this.data.items.map(i => ({ name: i.name, price: i.price })),
+      items,
+      count: order.itemCount(items),
+      goodsTotal, ship, total,
+      // 配送 / 支付方式与备注也是下单时的快照，之后页面默认值变了不影响历史订单
+      shipWay: this.data.shipWay,
+      payWay: this.data.payWay,
+      note: String(this.data.form.note || '').trim(),
     });
     getApp().clearCart();
     // redirect：下单后返回不该回到结算页
