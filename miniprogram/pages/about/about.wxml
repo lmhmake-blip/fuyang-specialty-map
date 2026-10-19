@@ -56,6 +56,7 @@
       <view class="spec"><text class="spec-k">县区与品类</text><text class="spec-v">阜阳各县区年货特产清单（公开报道）</text></view>
       <view class="spec"><text class="spec-k">地理标志</text><text class="spec-v">2025 年阜阳新增 7 个国家地理标志产品（公开报道）</text></view>
       <view class="spec"><text class="spec-k">非遗名录</text><text class="spec-v">市级/县级非遗名录、全国名特优新农产品名录</text></view>
+      <view class="spec"><text class="spec-k">认证归属</text><text class="spec-v">证书编号与认证主体待商会核实；核实前不展示编号或链接</text></view>
       <view class="spec"><text class="spec-k">价格与规格</text><text class="spec-v">演示数据，非真实报价</text></view>
       <view class="spec"><text class="spec-k">商品图片</text><text class="spec-v">暂无实拍图，正式版需商会提供</text></view>
     </view>
@@ -66,7 +67,7 @@
     <view class="specs">
       <view class="spec"><text class="spec-k">第一步</text><text class="spec-v">拿这个原型和商会聊，把上面 5 个问题问清楚</text></view>
       <view class="spec"><text class="spec-k">第二步</text><text class="spec-v">确认资质与供货后，替换真实商品图与价格</text></view>
-      <view class="spec"><text class="spec-k">第三步</text><text class="spec-v">转成微信小程序（含支付需企业主体 + 食品经营许可）</text></view>
+      <view class="spec"><text class="spec-k">第三步</text><text class="spec-v">小程序已完成；下一步接入真实支付（需企业主体 + 食品经营许可）</text></view>
     </view>
   </view>
 
