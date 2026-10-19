@@ -169,6 +169,28 @@ ok('qty -2 被拒绝', rejectedWithQty(-2) === true);
 ok('qty NaN 被拒绝', rejectedWithQty(NaN) === true);
 ok('非法数量不会清空购物车', cleared === false);
 
+// store.cartItems 渲染时会把 0 / 负数 / NaN 兜底成 1，
+// 只校验渲染后的 items 会漏掉它们，所以结算页还要校验原始购物车。
+function rejectedWithRawCartQty(qty) {
+  app.globalData.cart = [{ key: 'zhentoumo', qty: qty }];
+  page.onLoad();                 // 重新渲染：items 里的数量会被兜底成 1
+  added = null;
+  cleared = false;
+  page.data.toastText = '';
+  page.data.form = {
+    name: '张三', phone: '13800138000', addr: '上海市黄浦区南京东路 1 号', note: '',
+  };
+  page.submit();
+  return added === null && cleared === false &&
+         page.data.toastText === '商品数量有误，请回购物车调整';
+}
+ok('原始购物车 qty 0（渲染后被兜底成 1）仍被拒绝',
+   rejectedWithRawCartQty(0) === true);
+ok('原始购物车 qty -2（渲染后被兜底成 1）仍被拒绝',
+   rejectedWithRawCartQty(-2) === true);
+ok('原始购物车 qty NaN（渲染后被兜底成 1）仍被拒绝',
+   rejectedWithRawCartQty(NaN) === true);
+
 // ============================================================
 // ③ 我的订单页：旧订单兼容 + 不回写 Storage
 // ============================================================

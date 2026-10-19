@@ -59,7 +59,10 @@ Page({
     }
     if (!this.data.items.length) { toast(this, '清单是空的'); return; }
     // 数量只认正整数：小数 / 0 / 负数 / NaN 会把金额算错，提示后不下单。
-    if (order.hasInvalidQty(this.data.items)) {
+    // store.cartItems 渲染时会把 0 / 负数 / NaN 兜底成 1，所以同时看原始购物车，
+    // 否则这些非法值会在提交前被悄悄改成 1。
+    const rawCart = getApp().globalData.cart || [];
+    if (order.hasInvalidQty(this.data.items) || order.hasInvalidQty(rawCart)) {
       toast(this, '商品数量有误，请回购物车调整');
       return;
     }
