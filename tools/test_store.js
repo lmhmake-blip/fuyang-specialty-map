@@ -195,30 +195,87 @@ function cloudStub(docs) {
   const boxOf = (s, id) => s.allGiftboxes().find(g => g.id === id);
 
   head('场景三 · 礼盒旧价纠正与价格守卫');
-  const s3 = await storeWithGiftboxes([
-    { _id: 'gb-qiye', price: 358, sort: 30 },      // 旧错价
-    { _id: 'gb-tuan', price: 109, sort: 20 },      // 云端合法改价（≤ 118）
-    { _id: 'gb-nianwei', price: 9999, sort: 10 },  // 高于单品合计 197
-  ]);
-  ok('企业礼盒旧价 358 纠正为内置 299',
-     boxOf(s3, 'gb-qiye').price === 299, boxOf(s3, 'gb-qiye').price);
-  ok('礼盒价 9999 超过单品合计 197 → 回退内置 188',
-     boxOf(s3, 'gb-nianwei').price === 188, boxOf(s3, 'gb-nianwei').price);
-  ok('云端合法改价 109 保留不动',
-     boxOf(s3, 'gb-tuan').price === 109, boxOf(s3, 'gb-tuan').price);
+  // 高于单品合计只告警、保留云端价；测试期间打桩 console.warn 并记录调用。
+  const realWarn = console.warn;
+  let warnings = [];
+  console.warn = (...args) => { warnings.push(args.join(' ')); };
+  try {
+    const s3 = await storeWithGiftboxes([
+      { _id: 'gb-qiye', price: 358, sort: 30 },      // 旧错价，纠正后 299（≤ 313）
+      { _id: 'gb-tuan', price: 109, sort: 20 },      // 云端合法改价（≤ 118）
+      { _id: 'gb-nianwei', price: 9999, sort: 10 },  // 高于单品合计 197
+    ]);
+    ok('企业礼盒旧价 358 纠正为内置 299',
+       boxOf(s3, 'gb-qiye').price === 299, boxOf(s3, 'gb-qiye').price);
+    ok('礼盒价 9999 超过单品合计 197 → 保留云端价，不回退',
+       boxOf(s3, 'gb-nianwei').price === 9999, boxOf(s3, 'gb-nianwei').price);
+    ok('云端合法改价 109 保留不动',
+       boxOf(s3, 'gb-tuan').price === 109, boxOf(s3, 'gb-tuan').price);
+    ok('只有超过合计的礼盒触发 console.warn', warnings.length === 1,
+       warnings.length + ' 次' + (warnings.length ? '：' + warnings[0] : ''));
+    ok('告警信息带礼盒 id / 价格 / 合计',
+       warnings.length === 1 &&
+       warnings[0].indexOf('gb-nianwei') !== -1 &&
+       warnings[0].indexOf('9999') !== -1 &&
+       warnings[0].indexOf('197') !== -1,
+       warnings[0]);
+  } finally {
+    console.warn = realWarn;
+  }
 
-  head('场景四 · 礼盒价非法类型回退');
-  const s4 = await storeWithGiftboxes([
+  head('场景四 · 企业礼盒 320 保留并告警');
+  warnings = [];
+  console.warn = (...args) => { warnings.push(args.join(' ')); };
+  try {
+    const s4 = await storeWithGiftboxes([
+      { _id: 'gb-qiye', price: 320, sort: 30 },      // 高于单品合计 313
+    ]);
+    ok('企业礼盒 320 保留云端价',
+       boxOf(s4, 'gb-qiye').price === 320, boxOf(s4, 'gb-qiye').price);
+    ok('320 高于合计 313 → 调用 console.warn', warnings.length === 1,
+       warnings.length + ' 次');
+    ok('告警信息带 gb-qiye / 320 / 313',
+       warnings.length === 1 &&
+       warnings[0].indexOf('gb-qiye') !== -1 &&
+       warnings[0].indexOf('320') !== -1 &&
+       warnings[0].indexOf('313') !== -1,
+       warnings[0]);
+  } finally {
+    console.warn = realWarn;
+  }
+
+  head('场景五 · 合法价格不告警');
+  warnings = [];
+  console.warn = (...args) => { warnings.push(args.join(' ')); };
+  try {
+    const s5 = await storeWithGiftboxes([
+      { _id: 'gb-tuan', price: 118, sort: 20 },      // 等于单品合计 118
+    ]);
+    ok('价格 118 等于单品合计 → 保留不动',
+       boxOf(s5, 'gb-tuan').price === 118, boxOf(s5, 'gb-tuan').price);
+    ok('合法价格不调用 console.warn', warnings.length === 0,
+       warnings.length + ' 次');
+  } finally {
+    console.warn = realWarn;
+  }
+
+  head('场景六 · 礼盒价非法类型回退');
+  const s6 = await storeWithGiftboxes([
     { _id: 'gb-qiye', price: 'abc', sort: 30 },    // 非数字
     { _id: 'gb-tuan', price: NaN, sort: 20 },      // NaN
     { _id: 'gb-nianwei', price: 0, sort: 10 },     // 非正数
   ]);
   ok('礼盒价是字符串 → 回退内置 299',
-     boxOf(s4, 'gb-qiye').price === 299, boxOf(s4, 'gb-qiye').price);
+     boxOf(s6, 'gb-qiye').price === 299, boxOf(s6, 'gb-qiye').price);
   ok('礼盒价是 NaN → 回退内置 99',
-     boxOf(s4, 'gb-tuan').price === 99, boxOf(s4, 'gb-tuan').price);
+     boxOf(s6, 'gb-tuan').price === 99, boxOf(s6, 'gb-tuan').price);
   ok('礼盒价是 0 → 回退内置 188',
-     boxOf(s4, 'gb-nianwei').price === 188, boxOf(s4, 'gb-nianwei').price);
+     boxOf(s6, 'gb-nianwei').price === 188, boxOf(s6, 'gb-nianwei').price);
+  const s6b = await storeWithGiftboxes([
+    { _id: 'gb-qiye', price: -1, sort: 30 },       // 负数
+  ]);
+  ok('礼盒价是 -1 → 回退内置 299',
+     boxOf(s6b, 'gb-qiye').price === 299, boxOf(s6b, 'gb-qiye').price);
 
   console.log();
   console.log(fail === 0 ? '全部通过 ✅' : `${fail} 项失败 ❌`);

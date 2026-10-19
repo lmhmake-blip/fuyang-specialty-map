@@ -93,8 +93,11 @@ function sameValue(a, b) {
   return true;
 }
 
-// 礼盒价守卫：价格必须是有限正数，且不能高于盒内单品的现价合计。
-// 单品现价优先取内存里的（商家可能合法改过价），算不出来就不拦。
+// 礼盒价守卫：
+//   - 价格不是有限正数（字符串 / NaN / 0 / 负数 / null）→ 回退内置价；
+//   - 价格合法但高于盒内单品现价合计 → 只告警并保留云端价。
+//     商家可能有意做溢价组合（含包装、定制等），没核实前不擅自改价。
+// 单品现价优先取内存里的（商家可能合法改过价），算不出来就不告警。
 function giftboxItemsTotal(box) {
   const items = (box && box.items) || [];
   if (!items.length) return null;
@@ -112,8 +115,17 @@ function guardGiftboxPrice(box) {
   if (!base) return;              // 新增礼盒没有内置价可回退，不动它
   const price = box.price;
   const validNumber = typeof price === 'number' && isFinite(price) && price > 0;
+  if (!validNumber) {
+    box.price = base.price;
+    return;
+  }
   const sum = giftboxItemsTotal(box);
-  if (!validNumber || (sum !== null && price > sum)) box.price = base.price;
+  if (sum !== null && price > sum) {
+    console.warn(
+      '[store] 礼盒价高于单品合计：' + box.id +
+      '，价格 ' + price + '，合计 ' + sum + '，保留云端价'
+    );
+  }
 }
 
 function normalize(doc, collection) {
