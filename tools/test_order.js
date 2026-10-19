@@ -51,8 +51,21 @@ ok('不把购物车专用的 color 带进订单', snap[0].color === undefined);
 ok('不修改原数组（原条目仍无 subtotal）', cart[0].subtotal === undefined);
 ok('缺 qty 按 1 件',
    order.snapshotItems([{ name: '枕头馍', price: 38 }])[0].qty === 1);
-ok('qty 为 0 也按 1 件',
-   order.snapshotItems([{ name: '枕头馍', price: 38, qty: 0 }])[0].qty === 1);
+ok('qty 为 0 视为非法，快照里标成 null',
+   order.snapshotItems([{ name: '枕头馍', price: 38, qty: 0 }])[0].qty === null);
+
+head('数量合法性 · 只认正整数');
+ok('正整数 2 合法', order.qtyOf({ qty: 2 }) === 2);
+ok('缺 qty 字段按 1 件（旧订单兼容）', order.qtyOf({ name: '枕头馍', price: 38 }) === 1);
+ok('qty 为 null 按 1 件（旧订单兼容）', order.qtyOf({ qty: null }) === 1);
+ok('小数 1.5 非法', order.qtyOf({ qty: 1.5 }) === null);
+ok('0 非法', order.qtyOf({ qty: 0 }) === null);
+ok('负数 -2 非法', order.qtyOf({ qty: -2 }) === null);
+ok('NaN 非法', order.qtyOf({ qty: NaN }) === null);
+ok('字符串 "2" 非法（只认数字）', order.qtyOf({ qty: '2' }) === null);
+ok('hasInvalidQty 能发现小数', order.hasInvalidQty([{ qty: 2 }, { qty: 1.5 }]) === true);
+ok('hasInvalidQty 不会误伤旧订单',
+   order.hasInvalidQty([{ name: '枕头馍', price: 38 }, { name: '阜阳年味礼盒', price: 188 }]) === false);
 
 head('金额与件数');
 ok('itemsTotal = 76 + 188 = 264', order.itemsTotal(snap) === 264, order.itemsTotal(snap));
@@ -121,6 +134,40 @@ ok('订单 ship = 0（满 199 免运费）', added.ship === 0, added.ship);
 ok('订单 total = 264', added.total === 264, added.total);
 ok('订单条目不再只有 name/price',
    added.items[0].key === 'zhentoumo' && added.items[0].name === '枕头馍');
+ok('默认 shipWay = 0', added.shipWay === 0, added.shipWay);
+ok('默认 payWay = 0', added.payWay === 0, added.payWay);
+ok('备注为空时存空字符串', added.note === '', JSON.stringify(added.note));
+
+head('结算页提交 · 配送 / 支付 / 备注');
+added = null;
+cleared = false;
+page.data.shipWay = 1;
+page.data.payWay = 1;
+page.data.form = {
+  name: '张三', phone: '13800138000', addr: '上海市黄浦区南京东路 1 号',
+  note: '  要发票，工作日送达  ',
+};
+page.submit();
+ok('订单存 shipWay = 1', added && added.shipWay === 1, added && added.shipWay);
+ok('订单存 payWay = 1', added && added.payWay === 1, added && added.payWay);
+ok('备注先 trim 再存', added && added.note === '要发票，工作日送达', added && added.note);
+
+head('结算页提交 · 非法数量拒绝下单');
+// 数量非法时必须提示并且不下单、不清购物车
+function rejectedWithQty(qty) {
+  added = null;
+  cleared = false;
+  page.data.toastText = '';
+  page.data.items = [{ key: 'zhentoumo', name: '枕头馍', price: 38, qty: qty }];
+  page.submit();
+  return added === null && cleared === false &&
+         page.data.toastText === '商品数量有误，请回购物车调整';
+}
+ok('小数 qty 1.5 被拒绝', rejectedWithQty(1.5) === true);
+ok('qty 0 被拒绝', rejectedWithQty(0) === true);
+ok('qty -2 被拒绝', rejectedWithQty(-2) === true);
+ok('qty NaN 被拒绝', rejectedWithQty(NaN) === true);
+ok('非法数量不会清空购物车', cleared === false);
 
 // ============================================================
 // ③ 我的订单页：旧订单兼容 + 不回写 Storage

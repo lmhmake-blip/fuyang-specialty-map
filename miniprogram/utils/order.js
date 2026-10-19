@@ -9,12 +9,24 @@
    不碰 Storage、不碰页面，方便在 Node 里直接测。
    ============================================================ */
 
-// 数量兜底：旧订单没有 qty 字段，按 1 件算。
+// 数量规则：
+//   没有 qty 字段（旧订单）→ 按 1 件算，兼容历史数据
+//   qty 存在但不是正整数（小数 / 0 / 负数 / NaN / 非数字）→ 返回 null，表示非法
+// 提交前用 hasInvalidQty 拦下非法数量，不要让它进订单。
 function qtyOf(item) {
-  return item && item.qty > 0 ? item.qty : 1;
+  if (!item || item.qty === undefined || item.qty === null) return 1;
+  const qty = item.qty;
+  if (typeof qty !== 'number' || !isFinite(qty) || qty <= 0 || qty % 1 !== 0) return null;
+  return qty;
+}
+
+// 数量是否非法（缺 qty 的旧订单不算非法）。
+function hasInvalidQty(items) {
+  return (items || []).some(item => qtyOf(item) === null);
 }
 
 // 购物车条目 -> 订单条目。只留下订单要用的字段。
+// 非法数量照实标成 null、小计记 0；正常提交路径会先被 hasInvalidQty 拦下。
 function snapshotItems(items) {
   return (items || []).map(item => {
     const qty = qtyOf(item);
@@ -23,7 +35,7 @@ function snapshotItems(items) {
       name: item.name,
       price: item.price,
       qty: qty,
-      subtotal: item.price * qty,
+      subtotal: qty === null ? 0 : item.price * qty,
     };
   });
 }
@@ -31,13 +43,17 @@ function snapshotItems(items) {
 // 商品金额（不含运费）。旧条目无 qty 时每件按 1 件算。
 function itemsTotal(items) {
   return (items || []).reduce((sum, item) => {
-    return sum + (item.price || 0) * qtyOf(item);
+    const qty = qtyOf(item);
+    return sum + (qty === null ? 0 : (item.price || 0) * qty);
   }, 0);
 }
 
 // 件数 = 数量之和，不是行数。
 function itemCount(items) {
-  return (items || []).reduce((sum, item) => sum + qtyOf(item), 0);
+  return (items || []).reduce((sum, item) => {
+    const qty = qtyOf(item);
+    return sum + (qty === null ? 0 : qty);
+  }, 0);
 }
 
 // 旧订单没有 count 字段 —— 不知道当时买了几件，就不显示「共 N 件」，
@@ -53,8 +69,9 @@ function itemsText(order) {
   const items = (order && order.items) || [];
   const withQty = !!(order && order.count > 0);
   return items.map(item => {
-    return withQty ? item.name + ' × ' + qtyOf(item) : item.name;
+    const qty = qtyOf(item);
+    return withQty && qty !== null ? item.name + ' × ' + qty : item.name;
   }).join(' · ');
 }
 
-module.exports = { snapshotItems, itemsTotal, itemCount, displayCount, itemsText };
+module.exports = { qtyOf, hasInvalidQty, snapshotItems, itemsTotal, itemCount, displayCount, itemsText };

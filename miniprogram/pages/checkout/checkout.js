@@ -58,6 +58,11 @@ Page({
       return;
     }
     if (!this.data.items.length) { toast(this, '清单是空的'); return; }
+    // 数量只认正整数：小数 / 0 / 负数 / NaN 会把金额算错，提示后不下单。
+    if (order.hasInvalidQty(this.data.items)) {
+      toast(this, '商品数量有误，请回购物车调整');
+      return;
+    }
 
     const d = new Date();
     const pad = n => (n < 10 ? '0' + n : '' + n);
@@ -79,6 +84,10 @@ Page({
       items,
       count: order.itemCount(items),
       goodsTotal, ship, total,
+      // 配送 / 支付方式与备注也是下单时的快照，之后页面默认值变了不影响历史订单
+      shipWay: this.data.shipWay,
+      payWay: this.data.payWay,
+      note: String(this.data.form.note || '').trim(),
     });
     getApp().clearCart();
     // redirect：下单后返回不该回到结算页
