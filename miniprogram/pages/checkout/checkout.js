@@ -1,4 +1,5 @@
 const store = require('../../data/store.js');
+const order = require('../../utils/order.js');
 const { toast } = require('../../utils/toast.js');
 
 Page({
@@ -65,11 +66,19 @@ Page({
     const time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate()
                + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
 
+    // 订单快照：名称、单价、数量、小计一次存全。
+    // 之后商品改价或下架，历史订单展示的仍是提交时的数字。
+    const items = order.snapshotItems(this.data.items);
+    const goodsTotal = order.itemsTotal(items);
+    const ship = store.shipFee(goodsTotal);
+    const total = goodsTotal + ship;
+
     getApp().addOrder({
       no, time,
       name: name.trim(), phone: phone.trim(), addr: addr.trim(),
-      total: this.data.due,
-      items: this.data.items.map(i => ({ name: i.name, price: i.price })),
+      items,
+      count: order.itemCount(items),
+      goodsTotal, ship, total,
     });
     getApp().clearCart();
     // redirect：下单后返回不该回到结算页
